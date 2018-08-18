@@ -17,6 +17,8 @@ defmodule PropollrWeb.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
+    post "/new_session", PageController, :new
+    post "/join_session", PageController, :join
   end
 
   # Other scopes may use custom stacks.
