@@ -1,0 +1,1 @@
+alias Propollr.{Repo, Questions.Question, Sessions.Session, Users.User}
