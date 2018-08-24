@@ -21,11 +21,27 @@ defmodule PropollrWeb.Router do
     post "/join_session", PageController, :join
     post "/session/:session_id/close", PageController, :close_session
     post "/session/:session_id/questions/", PageController, :add_question
-    get "/session/:session_id/questions/", PageController, :all_questions
+    get "/session/:session_id/questions", PageController, :all
+    get "/session/:session_id/", PageController, :all
     get "/session/:session_id/:question_id", PageController, :view_question
     put "/session/:session_id/:question_id", PageController, :update_question
     delete "/session/:session_id/:question_id", PageController, :delete_question
     post "/session/:session_id/:question_id/answer", PageController, :answer_question
+
+    # Dashboard
+    get "/dashboard", DashboardController, :index
+
+    # User
+    post "/login", UserController, :login
+
+    # Sessions
+    get "/session", SessionController, :view
+    post "/session/join", SessionController, :join
+
+    # Questions
+    post "/question", QuestionController, :answer
+    get "/question", QuestionController, :new
+    post "/question/new", QuestionController, :create
   end
 
   # Other scopes may use custom stacks.

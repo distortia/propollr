@@ -1,0 +1,9 @@
+<h4>Dashboard</h4>
+
+<%= for session <- @sessions do %>
+<div class="session">
+    <h5>ID: <%= session.session_id %></h5>
+    <p>Created: <%= session.inserted_at %></p>
+    <%= link "Go to Session", to: session_path(@conn, :view, session_id: session.id) %>
+</div>
+<% end %>

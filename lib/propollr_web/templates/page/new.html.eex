@@ -1,27 +1,43 @@
-New Session!
+<div>
+  <p>Ask a new Question?</p>
+  <%= form_for @changeset, page_path(@conn, :add_question, @session_id), [as: :question], fn f -> %>
 
-<%= form_for @changeset, page_path(@conn, :add_question, @session_id), fn f -> %>
+  <label for="question">
+    Question: <%= text_input f, :text %>
+  </label>
 
-<label for="question">
-  Question: <%= text_input f, :text %>
-</label>
+  <label for="option1">
+    Option 1: <%= text_input f, :option1 %>
+  </label>
 
-<label for="answer1">
-  Answer 1: <%= text_input f, :answer1 %>
-</label>
+  <label for="option2">
+    Option 2: <%= text_input f, :option2 %>
+  </label>
 
-<label for="answer2">
-  Answer 2: <%= text_input f, :answer2 %>
-</label>
+  <label for="option3">
+    Option 3: <%= text_input f, :option3 %>
+  </label>
 
-<label for="answer3">
-  Answer 3: <%= text_input f, :answer3 %>
-</label>
+  <label for="option4">
+    Option 4: <%= text_input f, :option4 %>
+  </label>
 
-<label for="answer4">
-  Answer 4: <%= text_input f, :answer4 %>
-</label>
+  <%= submit "Ask" %>
 
-<%= submit "Submit" %>
-
-<% end %>
+  <% end %>  
+</div>
+<hr>
+<div>
+  <p>Recent Questions</p>
+  <%= if @questions do %> 
+  <ul>
+  <%= for {question, index} <- @questions do %>
+    <li>
+      <%= index + 1 %>: <%= question %>
+    </li>
+  <% end %>
+  </ul>
+  <% else %>
+  <p>No Questions asked yet.</p>
+  <% end %>
+</div>

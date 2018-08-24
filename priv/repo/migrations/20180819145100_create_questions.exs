@@ -3,8 +3,8 @@ defmodule Propollr.Repo.Migrations.CreateQuestions do
 
   def change do
     create table(:users) do
+      add :random_user_id, :string
       add :username, :string
-      add :email, :string
       add :password, :string
 
       timestamps()
@@ -20,7 +20,7 @@ defmodule Propollr.Repo.Migrations.CreateQuestions do
     create table(:questions) do
       add :text, :string
       add :answers, :map
-      add :options, :map
+      add :options, {:array, :string}
       add :session_id, references(:sessions, on_delete: :nothing)
 
       timestamps()

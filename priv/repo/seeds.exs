@@ -15,18 +15,18 @@ alias Propollr.Sessions.Session
 alias Propollr.Questions.Question
 import Ecto
 
-user = Repo.insert!(%User{username: "nick", email: "me@nickstalter.com", password: "123"})
+user = Repo.insert!(%User{random_user_id: "123", username: "nick", password: "123"})
 
-session = 
+session =
 user
 |> Ecto.build_assoc(:sessions, %{closed: false, session_id: "123"})
 |> Repo.insert!()
 
 session
 |> Ecto.build_assoc(
-  :questions,%{
-  "text" => "yes?",
-  "options" => %{"option1" => "yes", "option2" => "no", "option3" => "idk", "option4" => "kinda"},
-  "answers" => %{}
-})
+  :questions,
+  %{text: "2 + 2?",
+    options: ["1" , "2", "3", "4"],
+    answers: %{"1" => 0, "2" => 0, "3" => 0, "4" => 0}}
+  )
 |> Repo.insert!()

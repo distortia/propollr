@@ -1,0 +1,33 @@
+<div class="session-info">
+    <h4>Session ID: <%= @session.session_id %></h4>
+    <p>Status: <%= if @session.closed, do: "Closed", else: "Open" %></p>
+    <p>Created at: <%= @session.inserted_at %></p>
+    <%= if is_user(@conn) do %>
+        <%= link "Create Question", to: question_path(@conn, :new, session_id: @session.id) %>
+    <% end %>
+</div>
+<hr>
+
+<h4>Questions</h4>
+<%= form_for @conn, question_path(@conn, :answer, session_id: @session.id), [as: :answer_params], fn f -> %>
+    <%= for question <- @session.questions do %>
+        <div class="question">
+            <p><%= question.text %></p>
+            <%= select f, question.text, question.options, prompt: "" %>
+        </div>
+        <hr>
+    <% end %>
+    <%= submit "Answer" %>
+<% end %>
+
+<%= if is_user(@conn) do %>
+    <h4>Answers</h4>
+    <%= for question <- @session.questions do %>
+        <p><%= question.text %></p>
+        <ul>
+            <%= for {answer, count} <- question.answers do %>
+                <li><%= answer %> - <%= count %></li>
+            <% end %>
+        </ul>
+    <% end %>
+<% end %>

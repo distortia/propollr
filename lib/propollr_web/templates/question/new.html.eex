@@ -1,0 +1,25 @@
+<h4>New Question</h4>
+
+<%= form_for @changeset, question_path(@conn, :create, session_id: @session_id), [as: :question_params], fn f -> %>
+    <label>
+        Question: <%= text_input f, :text %>
+    </label>
+    <hr>
+    <label>
+        Option: <%= text_input f, :option1 %>
+    </label>
+    <br>
+    <label>
+        Option: <%= text_input f, :option2 %>
+    </label>
+    <br>
+    <label>
+        Option: <%= text_input f, :option3 %>
+    </label>
+    <br>
+    <label>
+        Option: <%= text_input f, :option4 %>
+    </label>
+    <br>
+    <%= submit "Add Question" %>
+<% end %>

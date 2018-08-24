@@ -1,6 +1,6 @@
 <h1>All Questions</h1>
 
-<%= for question <- @questions do %>
+<%= for {question, index} <- @questions do %>
 
 <h4><%= question.text %></h4>
 <ul>

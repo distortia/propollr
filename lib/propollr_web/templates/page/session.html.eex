@@ -1,1 +1,9 @@
-Welcome to your session! <%= @session_id %>
+<%= for {question, index} <- Enum.with_index(@session.questions) do %>
+
+<p><strong>Question <%= index + 1%>:</strong> <%= question.text %></p>
+<ul>
+  <%= for option <- question.options do %>
+    <li><%= option %></li>
+  <% end %>
+</ul>
+<% end %>
