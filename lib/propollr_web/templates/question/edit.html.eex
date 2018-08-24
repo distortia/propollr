@@ -1,0 +1,18 @@
+<h4>Editing Question</h4>
+
+<%= form_for @conn, question_path(@conn, :update, question_id: @question.id), [as: :question_params, method: :put], fn f -> %>
+
+<label>
+    <%= text_input f, :text, value: @question.text %>
+</label>
+<hr>
+<%= for {option, index} <- Enum.with_index(@question.options, 1) do %> 
+<label>
+    Option: <%= text_input f, String.to_atom("option#{index}"), value: option %>
+</label>
+<br>
+<% end %>
+
+<hr>
+<%= submit "Update" %>
+<% end %>

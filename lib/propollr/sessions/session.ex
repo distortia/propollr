@@ -59,6 +59,32 @@ defmodule Propollr.Sessions.Session do
     |> Repo.preload(:user)
   end
 
+  def get_opened(user_id) do
+    Repo.all(from s in __MODULE__, where: s.closed == ^false and s.user_id == ^user_id)
+    |> Repo.preload(:questions)
+    |> Repo.preload(:user)
+  end
+
+  def get_closed(user_id) do
+    Repo.all(from s in __MODULE__, where: s.closed == ^true and s.user_id == ^user_id)
+    |> Repo.preload(:questions)
+    |> Repo.preload(:user)
+  end
+
+  def reopen(id) do
+    __MODULE__
+    |> Repo.get(id)
+    |> __MODULE__.changeset(%{closed: false})
+    |> Repo.update()
+  end
+
+  def close(id) do
+    __MODULE__
+    |> Repo.get(id)
+    |> __MODULE__.changeset(%{closed: true})
+    |> Repo.update()
+  end
+
   def randomize_session_id() do
     Ecto.UUID.generate |> binary_part(16,16)
   end

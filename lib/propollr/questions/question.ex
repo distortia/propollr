@@ -1,9 +1,9 @@
 defmodule Propollr.Questions.Question do
   use Ecto.Schema
   import Ecto.Changeset
-  import Ecto.Query
   alias Propollr.Repo
   alias Propollr.Sessions.Session
+  require IEx
 
   schema "questions" do
     field :answers, :map
@@ -19,6 +19,18 @@ defmodule Propollr.Questions.Question do
     question
     |> cast(attrs, [:text, :answers, :options])
     |> validate_required([:text, :options])
+  end
+
+  def new(question_params) do
+    __MODULE__
+    |> Ecto.Changeset.change(question_params)
+    |> Repo.insert()
+  end
+
+  def get(id) do
+    __MODULE__
+    |> Repo.get(id)
+    |> Repo.preload(:session)
   end
 
   def answer(session_id, answer_params) do
@@ -38,5 +50,18 @@ defmodule Propollr.Questions.Question do
         |> Repo.update!()
       end
     end)
+  end
+
+  def update(question_id, question_params) do
+    question_id
+    |> __MODULE__.get()
+    |> Ecto.Changeset.change(question_params)
+    |> Repo.update()
+  end
+
+  def delete(question_id) do
+    question_id
+    |> __MODULE__.get()
+    |> Repo.delete()
   end
 end
