@@ -16,8 +16,8 @@ RUN apk update && apk upgrade &&\
   && rm -rf /var/cache/apk/*
 
 # Set exposed ports
-EXPOSE 4004
-ENV PORT=4004 MIX_ENV=prod
+EXPOSE 4000
+ENV PORT=4000 MIX_ENV=dev
 
 ADD . .
 
