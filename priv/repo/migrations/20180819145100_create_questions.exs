@@ -12,6 +12,7 @@ defmodule Propollr.Repo.Migrations.CreateQuestions do
     create table(:sessions) do
       add :closed, :boolean, default: false, null: false
       add :session_id, :string
+      add :title, :string
       add :user_id, references(:users, on_delete: :nothing)
 
       timestamps()

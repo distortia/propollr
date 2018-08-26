@@ -30,6 +30,10 @@ defmodule PropollrWeb.Router do
     get "/session/join/:session_id", SessionController, :join
     get "/session/close", SessionController, :close
     get "/session/reopen", SessionController, :reopen
+    get "/session/new", SessionController, :new
+    post "/session/new", SessionController, :create
+    get "/session/edit", SessionController, :edit
+    put "/session/edit", SessionController, :update
 
     # Questions
     post "/question", QuestionController, :answer

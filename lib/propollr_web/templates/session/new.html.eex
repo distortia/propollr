@@ -1,0 +1,9 @@
+<h4>Creating a new Session</h4>
+
+<%= form_for @changeset, session_path(@conn, :create), [as: :session_params], fn f -> %>
+
+    <label>
+        Title: <%= text_input f, :title %>
+    </label>
+    <%= submit "Create" %>
+<% end %>

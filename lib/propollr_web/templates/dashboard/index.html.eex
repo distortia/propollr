@@ -3,6 +3,7 @@
 <h1>Active Sessions</h1>
 <%= for session <- @opened_sessions do %>
 <div class="session open">
+    <h2>Title: <%= session.title %></h2>
     <h5>ID: <%= session.session_id %></h5>
     <p>Created: <%= session.inserted_at %></p>
     <p>Share Link: <%= PropollrWeb.Endpoint.url() <> "/session/join/" <> session.session_id %></p>
@@ -11,6 +12,7 @@
 </div>
 <% end %>
 <hr>
+
 <h1>Closed Sessions</h1>
 <%= if Enum.empty?(@closed_sessions) do %>
     <p>No Closed Sessions</p>

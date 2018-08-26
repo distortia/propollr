@@ -1,0 +1,9 @@
+<h4>Editing Session</h4>
+
+<%= form_for @changeset, session_path(@conn, :update, session_id: @session_id), [as: :session_params, method: :put], fn f -> %>
+
+    <label>
+        Titlte: <%= text_input f, :title %>
+    </label>
+    <%= submit "Update" %>
+<% end %>

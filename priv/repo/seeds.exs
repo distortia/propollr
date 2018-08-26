@@ -19,7 +19,7 @@ user = Repo.insert!(%User{random_user_id: "123", username: "nick", password: "12
 
 session =
 user
-|> Ecto.build_assoc(:sessions, %{closed: false, session_id: "123"})
+|> Ecto.build_assoc(:sessions, %{closed: false, session_id: "123", title: "Simple Math"})
 |> Repo.insert!()
 
 session

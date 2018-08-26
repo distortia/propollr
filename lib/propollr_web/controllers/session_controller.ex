@@ -62,4 +62,39 @@ defmodule PropollrWeb.SessionController do
         |> halt()
     end
   end
+
+  def new(conn, _params) do
+    render(conn, "new.html", changeset: Session.changeset(%Session{}, %{}))
+  end
+
+  def create(conn, %{"session_params" => session_params}) do
+    random_user_id = get_session(conn, :random_user_id)
+    session = Session.soft_session(session_params, random_user_id)
+    conn
+    |> put_session(:user, session.user)
+    |> put_flash(:info, "Session Created!")
+    |> redirect(to: session_path(conn, :view, session_id: session.id))
+  end
+
+  def edit(conn, %{"session_id" => session_id}) do
+    changeset =
+      session_id
+      |> Session.get()
+      |> Session.changeset(%{})
+    render(conn, "edit.html", changeset: changeset, session_id: session_id)
+  end
+
+  def update(conn, %{"session_id" => session_id, "session_params" => session_params}) do
+    case Session.update(session_id, session_params) do
+      {:ok, session} ->
+        conn
+        |> put_flash(:info, "Session Updated")
+        |> redirect(to: session_path(conn, :view, session_id: session.id))
+      {:error, changeset} ->
+        conn
+        |> put_flash(:error, "Error when updating. Please try again")
+        |> render("edit.html", changeset: changeset)
+        |> halt()
+    end
+  end
 end
