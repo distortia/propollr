@@ -21,13 +21,13 @@ ENV PORT=4000 MIX_ENV=dev
 
 ADD . .
 
-# Run frontend build, compile, and digest assets
-RUN mix do deps.get, deps.compile && \
-    cd assets/ && \
-    gem install bundler rubygems-bundler sass --no-rdoc --no-ri && \
-    npm install && \
-    npm run build && \
-    cd - && \
-    mix do compile, phx.digest
+# Get dependencies
+RUN mix do deps.get, deps.compile
+
+# Create, migrate, and seed  DB
+RUN mix ecto.create && mix ecto.migrate &&\
+    cd assets && npm install && \
+    cd ../ && \
+    mix run priv/repo/seeds.exs
 
 CMD ["mix", "phx.server"]
