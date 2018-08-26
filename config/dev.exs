@@ -54,5 +54,5 @@ config :propollr, Propollr.Repo,
   username: "postgres",
   password: "postgres",
   database: "propollr_dev",
-  hostname: "localhost",
+  hostname: "db",
   pool_size: 10

@@ -1,32 +1,22 @@
-FROM bitwalker/alpine-elixir-phoenix:latest
+FROM elixir:1.6.5
+MAINTAINER Nicolas Bettenburg <nicbet@gmail.com>
 
-# Set exposed ports
+RUN mix local.hex --force \
+ && mix archive.install --force  https://github.com/phoenixframework/archives/raw/master/phx_new-1.3.3.ez \
+ && apt-get update \
+ && curl -sL https://deb.nodesource.com/setup_8.x | bash \
+ && apt-get install -y apt-utils \
+ && apt-get install -y nodejs \
+ && apt-get install -y build-essential \
+ && apt-get install -y inotify-tools \
+ && mix local.rebar --force
+
+ENV APP_HOME /app
+RUN mkdir -p $APP_HOME
+WORKDIR $APP_HOME
+
+ADD . $APP_HOME
+
 EXPOSE 4000
-ENV PORT=4000 MIX_ENV=dev
-
-# Cache elixir deps
-ADD mix.exs mix.lock ./
-RUN mix do deps.get, deps.compile
-
-# Migrate DB
-RUN mix ecto.create && mix ecto.migrate
-
-# Same with npm deps
-ADD assets/package.json assets/
-RUN cd assets && \
-    npm install
-
-ADD . .
-
-# Seed the DB
-RUN mix run priv/repo/seeds.exs
-
-# Run frontend build, compile, and digest assets
-RUN cd assets/ && \
-    npm run deploy && \
-    cd - && \
-    mix do compile, phx.digest
-
-USER default
 
 CMD ["mix", "phx.server"]
