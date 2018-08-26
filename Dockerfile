@@ -1,22 +1,33 @@
-FROM elixir:1.6.5
-MAINTAINER Nicolas Bettenburg <nicbet@gmail.com>
+# Dockerfile
+FROM albertc/alpine-elixir-phoenix:latest
 
-RUN mix local.hex --force \
- && mix archive.install --force  https://github.com/phoenixframework/archives/raw/master/phx_new-1.3.3.ez \
- && apt-get update \
- && curl -sL https://deb.nodesource.com/setup_8.x | bash \
- && apt-get install -y apt-utils \
- && apt-get install -y nodejs \
- && apt-get install -y build-essential \
- && apt-get install -y inotify-tools \
- && mix local.rebar --force
+RUN apk update && apk upgrade &&\
+    apk --no-cache add ruby \
+    ruby-dev \
+    ruby-bundler \
+    postgresql-client\
+    python \
+    python-dev \
+    py-pip \
+    build-base \
+    alpine-sdk \
+    libffi-dev \
+  && pip install virtualenv \
+  && rm -rf /var/cache/apk/*
 
-ENV APP_HOME /app
-RUN mkdir -p $APP_HOME
-WORKDIR $APP_HOME
+# Set exposed ports
+EXPOSE 4004
+ENV PORT=4004 MIX_ENV=prod
 
-ADD . $APP_HOME
+ADD . .
 
-EXPOSE 4000
+# Run frontend build, compile, and digest assets
+RUN mix do deps.get, deps.compile && \
+    cd assets/ && \
+    gem install bundler rubygems-bundler sass --no-rdoc --no-ri && \
+    npm install && \
+    npm run build && \
+    cd - && \
+    mix do compile, phx.digest
 
 CMD ["mix", "phx.server"]
