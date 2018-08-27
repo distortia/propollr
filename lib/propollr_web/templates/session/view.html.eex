@@ -16,37 +16,17 @@
         <% end %>
     <% end %>
 </div>
+
 <hr>
 
 <h4>Questions</h4>
 <%= if length(@session.questions) > 0 do %>
-    <%= form_for @conn, question_path(@conn, :answer, session_id: @session.id), [as: :answer_params], fn f -> %>
-        <%= for question <- @session.questions do %>
-            <div class="question">
-                <p><%= question.text %></p>
-                <%= select f, question.text, question.options, prompt: "" %>
-                <%= if is_user(@conn) do %>
-                <%= link "Edit", to: question_path(@conn, :edit, question_id: question.id) %>
-                    <%= link "Delete", to: question_path(@conn, :delete, question_id: question.id, session_id: @session.id), method: :delete, data: [confirm: "Are you sure you want to delete this question??"] %>
-                    <%= link "View", to: question_path(@conn, :view, question_id: question.id) %>
-                <% end %>   
-            </div>
-            <hr>
-        <% end %>
-        <%= submit "Answer" %>
-    <% end %>
+    <div class="questions"></div>
 <% else %>
-<p>No Questions have been added yet.</p>
+    <p>No Questions have been added yet.</p>
+<% end %>
 
-<% end %>
-<%= if is_user(@conn) do %>
-    <h4>Answers</h4>
-    <%= for question <- @session.questions do %>
-        <p><%= question.text %></p>
-        <ul>
-            <%= for {answer, count} <- question.answers do %>
-                <li><%= answer %> - <%= count %></li>
-            <% end %>
-        </ul>
-    <% end %>
-<% end %>
+<h4>Answers</h4>
+<div class="answers"></div>
+
+<script>window.session_id = "<%= Plug.Conn.get_session(@conn, :session_id) %>";</script>

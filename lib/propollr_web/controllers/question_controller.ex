@@ -12,7 +12,9 @@ defmodule PropollrWeb.QuestionController do
   end
 
   def new(conn, %{"session_id" => session_id}) do
-    render(conn, "new.html", session_id: session_id, changeset: Question.changeset(%Question{}, %{}))
+    conn
+    |> put_session(:session_id, session_id)
+    |> render("new.html", session_id: session_id, changeset: Question.changeset(%Question{}, %{}))
   end
 
   def create(conn, %{"question_params" => question_params, "session_id" => session_id}) do
@@ -33,7 +35,10 @@ defmodule PropollrWeb.QuestionController do
     |> Ecto.build_assoc(:questions, %{text: text, options: options, answers: answers})
 
     case Repo.insert(changeset) do
-      {:ok, _question} ->
+      {:ok, question} ->
+        # Broadcast to the channel that theres a new question
+        payload = %{question_id: question.id, text: question.text, options: question.options, answers: question.answers}
+        PropollrWeb.Endpoint.broadcast("session:#{session_id}", "new_question", payload)
         conn
         |> put_flash(:info, "Question Created!")
         |> redirect(to: session_path(conn, :view, session_id: session_id))

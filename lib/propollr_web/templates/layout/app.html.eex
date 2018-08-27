@@ -32,6 +32,7 @@
       </main>
 
     </div> <!-- /container -->
+    <script>window.session_id = "<%= Plug.Conn.get_session(@conn, :session_id) %>";</script>
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
   </body>
 </html>

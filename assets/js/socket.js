@@ -51,12 +51,139 @@ let socket = new Socket("/socket", {params: {token: window.userToken}})
 // Finally, pass the token on connect as below. Or remove it
 // from connect if you don't care about authentication.
 
-socket.connect()
+//           //
+// variables //
+//           //
 
-// Now that you are connected, you can join channels with a topic:
-let channel = socket.channel("session:lobby", {})
+socket.connect()
+let session_id = window.session_id
+let answer_container = document.querySelector('.answers')
+let question_container = document.querySelector('.questions')
+let channel = socket.channel(`session:${session_id}`, {})
+
+//               //
+// Channel Calls //
+//               //
+
 channel.join()
-  .receive("ok", resp => { console.log("Joined successfully", resp) })
+  .receive("ok", resp => { console.log("Joined successfully" , resp) })
   .receive("error", resp => { console.log("Unable to join", resp) })
+
+  channel.on("questions", payload => {
+    let questions = payload.questions
+    create_questions(questions)
+    create_vote_events(questions)
+    create_answers(questions)
+  })
+
+  channel.on("updated_question", question => {
+    update_question(question)
+  })
+
+  channel.on("new_question", question => {
+    console.log("new question recieved", question)
+    new_question(question)
+
+  })
+
+  channel.on("updated_answer", answer => {
+    update_answer(answer)
+  })
+
+//         //
+// Methods //
+//         //
+
+  let create_vote_events = (questions) => {
+    questions.forEach(question => {
+      let parent = document.getElementById(`question_id_${question.id}`)
+      let button =  parent.querySelector('button').addEventListener('click', () => {
+        let options = parent.querySelector('select')
+        if (options.value) {
+          // Add class to disable answering again
+          channel.push("answer", {question_id: question.id, answer: options.value})
+        }
+      })
+    })
+  }
+
+  let new_question = (question) => {
+   question_container.innerHTML =
+    `
+    <div class="question" id="question_id_${question.id}">
+      <p>${question.text}</p>
+      <select>
+        <option></option>
+        ${question.options.map(option =>`<option>${option}</option>`)}
+      </select>
+      <button>Answer</button>
+    </div>
+    ` 
+    + question_container.innerHTML
+  }
+
+  let update_question = (question) => {
+    let old_question = question_container.querySelector(`#question_id_${question.id}`)
+    old_question.innerHTML =
+    `
+    <div class="question" id="question_id_${question.id}">
+      <p>${question.text}</p>
+      <select>
+        <option></option>
+        ${question.options.map(option =>`<option>${option}</option>`)}
+      </select>
+      <button>Answer</button>
+    </div>
+    `
+  }
+
+  let create_questions = (questions) => {
+    questions.forEach(question => {
+      question_container.innerHTML +=
+        `
+        <div class="question" id="question_id_${question.id}">
+          <p>${question.text}</p>
+          <select>
+            <option></option>
+            ${question.options.map(option =>`<option>${option}</option>`)}
+          </select>
+          <button>Answer</button>
+        </div>
+        `
+    });
+  }
+
+  // Can this be refactored with create answers to abstract out the innerHtml setting?
+  let update_answer = (answer) => {
+    let old_answer_set = answer_container.querySelector(`#answer_id_${answer.question_id} ul`)
+    old_answer_set.innerHTML = ''
+    Object.entries(answer.answers).forEach(opt => 
+      old_answer_set.innerHTML += 
+      `<li>Option ${opt[0]}: ${opt[1]} Votes</li>`
+    )
+  }
+
+  let create_answers = (questions) => {
+    questions.forEach(question => {
+      create_answer(question)
+    })
+  }
+  
+  let create_answer = (question) => {
+      answer_container.innerHTML =
+      `
+      <div class="answer" id="answer_id_${question.id}">
+        <p>Question: ${question.text}</p>
+        <ul></ul>
+      </div>
+      `
+      + answer_container.innerHTML
+
+      Object.entries(question.answers).forEach(opt => 
+        document.querySelector(`#answer_id_${question.id} ul`).innerHTML += 
+        `<li>Option ${opt[0]}: ${opt[1]} Votes</li>`
+      )
+
+  }
 
 export default socket
