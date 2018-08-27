@@ -33,24 +33,33 @@ defmodule Propollr.Questions.Question do
     |> Repo.preload(:session)
   end
 
-  def answer(session_id, answer_params) do
-    session = Session.get(session_id)
-    question_list = session.questions
-    Enum.each(answer_params, fn {question_text, answer} ->
-      if answer == "" do
-        #skip it
-      else
-        question =
-          question_list
-          |> Enum.filter(fn question -> question.text == question_text end)
-          |> List.first()
+  def answer(question_id, answer) do
+    question =
+      question_id
+      |> __MODULE__.get()
 
-        question
-        |> Ecto.Changeset.change(%{answers: Map.update(question.answers, answer, 1, &(&1 + 1))})
-        |> Repo.update!()
-      end
-    end)
+    question
+    |> Ecto.Changeset.change(%{answers: Map.update(question.answers, answer, 1, &(&1 + 1))})
+    |> Repo.update()
   end
+  # def answer(session_id, answer_params) do
+  #   session = Session.get(session_id)
+  #   question_list = session.questions
+  #   Enum.each(answer_params, fn {question_text, answer} ->
+  #     if answer == "" do
+  #       #skip it
+  #     else
+  #       question =
+  #         question_list
+  #         |> Enum.filter(fn question -> question.text == question_text end)
+  #         |> List.first()
+
+  #       question
+  #       |> Ecto.Changeset.change(%{answers: Map.update(question.answers, answer, 1, &(&1 + 1))})
+  #       |> Repo.update!()
+  #     end
+  #   end)
+  # end
 
   def update(question_id, question_params) do
     question_id

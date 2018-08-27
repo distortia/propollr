@@ -5,6 +5,7 @@ defmodule PropollrWeb.SessionController do
     def view(conn, %{"session_id" => session_id}) do
       session = Session.get(session_id)
       conn
+      |> put_session(:session_id, session.id)
       |> render("view.html", session: session)
     end
 
@@ -17,6 +18,7 @@ defmodule PropollrWeb.SessionController do
           |> redirect(to: page_path(conn, :index))
         _ ->
           conn
+          |> put_session(:session_id, session.id)
           |> render("view.html", session: session)
       end
     end
@@ -31,6 +33,7 @@ defmodule PropollrWeb.SessionController do
           |> redirect(to: page_path(conn, :index))
         _ ->
           conn
+          |> put_session(:session_id, session.id)
           |> render("view.html", session: session)
       end
     end
