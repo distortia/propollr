@@ -28,10 +28,10 @@
     </div>
     <div class="navbar-menu">
       <div class="navbar-end">
-        <%= link "Home", to: page_path(@conn, :index), class: "navbar-item" %>
-        <%= link "Create Session", to: session_path(@conn, :new), class: "navbar-item" %>
+        <%= link "Home", to: page_path(@conn, :index), class: active_class(@conn, page_path(@conn, :index), "navbar-item") %>
+        <%= link "Create Session", to: session_path(@conn, :new), class: active_class(@conn, session_path(@conn, :new), "navbar-item") %>
         <%= if Plug.Conn.get_session(@conn, :user) do %>
-          <%= link "Dashboard", to: dashboard_path(@conn, :index), class: "navbar-item" %>
+          <%= link "Dashboard", to: dashboard_path(@conn, :index), class: active_class(@conn, dashboard_path(@conn, :index), "navbar-item") %>
         <% end %>
       </div>
     </div>
