@@ -1,32 +1,61 @@
-<div class="session-info">
-    <h2>Title: <%= @session.title %></h2>
-    <h4>Session ID: <%= @session.session_id %></h4>
-    <p>Status: <%= if @session.closed, do: "Closed", else: "Open" %></p>
-    <p>Created at: <%= @session.inserted_at %></p>
-    <p>Share Link: <%= PropollrWeb.Endpoint.url() <> "/session/join/" <> @session.session_id %>
-    <%= if is_user(@conn) do %>
-        <br>
-        <%= link "Create Question", to: question_path(@conn, :new, session_id: @session.id) %>
-        <br>
-        <%= link "Edit Session", to: session_path(@conn, :edit, session_id: @session.id) %>
-        <%= if @session.closed do %>
-            <%= link "Reopen Session", to: session_path(@conn, :reopen, session_id: @session.id) %>
-        <% else %>
-            <%= link "Close Session", to: session_path(@conn, :close, session_id: @session.id) %>
-        <% end %>
+<section class="section">
+    <div class="card session-info">
+        <header class="header">
+            <p class="card-header-title">
+                <%= @session.title %> |  <%= if @session.closed, do: "Closed", else: "Open" %>
+            </p>
+        </header>
+        <div class="card-content">
+            <h4 class="subtitle">Session ID: <%= @session.session_id %></h4>
+            <p>
+                Created at: <%= @session.inserted_at %>
+                <br>
+                Last Updated: <%= @session.updated_at %>
+                <br>
+                Questions: <%= length(@session.questions) %>
+            </p>
+        </div>
+        <footer class="card-footer">
+            <div class="card-footer-item">
+                <%= link "Share Link", to: PropollrWeb.Endpoint.url() <> "/session/join/" <> @session.session_id %>
+            </div>
+            <%= if is_user(@conn) do %>
+                <div class="card-footer-item">
+                    <%= link "Create Question", to: question_path(@conn, :new, session_id: @session.id) %>
+                </div>
+                <div class="card-footer-item">
+                    <%= link "Edit Session", to: session_path(@conn, :edit, session_id: @session.id) %>
+                </div>
+                <div class="card-footer-item">
+                    <%= if @session.closed do %>
+                        <%= link "Reopen Session", to: session_path(@conn, :reopen, session_id: @session.id) %>
+                    <% else %>
+                        <%= link "Close Session", to: session_path(@conn, :close, session_id: @session.id) %>
+                    <% end %>
+                </div>
+            <% end %>
+        </footer>
+    </div>
+</section>
+<section class="section">
+    <h1 class="title">Questions</h1>
+    <%= if length(@session.questions) > 0 do %>
+        <div class="container">
+            <div class="questions columns is-multiline"></div>    
+        </div>
+    <% else %>
+        <div class="notification">
+            No Questions have been added yet! <%= link "Create a Question", to: question_path(@conn, :new) %>
+        </div>
     <% end %>
-</div>
+</section>
 
-<hr>
+<section class="section">
+    <h1 class="title">Answers</h1>
+    <div class="container">
+        <div class="answers columns is-multiline"></div>
+    </div>
+</section>
 
-<h4>Questions</h4>
-<%= if length(@session.questions) > 0 do %>
-    <div class="questions"></div>
-<% else %>
-    <p>No Questions have been added yet.</p>
-<% end %>
-
-<h4>Answers</h4>
-<div class="answers"></div>
 
 <script>window.session_id = "<%= Plug.Conn.get_session(@conn, :session_id) %>";</script>

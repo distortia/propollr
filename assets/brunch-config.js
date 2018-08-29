@@ -20,7 +20,12 @@ exports.config = {
       // }
     },
     stylesheets: {
-      joinTo: "css/app.css"
+      joinTo: {
+        "css/bulma.css": "css/bulma-customize.scss",
+        "css/font-awesome.css": "css/font-awesome.scss",
+        "css/app.css": "css/app.scss"
+      }
+
     },
     templates: {
       joinTo: "js/app.js"
