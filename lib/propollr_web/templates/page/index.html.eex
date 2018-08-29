@@ -1,32 +1,55 @@
-<div class="jumbotron">
-  <h2><%= gettext "Welcome to %{name}!", name: "Phoenix" %></h2>
-  <p class="lead">A productive web framework that<br />does not compromise speed and maintainability.</p>
-</div>
-
-<div class="row marketing">
-  <div class="col-lg-6">
-    <%= link "Create Session", to: session_path(@conn, :new) %>
-    <hr>
-    <h4>Login</h4>
-    <p>
-      Username: nick<br>
-      Password: 123
-    </p>
-    <%= form_for @conn, user_path(@conn, :login), fn f -> %>
-      <label>
-        Username: <%= text_input f, :username %>
-      </label>
-      <label>
-        Password: <%= password_input f, :password %>
-      </label>
-      <%= submit "Login" %>
-    <% end %>
+<section class="hero">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">Welcome to ProPollr</h1>
+      <h2 class="subtitle">A dead simple realtime polling application</h2>
+    </div>
   </div>
+</section>
 
-  <div class="col-lg-6">
-    <%= form_for @conn, session_path(@conn, :join), fn f -> %>
-      <%= text_input f, :session_id %>
-      <%= submit "Join Session" %>
-    <% end %>
+<section class="section">
+  <div class="container">
+    <div class="row">
+      <div class="columns">
+        <div class="column">
+          <h4 class="subtitle">Login</h4>
+          <%= form_for @conn, user_path(@conn, :login), fn f -> %>
+            <div class="field">
+              <label class="label">Username:</label>
+              <div class="control">
+                <%= text_input f, :username, class: "input", placeholder: "nick" %>
+              </div>
+            </div>
+            <div class="field">
+            <label class="label">Password</label>
+              <div class="control">
+                <%= password_input f, :password, class: "input", placeholder: "123" %>
+              </div>
+            </div>
+            <div class="field">
+              <div class="control">
+                <%= submit "Login", class: "button" %>
+              </div>
+            </div>
+          <% end %>        
+        </div>
+        <div class="column">
+          <h4 class="subtitle">Join a Session</h4>
+          <%= form_for @conn, session_path(@conn, :join), fn f -> %>
+            <div class="field">
+              <label class="label">Session ID</label>
+              <div class="control">
+                <%= text_input f, :session_id, class: "input", placeholder: "Session ID" %>
+              </div>
+            </div>
+            <div class="field">
+              <div class="control">
+                <%= submit "Join Session", class: "button" %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
+</section>

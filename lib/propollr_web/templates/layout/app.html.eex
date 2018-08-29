@@ -8,23 +8,36 @@
     <meta name="author" content="">
 
     <title>Hello Propollr!</title>
+    <link rel="stylesheet" href="<%= static_path(@conn, "/css/bulma.css") %>">
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+    <link rel="stylesheet" href="<%= static_path(@conn, "/css/font-awesome.css") %>">
   </head>
 
   <body>
-    <div class="container">
-      <header class="header">
-        <nav role="navigation">
-          <ul class="nav nav-pills pull-right">
-            <li><%= link "Home", to: "/" %></li>
-            <%= if Plug.Conn.get_session(@conn, :user) do %>
-              <li><%= link "Dashboard", to: dashboard_path(@conn, :index) %></li>
-            <% end %>
-          </ul>
-        </nav>
-        <span class="logo"></span>
-      </header>
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <%= link to: page_path(@conn, :index), class: "navbar-item" do %>
+        <i class="fas fa-chevron-right"></i>ProPollr
+      <% end %>
 
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+    <div class="navbar-menu">
+      <div class="navbar-end">
+        <%= link "Home", to: page_path(@conn, :index), class: "navbar-item" %>
+        <%= link "Create Session", to: session_path(@conn, :new), class: "navbar-item" %>
+        <%= if Plug.Conn.get_session(@conn, :user) do %>
+          <%= link "Dashboard", to: dashboard_path(@conn, :index), class: "navbar-item" %>
+        <% end %>
+      </div>
+    </div>
+  </nav>
+  <section class="section">
+    <div class="container">
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
       <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
       <main role="main">
@@ -32,6 +45,7 @@
       </main>
 
     </div> <!-- /container -->
+  </section>
     <script>window.session_id = "<%= Plug.Conn.get_session(@conn, :session_id) %>";</script>
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
   </body>

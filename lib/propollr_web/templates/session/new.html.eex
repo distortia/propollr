@@ -1,9 +1,33 @@
-<h4>Creating a new Session</h4>
-
-<%= form_for @changeset, session_path(@conn, :create), [as: :session_params], fn f -> %>
-
-    <label>
-        Title: <%= text_input f, :title %>
-    </label>
-    <%= submit "Create" %>
-<% end %>
+<section class="section">
+  <div class="container">
+    <h1 class="title">Creating a new Session</h1>
+    <%= form_for @changeset, session_path(@conn, :create), [as: :session_params], fn f -> %>
+      <div class="card">
+        <div class="card-content">
+          <div class="field">
+            <label class="label">Title</label>
+            <div class="control">
+              <%= text_input f, :title, class: "input" %>
+            </div>
+          </div>
+          <div class="columns">
+            <div class="column">
+              <div class="field">
+                <div class="control">
+                  <%= submit "Update", class: "button" %>
+                </div>
+              </div>
+            </div>
+            <div class="column">
+              <div class="field">
+                <div class="control is-pulled-right">
+                  <%= link "Cancel", to: page_path(@conn, :index), class: "button" %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</section>

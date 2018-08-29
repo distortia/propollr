@@ -1,28 +1,77 @@
-<h4>Dashboard</h4>
-
-<h1>Active Sessions</h1>
-<%= for session <- @opened_sessions do %>
-<div class="session open">
-    <h2>Title: <%= session.title %></h2>
-    <h5>ID: <%= session.session_id %></h5>
-    <p>Created: <%= session.inserted_at %></p>
-    <p>Share Link: <%= PropollrWeb.Endpoint.url() <> "/session/join/" <> session.session_id %></p>
-    <%= link "Go to Session", to: session_path(@conn, :view, session_id: session.id) %>
-    <%= link "Close Session", to: session_path(@conn, :close, session_id: session.id) %>
-</div>
-<% end %>
-<hr>
-
-<h1>Closed Sessions</h1>
-<%= if Enum.empty?(@closed_sessions) do %>
-    <p>No Closed Sessions</p>
-<% else %>
-    <%= for session <- @closed_sessions do %>
-        <div class="session closed">
-            <h5>ID: <%= session.session_id %></h5>
-            <p>Created: <%= session.inserted_at %></p>
-            <%= link "Go to Session", to: session_path(@conn, :view, session_id: session.id) %>
-            <%= link "Reopen Session", to: session_path(@conn, :reopen, session_id: session.id) %>
+<section class="hero">
+    <div class="hero-body">
+        <div class="container">
+            <h1 class="title">Dashbard</h1>
+            <h2 class="subtitle">Manage Your Sessions</h2>
         </div>
+    </div>
+</section>
+<section class="section">
+    <h3 class="subtitle">Active Sessions</h3>
+    <%= if Enum.empty?(@opened_sessions) do %>
+        <div class="notification">
+            No Sessions open yet! <%= link "Create a Session", to: session_path(@conn, :new) %>
+        </div>
+    <% else %>
+        <%= for session <- @opened_sessions do %>
+            <div class="card session open">
+                <header class="card-header">
+                    <p class="card-header-title">
+                        <%= session.title %>
+                    </p>
+                </header>
+                <div class="card-content">
+                    <p class="card-content">
+                        Questions: <%= length(session.questions) %>
+                        <br>
+                        Created: <%= session.inserted_at %>
+                        <br>
+                        Last Updated: <%= session.updated_at %>
+                    </p>
+                    <footer class="card-footer">
+                        <p class="card-footer-item">
+                            <%= link "Share Link", to: PropollrWeb.Endpoint.url() <> "/session/join/" <> session.session_id %> 
+                        </p>
+                        <p class="card-footer-item">
+                            <%= link "Go to Session", to: session_path(@conn, :view, session_id: session.id) %>
+                        </p>
+                        <p class="card-footer-item">
+                            <%= link "Close Session", to: session_path(@conn, :close, session_id: session.id) %>
+                        </p>
+                    </footer>
+                </div>
+            </div>
+        <% end %>
     <% end %>
-<% end %>
+</section>
+<section class="section">
+    <h3 class="subtitle">Closed Sessions</h3>
+    <%= if Enum.empty?(@closed_sessions) do %>
+        <div class="notification">
+            No Closed Sessions as of yet.
+        </div>
+    <% else %>
+        <%= for session <- @closed_sessions do %>
+        <div class="card session closed">
+            <header class="card-header">
+                <p class="card-header-title">
+                    <%= session.title %>
+                </p>
+            </header>
+            <div class="card-content">
+                <h5>ID: <%= session.session_id %></h5>
+                <p>Created: <%= session.inserted_at %></p>
+            </div>
+            <footer class="card-footer">
+                <p class="card-footer-item">
+                    <%= link "Go to Session", to: session_path(@conn, :view, session_id: session.id) %>
+                </p>
+                <p class="card-footer-item">
+                    <%= link "Reopen Session", to: session_path(@conn, :reopen, session_id: session.id) %>
+                </p>
+                <p class="card-footer-item"></p>
+            </footer>
+        </div>
+        <% end %>
+    <% end %>
+</section>

@@ -81,9 +81,7 @@ channel.join()
   })
 
   channel.on("new_question", question => {
-    console.log("new question recieved", question)
     new_question(question)
-
   })
 
   channel.on("updated_answer", answer => {
@@ -108,58 +106,60 @@ channel.join()
   }
 
   let new_question = (question) => {
-   question_container.innerHTML =
-    `
-    <div class="question" id="question_id_${question.id}">
-      <p>${question.text}</p>
-      <select>
-        <option></option>
-        ${question.options.map(option =>`<option>${option}</option>`)}
-      </select>
-      <button>Answer</button>
-    </div>
-    ` 
-    + question_container.innerHTML
+   question_container.innerHTML = question_template + question_container.innerHTML   
   }
 
   let update_question = (question) => {
     let old_question = question_container.querySelector(`#question_id_${question.id}`)
-    old_question.innerHTML =
-    `
-    <div class="question" id="question_id_${question.id}">
-      <p>${question.text}</p>
-      <select>
-        <option></option>
-        ${question.options.map(option =>`<option>${option}</option>`)}
-      </select>
-      <button>Answer</button>
-    </div>
-    `
+    old_question.innerHTML = question_template(question)
   }
 
   let create_questions = (questions) => {
     questions.forEach(question => {
-      question_container.innerHTML +=
-        `
-        <div class="question" id="question_id_${question.id}">
-          <p>${question.text}</p>
-          <select>
-            <option></option>
-            ${question.options.map(option =>`<option>${option}</option>`)}
-          </select>
-          <button>Answer</button>
-        </div>
-        `
+      question_container.innerHTML += question_template(question)
     });
   }
 
+  let question_template = (question) => {
+    return `
+      <div class="column is-one-quarter">
+        <div class="card question" id="question_id_${question.id}">
+          <header class="header">
+              <p class="card-header-title">
+                  ${question.text}
+              </p>
+          </header>
+          <div class="card-content">
+            <div class="field">
+              <div class="control">
+                <div class="select is-fullwidth">
+                  <select>
+                    <option></option>
+                    ${question.options.map(option =>`<option>${option}</option>`)}
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="card-footer-item">
+              <div class="field">
+                <div class="control">
+                  <button class="button">Answer</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `
+  }
   // Can this be refactored with create answers to abstract out the innerHtml setting?
   let update_answer = (answer) => {
     let old_answer_set = answer_container.querySelector(`#answer_id_${answer.question_id} ul`)
     old_answer_set.innerHTML = ''
     Object.entries(answer.answers).forEach(opt => 
-      old_answer_set.innerHTML += 
-      `<li>Option ${opt[0]}: ${opt[1]} Votes</li>`
+      old_answer_set.innerHTML += option_template(opt)
     )
   }
 
@@ -170,20 +170,31 @@ channel.join()
   }
   
   let create_answer = (question) => {
-      answer_container.innerHTML =
-      `
-      <div class="answer" id="answer_id_${question.id}">
-        <p>Question: ${question.text}</p>
-        <ul></ul>
-      </div>
-      `
-      + answer_container.innerHTML
+      answer_container.innerHTML = answer_template(question) + answer_container.innerHTML
 
       Object.entries(question.answers).forEach(opt => 
-        document.querySelector(`#answer_id_${question.id} ul`).innerHTML += 
-        `<li>Option ${opt[0]}: ${opt[1]} Votes</li>`
-      )
-
+        document.querySelector(`#answer_id_${question.id} ul`).innerHTML += option_template(opt)
+        )
   }
-
+ let answer_template = (question) => {
+    return `
+      <div class="column is-one-quarter">
+        <div class="card answer" id="answer_id_${question.id}">
+          <header class="header">
+              <p class="card-header-title">
+                  ${question.text}
+              </p>
+          </header>
+          <div class="card-content">
+            <ul></ul>
+          </div>
+        </div>
+      </div>
+    `
+  }
+  let option_template = (opt) => {
+    return `
+      <li>Option ${opt[0]}: ${opt[1]} Votes</li>
+    `
+  }
 export default socket
