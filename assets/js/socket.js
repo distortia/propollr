@@ -88,6 +88,11 @@ channel.join()
     update_answer(answer)
   })
 
+  channel.on("remove_question", question => {
+    remove_question(question)
+    remove_answer(question)
+  })
+
 //         //
 // Methods //
 //         //
@@ -122,7 +127,7 @@ channel.join()
 
   let question_template = (question) => {
     return `
-      <div class="column is-one-quarter">
+      <div class="column is-one-quarter" id="question_column_${question.id}">
         <div class="card question" id="question_id_${question.id}">
           <header class="header">
               <p class="card-header-title">
@@ -154,6 +159,11 @@ channel.join()
       </div>
     `
   }
+
+  let remove_question = (question) => {
+    document.querySelector(`#question_column_${question.id}`).remove()
+
+  }
   // Can this be refactored with create answers to abstract out the innerHtml setting?
   let update_answer = (answer) => {
     let old_answer_set = answer_container.querySelector(`#answer_id_${answer.question_id} ul`)
@@ -178,7 +188,7 @@ channel.join()
   }
  let answer_template = (question) => {
     return `
-      <div class="column is-one-quarter">
+      <div class="column is-one-quarter" id="answer_column_${question.id}">
         <div class="card answer" id="answer_id_${question.id}">
           <header class="header">
               <p class="card-header-title">
@@ -196,5 +206,9 @@ channel.join()
     return `
       <li>Option ${opt[0]}: ${opt[1]} Votes</li>
     `
+  }
+
+  let remove_answer = (question) => {
+    document.querySelector(`answer_column_${question.id}`).remove()
   }
 export default socket
