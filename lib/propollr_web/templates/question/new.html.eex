@@ -18,7 +18,7 @@
         <div class="field">
           <label class="label">Option</label>
           <div class="control">
-            <%= text_input f, :option2, class: "input" %>
+            <%= text_input f, :option1, class: "input" %>
           </div>
         </div>
         <div class="field">

@@ -82,6 +82,8 @@ channel.join()
 
   channel.on("new_question", question => {
     new_question(question)
+    create_vote_event(question)
+    create_answer(question)
   })
 
   channel.on("updated_answer", answer => {
@@ -99,19 +101,23 @@ channel.join()
 
   let create_vote_events = (questions) => {
     questions.forEach(question => {
-      let parent = document.getElementById(`question_id_${question.id}`)
-      let button =  parent.querySelector('button').addEventListener('click', () => {
-        let options = parent.querySelector('select')
-        if (options.value) {
-          // Add class to disable answering again
-          channel.push("answer", {question_id: question.id, answer: options.value})
-        }
-      })
+      create_vote_event(question)
+    })
+  }
+
+  let create_vote_event = (question) => {
+    let parent = document.getElementById(`question_id_${question.id}`)
+    let button =  parent.querySelector('button').addEventListener('click', () => {
+      let options = parent.querySelector('select')
+      if (options.value) {
+        // Add class to disable answering again
+        channel.push("answer", {question_id: question.id, answer: options.value})
+      }
     })
   }
 
   let new_question = (question) => {
-   question_container.innerHTML = question_template + question_container.innerHTML   
+   question_container.innerHTML = question_template(question) + question_container.innerHTML   
   }
 
   let update_question = (question) => {
@@ -162,7 +168,6 @@ channel.join()
 
   let remove_question = (question) => {
     document.querySelector(`#question_column_${question.id}`).remove()
-
   }
   // Can this be refactored with create answers to abstract out the innerHtml setting?
   let update_answer = (answer) => {
@@ -209,6 +214,6 @@ channel.join()
   }
 
   let remove_answer = (question) => {
-    document.querySelector(`answer_column_${question.id}`).remove()
+    document.querySelector(`#answer_column_${question.id}`).remove()
   }
 export default socket
