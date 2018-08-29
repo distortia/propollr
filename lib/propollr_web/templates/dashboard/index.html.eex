@@ -29,8 +29,13 @@
                         Last Updated: <%= session.updated_at %>
                     </p>
                     <footer class="card-footer">
-                        <p class="card-footer-item">
-                            <%= link "Share Link", to: PropollrWeb.Endpoint.url() <> "/session/join/" <> session.session_id %> 
+                        <p class="card-footer-item share-link-container">
+                            <a onclick="copy_share_link('<%= PropollrWeb.Endpoint.url() <> "/session/join/" <> session.session_id %>')">
+                                 <span class="icon">
+                                     <i class="fas fa-copy"></i>
+                                 </span>
+                                 <span id="copy-share-link">Copy Share link</span>
+                            </a>
                         </p>
                         <p class="card-footer-item">
                             <%= link "Go to Session", to: session_path(@conn, :view, session_id: session.id) %>

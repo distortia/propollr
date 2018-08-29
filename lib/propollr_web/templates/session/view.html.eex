@@ -16,9 +16,14 @@
             </p>
         </div>
         <footer class="card-footer">
-            <div class="card-footer-item">
-                <%= link "Share Link", to: PropollrWeb.Endpoint.url() <> "/session/join/" <> @session.session_id %>
-            </div>
+            <p class="card-footer-item share-link-container">
+                <a onclick="copy_share_link('<%= PropollrWeb.Endpoint.url() <> "/session/join/" <> @session.session_id %>')">
+                     <span class="icon">
+                         <i class="fas fa-copy"></i>
+                     </span>
+                     <span id="copy-share-link">Copy Share link</span>
+                </a>
+            </p>
             <%= if is_user(@conn) do %>
                 <div class="card-footer-item">
                     <%= link "Create Question", to: question_path(@conn, :new, session_id: @session.id) %>
