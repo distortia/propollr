@@ -80,11 +80,13 @@ defmodule PropollrWeb.SessionController do
   end
 
   def edit(conn, %{"session_id" => session_id}) do
-    changeset =
+    session = 
       session_id
       |> Session.get()
+    changeset =
+      session
       |> Session.changeset(%{})
-    render(conn, "edit.html", changeset: changeset, session_id: session_id)
+    render(conn, "edit.html", changeset: changeset, session_id: session_id, questions: session.questions)
   end
 
   def update(conn, %{"session_id" => session_id, "session_params" => session_params}) do

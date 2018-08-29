@@ -110,13 +110,14 @@ defmodule PropollrWeb.QuestionController do
   def delete(conn, %{"question_id" => question_id, "session_id" => session_id}) do
     case Question.delete(question_id) do
       {:ok, _} ->
+        PropollrWeb.Endpoint.broadcast("session:#{session_id}", "remove_question", %{id: question_id})
         conn
         |> put_flash(:info, "Question Deleted")
-        |> redirect(to: session_path(conn, :view, session_id: session_id))
+        |> redirect(to: session_path(conn, :edit, session_id: session_id))
       {:error, message} ->
         conn
         |> put_flash(:error, "An Error occurred while trying to delete this question. " <> message)
-        |> redirect(to: session_path(conn, :view, session_id: session_id))
+        |> redirect(to: session_path(conn, :edit, session_id: session_id))
         |> halt()
     end
   end
