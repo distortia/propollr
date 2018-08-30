@@ -129,9 +129,10 @@ defmodule PropollrWeb.SessionController do
   def update(conn, %{"session_id" => session_id, "session_params" => session_params}) do
     case Session.update(session_id, session_params) do
       {:ok, session} ->
+        user = session.user_id |> User.get()
         conn
         |> put_flash(:info, "Session Updated")
-        |> redirect(to: session_path(conn, :view, session_id: session.id))
+        |> redirect(to: session_path(conn, :view, session_id: session.id, user: user))
       {:error, changeset} ->
         conn
         |> put_flash(:error, "Error when updating. Please try again")

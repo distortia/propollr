@@ -11,7 +11,7 @@ let socket = new Socket("/socket", {params: {token: window.userToken}})
 // variables //
 //           //
 
-if (window.location.href.includes("session")) {
+if (window.location.href.includes("/session")) {
   socket.connect()
 }
 let session_id = window.session_id

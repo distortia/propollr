@@ -3,6 +3,7 @@ defmodule PropollrWeb.QuestionController do
   alias Propollr.Questions.Question
   alias Propollr.Repo
   alias Propollr.Sessions.Session
+  alias Propollr.Users.User
 
   def answer(conn, %{"answer_params" => answer_params, "session_id" => session_id}) do
     Question.answer(session_id, answer_params)
@@ -12,9 +13,10 @@ defmodule PropollrWeb.QuestionController do
   end
 
   def new(conn, %{"session_id" => session_id}) do
+    user = (session_id |> Session.get()).user_id |> User.get()
     conn
     |> put_session(:session_id, session_id)
-    |> render("new.html", session_id: session_id, changeset: Question.changeset(%Question{}, %{}))
+    |> render("new.html", session_id: session_id, changeset: Question.changeset(%Question{}, %{}), user: user)
   end
 
   def create(conn, %{"question_params" => question_params, "session_id" => session_id}) do

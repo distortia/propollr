@@ -1,7 +1,7 @@
 <section class="section">
   <div class="container">
     <h1 class="title">Editing Session</h1>
-    <%= form_for @changeset, session_path(@conn, :update, session_id: @session_id), [as: :session_params, method: :put], fn f -> %>
+    <%= form_for @changeset, session_path(@conn, :update, session_id: @session_id), [as: :session_params, method: :put, id: "update-form"], fn f -> %>
       <div class="card">
         <div class="card-content">
           <div class="field">
@@ -10,22 +10,11 @@
               <%= text_input f, :title, class: "input" %>
             </div>
           </div>
-          <div class="columns">
-            <div class="column">
-              <div class="field">
-                <div class="control">
-                  <%= submit "Update", class: "button" %>
-                </div>
-              </div>
-            </div>
-            <div class="column">
-              <div class="field">
-                <div class="control is-pulled-right">
-                  <%= link "Cancel", to: session_path(@conn, :view, session_id: @session_id), class: "button" %>
-                </div>
-              </div>
-            </div>
-          </div>
+          <footer class="card-footer">
+            <a onclick="document.getElementById('update-form').submit()" class="card-footer-item">Update</a>
+
+            <%= link "Back", to: session_path(@conn, :view, session_id: @session_id), class: "card-footer-item" %>
+          </footer>
         </div>
       </div>
     <% end %>
