@@ -11,7 +11,9 @@ let socket = new Socket("/socket", {params: {token: window.userToken}})
 // variables //
 //           //
 
-socket.connect()
+if (window.location.href.includes("session")) {
+  socket.connect()
+}
 let session_id = window.session_id
 let answer_container = document.querySelector('.answers')
 let question_container = document.querySelector('.questions')
@@ -27,18 +29,25 @@ channel.join()
 
   channel.on("questions", payload => {
     let questions = payload.questions
-    create_questions(questions)
-    create_vote_events(questions)
+    // Session Owners should not be able to vote on questions
+    if (!window.user) {
+      create_questions(questions)
+      create_vote_events(questions)
+    }
     create_answers(questions)
   })
 
   channel.on("updated_question", question => {
-    update_question(question)
+    if (!window.user) {
+      update_question(question)
+    }
   })
 
   channel.on("new_question", question => {
-    new_question(question)
-    create_vote_event(question)
+    if (!window.user) {
+      new_question(question)
+      create_vote_event(question)
+    }
     create_answer(question)
   })
 
@@ -63,15 +72,15 @@ channel.join()
 
   let create_vote_event = (question) => {
     let parent = document.getElementById(`question_id_${question.id}`)
-    let button =  parent.querySelector('button')
-    button.addEventListener('click', () => {
-      let options = parent.querySelector('select')
-      if (options.value) {
-        button.disabled = true
-        button.innerText = "Answered"
-        channel.push("answer", {question_id: question.id, answer: options.value})
-      }
-    })
+      let button =  parent.querySelector('button')
+      button.addEventListener('click', () => {
+        let options = parent.querySelector('select')
+        if (options.value) {
+          button.disabled = true
+          button.innerText = "Answered"
+          channel.push("answer", {question_id: question.id, answer: options.value})
+        }
+      })
   }
 
   let new_question = (question) => {
