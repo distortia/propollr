@@ -13,7 +13,7 @@ defmodule PropollrWeb.QuestionController do
   end
 
   def new(conn, %{"session_id" => session_id}) do
-    user = (session_id |> Session.get()).user_id |> User.get()
+    user = (session_id |> Session.get_by()).user_id |> User.get()
     conn
     |> put_session(:session_id, session_id)
     |> render("new.html", session_id: session_id, changeset: Question.changeset(%Question{}, %{}), user: user)
@@ -33,7 +33,7 @@ defmodule PropollrWeb.QuestionController do
 
     changeset =
     session_id
-    |> Session.get()
+    |> Session.get_by()
     |> Ecto.build_assoc(:questions, %{text: text, options: options, answers: answers})
 
     case Repo.insert(changeset) do

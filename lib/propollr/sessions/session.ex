@@ -19,7 +19,11 @@ defmodule Propollr.Sessions.Session do
     session
     |> cast(attrs, [:closed, :session_id, :title])
     |> validate_required([:closed, :session_id, :title])
-    |> put_change(:session_id, randomize_session_id())
+    |> add_session_id()
+  end
+
+  def add_session_id(session) do
+    if session.data.session_id, do: session, else: session |> put_change(:session_id, randomize_session_id())
   end
 
   def create(user, session_params) do
@@ -30,28 +34,11 @@ defmodule Propollr.Sessions.Session do
     |> Repo.insert()
   end
 
-  def soft_session(session_params, random_user_id) do
-    session_id = randomize_session_id()
-    case Repo.get_by(__MODULE__, session_id: session_id) do
-      nil ->
-        %User{random_user_id: random_user_id}
-        |> User.new()
-        |> Ecto.build_assoc(:sessions, %__MODULE__{closed: false, session_id: session_id, title: session_params["title"]})
-        |> Repo.insert!()
-        |> Repo.preload(:user)
-
-        _ -> soft_session(session_params, random_user_id) # Keep trying till we get a unique session_id
-    end
-  end
-
-  def with_questions(session_id) do
-    case Repo.get_by(__MODULE__, session_id: session_id, closed: false) do
-      nil -> {:error, :inavlid_session}
-      session ->
-        session
-        |> Repo.preload(:questions)
-        |> Repo.preload(:user)
-    end
+  def soft_session(session_params, user) do
+    user
+    |> Ecto.build_assoc(:sessions, %__MODULE__{closed: false, session_id: randomize_session_id(), title: session_params["title"]})
+    |> Repo.insert!()
+    |> Repo.preload(:user)
   end
 
   def get(id) do
@@ -80,23 +67,23 @@ defmodule Propollr.Sessions.Session do
     |> Repo.preload(:user)
   end
 
-  def reopen(id) do
+  def reopen(session_id) do
     __MODULE__
-    |> Repo.get(id)
+    |> Repo.get_by(session_id: session_id)
     |> __MODULE__.changeset(%{closed: false})
     |> Repo.update()
   end
 
-  def close(id) do
-    __MODULE__
-    |> Repo.get(id)
+  def close(session_id) do
+    session_id
+    |> __MODULE__.get_by()
     |> __MODULE__.changeset(%{closed: true})
     |> Repo.update()
   end
 
   def update(session_id, session_params) do
     session_id
-    |> __MODULE__.get()
+    |> __MODULE__.get_by()
     |> __MODULE__.changeset(session_params)
     |> Repo.update()
   end

@@ -26,23 +26,23 @@
             </p>
             <%= if is_user(@conn) do %>
                 <div class="card-footer-item">
-                    <%= link "Create Question", to: question_path(@conn, :new, session_id: @session.id) %>
+                    <%= link "Create Question", to: question_path(@conn, :new, session_id: @session.session_id) %>
                 </div>
                 <div class="card-footer-item">
-                    <%= link "Edit Session", to: session_path(@conn, :edit, session_id: @session.id) %>
+                    <%= link "Edit Session", to: session_path(@conn, :edit, session_id: @session.session_id) %>
                 </div>
                 <div class="card-footer-item">
                     <%= if @session.closed do %>
-                        <%= link "Reopen Session", to: session_path(@conn, :reopen, session_id: @session.id) %>
+                        <%= link "Reopen Session", to: session_path(@conn, :reopen, session_id: @session.session_id) %>
                     <% else %>
-                        <%= link "Close Session", to: session_path(@conn, :close, session_id: @session.id) %>
+                        <%= link "Close Session", to: session_path(@conn, :close, session_id: @session.session_id) %>
                     <% end %>
                 </div>
             <% end %>
         </footer>
     </div>
 </section>
-<%= if !@user do %>
+<%= if !Plug.Conn.get_session(@conn, :user_id) do %>
 <section class="section">
     <h1 class="title">Questions</h1>
     <%= if length(@session.questions) > 0 do %>
@@ -63,5 +63,5 @@
     </div>
 </section>
 
-<script>window.user = <%= if Plug.Conn.get_session(@conn, :user), do: true, else: false %></script>
+<script>window.user = <%= if Plug.Conn.get_session(@conn, :user_id), do: true, else: false %></script>
 <script>window.session_id = "<%= Plug.Conn.get_session(@conn, :session_id) %>";</script>

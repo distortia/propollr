@@ -11,7 +11,7 @@ defmodule PropollrWeb.SessionChannel do
   def handle_info({:after_join, session_id}, socket) do
     session =
       session_id
-      |> Session.get()
+      |> Session.get_by()
 
       questions =
       session.questions

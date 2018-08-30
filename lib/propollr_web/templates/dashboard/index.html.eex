@@ -7,48 +7,50 @@
     </div>
 </section>
 <section class="section">
-    <%= link "Create a Session", to: session_path(@conn, :new, user_id: @user.id) %>
-    <h3 class="subtitle">Active Sessions</h3>
-    <%= if Enum.empty?(@opened_sessions) do %>
-        <div class="notification">
-            No Sessions open yet! <%= link "Create a Session", to: session_path(@conn, :new, user_id: @user.id) %>
-        </div>
-    <% else %>
-        <%= for session <- @opened_sessions do %>
-            <div class="card session open">
-                <header class="card-header">
-                    <p class="card-header-title">
-                        <%= session.title %>
-                    </p>
-                </header>
-                <div class="card-content">
-                    <p class="card-content">
-                        Questions: <%= length(session.questions) %>
-                        <br>
-                        Created: <%= session.inserted_at %>
-                        <br>
-                        Last Updated: <%= session.updated_at %>
-                    </p>
-                    <footer class="card-footer">
-                        <p class="card-footer-item share-link-container">
-                            <a onclick="copy_share_link('<%= PropollrWeb.Endpoint.url() <> "/session/join/" <> session.session_id %>')">
-                                 <span class="icon">
-                                     <i class="fas fa-copy"></i>
-                                 </span>
-                                 <span id="copy-share-link">Copy Share link</span>
-                            </a>
-                        </p>
-                        <p class="card-footer-item">
-                            <%= link "Go to Session", to: session_path(@conn, :view, session_id: session.id, user: @user) %>
-                        </p>
-                        <p class="card-footer-item">
-                            <%= link "Close Session", to: session_path(@conn, :close, session_id: session.id) %>
-                        </p>
-                    </footer>
-                </div>
+    <div class="container">
+        <%= link "Create a Session", to: session_path(@conn, :new) %>
+        <h3 class="subtitle">Active Sessions</h3>
+        <%= if Enum.empty?(@opened_sessions) do %>
+            <div class="notification">
+                No Sessions open yet! <%= link "Create a Session", to: session_path(@conn, :new, user_id: @user.id) %>
             </div>
+        <% else %>
+            <%= for session <- @opened_sessions do %>
+                <div class="card session open">
+                    <header class="card-header">
+                        <p class="card-header-title">
+                            <%= session.title %>
+                        </p>
+                    </header>
+                    <div class="card-content">
+                        <p class="card-content">
+                            Questions: <%= length(session.questions) %>
+                            <br>
+                            Created: <%= session.inserted_at %>
+                            <br>
+                            Last Updated: <%= session.updated_at %>
+                        </p>
+                        <footer class="card-footer">
+                            <p class="card-footer-item share-link-container">
+                                <a onclick="copy_share_link('<%= PropollrWeb.Endpoint.url() <> "/session/join/" <> session.session_id %>')">
+                                     <span class="icon">
+                                         <i class="fas fa-copy"></i>
+                                     </span>
+                                     <span id="copy-share-link">Share link</span>
+                                </a>
+                            </p>
+                            <p class="card-footer-item">
+                                <%= link "Go to Session", to: session_path(@conn, :view, session_id: session.session_id) %>
+                            </p>
+                            <p class="card-footer-item">
+                                <%= link "Close Session", to: session_path(@conn, :close, session_id: session.session_id) %>
+                            </p>
+                        </footer>
+                    </div>
+                </div>
+            <% end %>
         <% end %>
-    <% end %>
+    </div>
 </section>
 <section class="section">
     <h3 class="subtitle">Closed Sessions</h3>
@@ -70,10 +72,10 @@
             </div>
             <footer class="card-footer">
                 <p class="card-footer-item">
-                    <%= link "Go to Session", to: session_path(@conn, :view, session_id: session.id) %>
+                    <%= link "Go to Session", to: session_path(@conn, :view, session_id: session.session_id) %>
                 </p>
                 <p class="card-footer-item">
-                    <%= link "Reopen Session", to: session_path(@conn, :reopen, session_id: session.id) %>
+                    <%= link "Reopen Session", to: session_path(@conn, :reopen, session_id: session.session_id) %>
                 </p>
                 <p class="card-footer-item"></p>
             </footer>

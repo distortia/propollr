@@ -31,7 +31,9 @@ defmodule PropollrWeb.Router do
     get "/session/close", SessionController, :close
     get "/session/reopen", SessionController, :reopen
     get "/session/new", SessionController, :new
+    get "/session/new/soft", SessionController, :new_soft
     post "/session/new", SessionController, :create
+    post "/session/new/soft", SessionController, :create_soft
     get "/session/edit", SessionController, :edit
     put "/session/edit", SessionController, :update
 

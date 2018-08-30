@@ -31,4 +31,10 @@ defmodule Propollr.Users.User do
   def get_by_username(username) do
     Repo.get_by(__MODULE__, username: username) |> Repo.preload(:sessions)
   end
+
+  def soft_user(random_user_id) do
+    %__MODULE__{}
+    |> __MODULE__.changeset(%{random_user_id: random_user_id})
+    |> Repo.insert!()
+  end
 end
