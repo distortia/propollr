@@ -107,10 +107,12 @@ channel.join()
 
   let create_vote_event = (question) => {
     let parent = document.getElementById(`question_id_${question.id}`)
-    let button =  parent.querySelector('button').addEventListener('click', () => {
+    let button =  parent.querySelector('button')
+    button.addEventListener('click', () => {
       let options = parent.querySelector('select')
       if (options.value) {
-        // Add class to disable answering again
+        button.disabled = true
+        button.innerText = "Answered"
         channel.push("answer", {question_id: question.id, answer: options.value})
       }
     })
