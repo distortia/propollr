@@ -4,10 +4,10 @@ defmodule PropollrWeb.UserController do
 
   def login(conn, %{"username" => username, "password" => password}) do
     if username == "nick" && password == "123" do
+      user = User.get_by_username(username)
       conn
       |> put_flash(:info, "Successfully Logged In!")
-      |> put_session(:user, User.get_by_username(username))
-      |> redirect(to: dashboard_path(conn, :index))
+      |> redirect(to: dashboard_path(conn, :index, user: user))
     else
       conn
       |> put_flash(:error, "Invalid Username or Password")

@@ -39,7 +39,7 @@
                             </a>
                         </p>
                         <p class="card-footer-item">
-                            <%= link "Go to Session", to: session_path(@conn, :view, session_id: session.id) %>
+                            <%= link "Go to Session", to: session_path(@conn, :view, session_id: session.id, user: @user) %>
                         </p>
                         <p class="card-footer-item">
                             <%= link "Close Session", to: session_path(@conn, :close, session_id: session.id) %>
@@ -81,3 +81,4 @@
         <% end %>
     <% end %>
 </section>
+<script>window.user = <%= if @user, do: true, else: false %></script>

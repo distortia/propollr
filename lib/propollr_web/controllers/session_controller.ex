@@ -3,6 +3,13 @@ defmodule PropollrWeb.SessionController do
   alias Propollr.Sessions.Session
   alias Propollr.Users.User
 
+  def view(conn, %{"session_id" => session_id, "user" => user}) do
+    session = Session.get(session_id)
+    conn
+    |> put_session(:sesison_id, session.id)
+    |> render("view.html", session: session, user: user)
+  end
+
     def view(conn, %{"session_id" => session_id}) do
       session = Session.get(session_id)
       conn
