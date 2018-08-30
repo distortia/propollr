@@ -7,10 +7,11 @@
     </div>
 </section>
 <section class="section">
+    <%= link "Create a Session", to: session_path(@conn, :new, user_id: @user.id) %>
     <h3 class="subtitle">Active Sessions</h3>
     <%= if Enum.empty?(@opened_sessions) do %>
         <div class="notification">
-            No Sessions open yet! <%= link "Create a Session", to: session_path(@conn, :new) %>
+            No Sessions open yet! <%= link "Create a Session", to: session_path(@conn, :new, user_id: @user.id) %>
         </div>
     <% else %>
         <%= for session <- @opened_sessions do %>

@@ -1,6 +1,7 @@
 defmodule PropollrWeb.SessionController do
   use PropollrWeb, :controller
   alias Propollr.Sessions.Session
+  alias Propollr.Users.User
 
     def view(conn, %{"session_id" => session_id}) do
       session = Session.get(session_id)
@@ -66,8 +67,37 @@ defmodule PropollrWeb.SessionController do
     end
   end
 
+  def new(conn, %{"user_id" => user_id}) do
+    user =
+      user_id
+      |> User.get()
+    changeset =
+      user
+      |> Ecto.build_assoc(:sessions, %Session{})
+      |> Session.changeset(%{})
+    render(conn, "new.html", changeset: changeset, user: user)
+  end
+
   def new(conn, _params) do
     render(conn, "new.html", changeset: Session.changeset(%Session{}, %{}))
+  end
+
+  def create(conn, %{"session_params" => session_params, "user_id" => user_id}) do
+    user =
+    user_id
+    |> User.get()
+
+    case Session.create(user, session_params) do
+      {:ok, session} ->
+        conn
+        |> put_flash(:info, "Session Created!")
+        |> redirect(to: session_path(conn, :view, session_id: session.id))
+      {:error, changeset} ->
+        conn
+        |> put_flash(:error, "Error creating session")
+        |> render("new.html", changeset: changeset, user: user)
+        |> halt()  
+    end
   end
 
   def create(conn, %{"session_params" => session_params}) do

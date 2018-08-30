@@ -22,6 +22,14 @@ defmodule Propollr.Sessions.Session do
     |> put_change(:session_id, randomize_session_id())
   end
 
+  def create(user, session_params) do
+    session_id = randomize_session_id()
+    user
+    |> Ecto.build_assoc(:sessions, %{closed: false, session_id: session_id, title: session_params["title"]})
+    |> __MODULE__.changeset(session_params)
+    |> Repo.insert()
+  end
+
   def soft_session(session_params, random_user_id) do
     session_id = randomize_session_id()
     case Repo.get_by(__MODULE__, session_id: session_id) do
@@ -93,7 +101,7 @@ defmodule Propollr.Sessions.Session do
     |> Repo.update()
   end
 
-  defp randomize_session_id() do
+  def randomize_session_id() do
     Ecto.UUID.generate |> binary_part(16,16)
   end
 end
