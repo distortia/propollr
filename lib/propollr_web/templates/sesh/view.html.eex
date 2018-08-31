@@ -16,12 +16,12 @@
       </p>
     </div>
     <footer class="card-footer">
-      <p class="card-footer-item share-link-container">
-        <a onclick="copy_share_link('<%= PropollrWeb.Endpoint.url() <> "/sesh/join/" <> @sesh.sesh_id %>')">
+      <p class="card-footer-item" id="share-link-container-<%= @sesh.sesh_id %>">
+        <a onclick="copy_share_link('<%= PropollrWeb.Endpoint.url() <> "/sesh/join/" %>', '<%= @sesh.sesh_id %>')">
          <span class="icon">
            <i class="fas fa-copy"></i>
          </span>
-         <span id="copy-share-link">Copy Share link</span>
+         <span class="copy-share-link">Share link</span>
        </a>
      </p>
      <%= if user_belongs_to_session?(@conn) do %>
