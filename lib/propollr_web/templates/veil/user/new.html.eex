@@ -1,0 +1,7 @@
+<section class="hero">
+  <h1 class="title">Sign In</h1>
+  <h2 class="subtitle">We only authenticate with your email. No Passwords. More Secure.</h2>
+</section>
+<section class="section">
+  <%= render "form.html", changeset: @changeset, action: user_path(@conn, :create) %>
+</section>

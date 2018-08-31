@@ -11,13 +11,13 @@ let socket = new Socket("/socket", {params: {token: window.userToken}})
 // variables //
 //           //
 
-if (window.location.href.includes("/session")) {
+if (window.location.href.includes("/sesh")) {
   socket.connect()
 }
-let session_id = window.session_id
+let sesh_id = window.sesh_id
 let answer_container = document.querySelector('.answers')
 let question_container = document.querySelector('.questions')
-let channel = socket.channel(`session:${session_id}`, {})
+let channel = socket.channel(`sesh:${sesh_id}`, {})
 
 //               //
 // Channel Calls //
@@ -29,7 +29,7 @@ channel.join()
 
   channel.on("questions", payload => {
     let questions = payload.questions
-    // Session Owners should not be able to vote on questions
+    // Sesh Owners should not be able to vote on questions
     if (!window.user) {
       create_questions(questions)
       create_vote_events(questions)

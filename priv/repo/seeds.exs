@@ -10,19 +10,19 @@
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
 alias Propollr.Repo
-alias Propollr.Users.User
-alias Propollr.Sessions.Session
+alias Propollr.Veil.User
+alias Propollr.Sesshes.Sesh
 alias Propollr.Questions.Question
 import Ecto
 
-user = Repo.insert!(%User{random_user_id: "123", username: "nick", password: "123"})
+user = Repo.insert!(%User{email: "nickstalter@gmail.com", verified: true})
 
-session =
+sesh =
 user
-|> Ecto.build_assoc(:sessions, %{closed: false, session_id: "123", title: "Simple Math"})
+|> Ecto.build_assoc(:seshes, %{closed: false, sesh_id: "123", title: "Simple Math"})
 |> Repo.insert!()
 
-session
+sesh
 |> Ecto.build_assoc(
   :questions,
   %{text: "2 + 2?",

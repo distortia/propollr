@@ -6,7 +6,7 @@
 
     <div class="card">
       <div class="card-content">
-        <%= form_for @changeset, question_path(@conn, :create, session_id: @session_id), [as: :question_params], fn f -> %>
+        <%= form_for @changeset, question_path(@conn, :create, sesh_id: @sesh_id), [as: :question_params], fn f -> %>
         <div class="field">
           <label class="label">
             Question
@@ -50,7 +50,7 @@
         <div class="column">
           <div class="field">
             <div class="control is-pulled-right">
-              <%= link "Cancel", to: session_path(@conn, :view, session_id: @session_id, user: @user), class: "button" %>
+              <%= link "Cancel", to: sesh_path(@conn, :view, sesh_id: @sesh_id, user: @user), class: "button" %>
             </div>
           </div>
         </div>

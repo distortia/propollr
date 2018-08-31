@@ -1,6 +1,0 @@
-<h4>Viewing <%= @question.text %></h4>
-
-<ul>
-<%= for {answer, count} <- @question.answers do %>
-<li><%= answer %> - <%= count %>
-<% end %>

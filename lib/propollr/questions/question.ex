@@ -2,15 +2,14 @@ defmodule Propollr.Questions.Question do
   use Ecto.Schema
   import Ecto.Changeset
   alias Propollr.Repo
-  alias Propollr.Sessions.Session
-  require IEx
+  alias Propollr.Seshes.Sesh
 
   schema "questions" do
     field :answers, :map
     field :options, {:array, :string}
     field :text, :string
 
-    belongs_to :session, Propollr.Sessions.Session
+    belongs_to :sesh, Propollr.Seshes.Sesh
     timestamps()
   end
 
@@ -30,7 +29,7 @@ defmodule Propollr.Questions.Question do
   def get(id) do
     __MODULE__
     |> Repo.get(id)
-    |> Repo.preload(:session)
+    |> Repo.preload(:sesh)
   end
 
   def answer(question_id, answer) do
@@ -42,24 +41,6 @@ defmodule Propollr.Questions.Question do
     |> Ecto.Changeset.change(%{answers: Map.update(question.answers, answer, 1, &(&1 + 1))})
     |> Repo.update()
   end
-  # def answer(session_id, answer_params) do
-  #   session = Session.get(session_id)
-  #   question_list = session.questions
-  #   Enum.each(answer_params, fn {question_text, answer} ->
-  #     if answer == "" do
-  #       #skip it
-  #     else
-  #       question =
-  #         question_list
-  #         |> Enum.filter(fn question -> question.text == question_text end)
-  #         |> List.first()
-
-  #       question
-  #       |> Ecto.Changeset.change(%{answers: Map.update(question.answers, answer, 1, &(&1 + 1))})
-  #       |> Repo.update!()
-  #     end
-  #   end)
-  # end
 
   def update(question_id, question_params) do
     question_id

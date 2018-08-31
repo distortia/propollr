@@ -1,15 +1,13 @@
 defmodule PropollrWeb.DashboardController do
   use PropollrWeb, :controller
-  alias Propollr.Users.User
-  alias Propollr.Sessions.Session
+  alias Propollr.Veil.User
+  alias Propollr.Seshes.Sesh
+
   def index(conn, _params) do
-    user = 
-    conn
-    |> get_session(:user_id)
-    |> User.get()
-    opened_sessions = Session.get_opened(user.id)
-    closed_sessions = Session.get_closed(user.id)
-    conn
-    |> render("index.html", opened_sessions: opened_sessions, closed_sessions: closed_sessions, user: user)
+    user = User.get(conn.assigns.veil_user_id)
+    opened_seshes = Sesh.get_opened(user.id)
+    closed_seshes = Sesh.get_closed(user.id)
+
+    render(conn, "index.html", opened_seshes: opened_seshes, closed_seshes: closed_seshes, user: user)
   end
 end

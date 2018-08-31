@@ -1,0 +1,64 @@
+<section class="section">
+  <div class="card session-info">
+    <header class="header">
+      <p class="card-header-title">
+        <%= @sesh.title %> |  <%= if @sesh.closed, do: "Closed", else: "Open" %>
+      </p>
+    </header>
+    <div class="card-content">
+      <h4 class="subtitle">Sesh ID: <%= @sesh.sesh_id %></h4>
+      <p>
+        Created at: <%= @sesh.inserted_at %>
+        <br>
+        Last Updated: <%= @sesh.updated_at %>
+        <br>
+        Questions: <%= length(@sesh.questions) %>
+      </p>
+    </div>
+    <footer class="card-footer">
+      <p class="card-footer-item share-link-container">
+        <a onclick="copy_share_link('<%= PropollrWeb.Endpoint.url() <> "/sesh/join/" <> @sesh.sesh_id %>')">
+         <span class="icon">
+           <i class="fas fa-copy"></i>
+         </span>
+         <span id="copy-share-link">Copy Share link</span>
+       </a>
+     </p>
+     <%= if user_belongs_to_session?(@conn) do %>
+     <div class="card-footer-item">
+      <%= link "Create Question", to: question_path(@conn, :new, sesh_id: @sesh.sesh_id) %>
+    </div>
+    <div class="card-footer-item">
+      <%= link "Edit Session", to: sesh_path(@conn, :edit, sesh_id: @sesh.sesh_id) %>
+    </div>
+    <div class="card-footer-item">
+      <%= if @sesh.closed do %>
+      <%= link "Reopen Session", to: sesh_path(@conn, :reopen, sesh_id: @sesh.sesh_id) %>
+      <% else %>
+      <%= link "Close Session", to: sesh_path(@conn, :close, sesh_id: @sesh.sesh_id) %>
+      <% end %>
+    </div>
+    <% end %>
+  </footer>
+</div>
+</section>
+
+<%= if !user_belongs_to_session?(@conn) do %>
+<section class="section">
+  <h1 class="title">Questions</h1>
+  <div class="container">
+    <div class="questions columns is-multiline">
+    </div>    
+  </div>
+</section>
+<% end %>
+
+<section class="section">
+  <h1 class="title">Answers</h1>
+  <div class="container">
+    <div class="answers columns is-multiline"></div>
+  </div>
+</section>
+
+<script>window.user = <%= if @conn.assigns[:user], do: true, else: false %></script>
+<script>window.sesh_id = "<%= Plug.Conn.get_session(@conn, :sesh_id) %>";</script>

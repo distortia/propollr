@@ -1,42 +1,42 @@
-defmodule Propollr.Sessions.Session do
+defmodule Propollr.Seshes.Sesh do
   use Ecto.Schema
   alias Propollr.Repo
-  alias Propollr.Users.User
+  alias Propollr.Veil.User
   import Ecto.Changeset
   import Ecto.Query
 
-  schema "sessions" do
+  schema "seshes" do
     field :closed, :boolean, default: false
-    field :session_id, :string
+    field :sesh_id, :string
     field :title, :string
     has_many :questions, Propollr.Questions.Question
-    belongs_to :user, Propollr.Users.User
+    belongs_to :user, Propollr.Veil.User
     timestamps()
   end
 
   @doc false
-  def changeset(session, attrs) do
-    session
-    |> cast(attrs, [:closed, :session_id, :title])
-    |> validate_required([:closed, :session_id, :title])
-    |> add_session_id()
+  def changeset(sesh, attrs) do
+    sesh
+    |> cast(attrs, [:closed, :sesh_id, :title])
+    |> validate_required([:closed, :sesh_id, :title])
+    |> add_sesh_id()
   end
 
-  def add_session_id(session) do
-    if session.data.session_id, do: session, else: session |> put_change(:session_id, randomize_session_id())
+  def add_sesh_id(sesh) do
+    if sesh.data.sesh_id, do: sesh, else: sesh |> put_change(:sesh_id, randomize_sesh_id())
   end
 
-  def create(user, session_params) do
-    session_id = randomize_session_id()
+  def create(user, sesh_params) do
+    sesh_id = randomize_sesh_id()
     user
-    |> Ecto.build_assoc(:sessions, %{closed: false, session_id: session_id, title: session_params["title"]})
-    |> __MODULE__.changeset(session_params)
+    |> Ecto.build_assoc(:seshes, %{closed: false, sesh_id: sesh_id, title: sesh_params["title"]})
+    |> __MODULE__.changeset(sesh_params)
     |> Repo.insert()
   end
 
-  def soft_session(session_params, user) do
+  def soft_sesh(sesh_params, user) do
     user
-    |> Ecto.build_assoc(:sessions, %__MODULE__{closed: false, session_id: randomize_session_id(), title: session_params["title"]})
+    |> Ecto.build_assoc(:seshes, %__MODULE__{closed: false, sesh_id: randomize_sesh_id(), title: sesh_params["title"]})
     |> Repo.insert!()
     |> Repo.preload(:user)
   end
@@ -48,9 +48,9 @@ defmodule Propollr.Sessions.Session do
     |> Repo.preload(:user)
   end
 
-  def get_by(session_id) do
+  def get_by(sesh_id) do
     __MODULE__
-    |> Repo.get_by(session_id: session_id)
+    |> Repo.get_by(sesh_id: sesh_id)
     |> Repo.preload(:questions)
     |> Repo.preload(:user)
   end
@@ -67,28 +67,28 @@ defmodule Propollr.Sessions.Session do
     |> Repo.preload(:user)
   end
 
-  def reopen(session_id) do
+  def reopen(sesh_id) do
     __MODULE__
-    |> Repo.get_by(session_id: session_id)
+    |> Repo.get_by(sesh_id: sesh_id)
     |> __MODULE__.changeset(%{closed: false})
     |> Repo.update()
   end
 
-  def close(session_id) do
-    session_id
+  def close(sesh_id) do
+    sesh_id
     |> __MODULE__.get_by()
     |> __MODULE__.changeset(%{closed: true})
     |> Repo.update()
   end
 
-  def update(session_id, session_params) do
-    session_id
+  def update(sesh_id, sesh_params) do
+    sesh_id
     |> __MODULE__.get_by()
-    |> __MODULE__.changeset(session_params)
+    |> __MODULE__.changeset(sesh_params)
     |> Repo.update()
   end
 
-  def randomize_session_id() do
+  def randomize_sesh_id() do
     Ecto.UUID.generate |> binary_part(16,16)
   end
 end

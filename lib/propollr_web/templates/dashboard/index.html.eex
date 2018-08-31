@@ -8,31 +8,31 @@
 </section>
 <section class="section">
     <div class="container">
-        <%= link "Create a Session", to: session_path(@conn, :new) %>
+        <%= link "Create a Session", to: sesh_path(@conn, :new) %>
         <h3 class="subtitle">Active Sessions</h3>
-        <%= if Enum.empty?(@opened_sessions) do %>
+        <%= if Enum.empty?(@opened_seshes) do %>
             <div class="notification">
-                No Sessions open yet! <%= link "Create a Session", to: session_path(@conn, :new, user_id: @user.id) %>
+                No Sessions open yet! <%= link "Create a Session", to: sesh_path(@conn, :new, user_id: @user.id) %>
             </div>
         <% else %>
-            <%= for session <- @opened_sessions do %>
+            <%= for sesh <- @opened_seshes do %>
                 <div class="card session open">
                     <header class="card-header">
                         <p class="card-header-title">
-                            <%= session.title %>
+                            <%= sesh.title %>
                         </p>
                     </header>
                     <div class="card-content">
                         <p class="card-content">
-                            Questions: <%= length(session.questions) %>
+                            Questions: <%= length(sesh.questions) %>
                             <br>
-                            Created: <%= session.inserted_at %>
+                            Created: <%= sesh.inserted_at %>
                             <br>
-                            Last Updated: <%= session.updated_at %>
+                            Last Updated: <%= sesh.updated_at %>
                         </p>
                         <footer class="card-footer">
                             <p class="card-footer-item share-link-container">
-                                <a onclick="copy_share_link('<%= PropollrWeb.Endpoint.url() <> "/session/join/" <> session.session_id %>')">
+                                <a onclick="copy_share_link('<%= PropollrWeb.Endpoint.url() <> "/sesh/join/" <> sesh.sesh_id %>')">
                                      <span class="icon">
                                          <i class="fas fa-copy"></i>
                                      </span>
@@ -40,10 +40,10 @@
                                 </a>
                             </p>
                             <p class="card-footer-item">
-                                <%= link "Go to Session", to: session_path(@conn, :view, session_id: session.session_id) %>
+                                <%= link "Go to Session", to: sesh_path(@conn, :view, sesh_id: sesh.sesh_id) %>
                             </p>
                             <p class="card-footer-item">
-                                <%= link "Close Session", to: session_path(@conn, :close, session_id: session.session_id) %>
+                                <%= link "Close Session", to: sesh_path(@conn, :close, sesh_id: sesh.sesh_id) %>
                             </p>
                         </footer>
                     </div>
@@ -54,28 +54,28 @@
 </section>
 <section class="section">
     <h3 class="subtitle">Closed Sessions</h3>
-    <%= if Enum.empty?(@closed_sessions) do %>
+    <%= if Enum.empty?(@closed_seshes) do %>
         <div class="notification">
             No Closed Sessions as of yet.
         </div>
     <% else %>
-        <%= for session <- @closed_sessions do %>
+        <%= for sesh <- @closed_seshes do %>
         <div class="card session closed">
             <header class="card-header">
                 <p class="card-header-title">
-                    <%= session.title %>
+                    <%= sesh.title %>
                 </p>
             </header>
             <div class="card-content">
-                <h5>ID: <%= session.session_id %></h5>
-                <p>Created: <%= session.inserted_at %></p>
+                <h5>ID: <%= sesh.sesh_id %></h5>
+                <p>Created: <%= sesh.inserted_at %></p>
             </div>
             <footer class="card-footer">
                 <p class="card-footer-item">
-                    <%= link "Go to Session", to: session_path(@conn, :view, session_id: session.session_id) %>
+                    <%= link "Go to Session", to: sesh_path(@conn, :view, sesh_id: sesh.sesh_id) %>
                 </p>
                 <p class="card-footer-item">
-                    <%= link "Reopen Session", to: session_path(@conn, :reopen, session_id: session.session_id) %>
+                    <%= link "Reopen Session", to: sesh_path(@conn, :reopen, sesh_id: sesh.sesh_id) %>
                 </p>
                 <p class="card-footer-item"></p>
             </footer>

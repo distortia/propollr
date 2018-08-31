@@ -1,1 +1,1 @@
-alias Propollr.{Repo, Questions.Question, Sessions.Session, Users.User}
+alias Propollr.{Repo, Questions.Question, Seshes.Sesh, Veil.User}

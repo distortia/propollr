@@ -1,23 +1,23 @@
-defmodule PropollrWeb.SessionChannel do
+defmodule PropollrWeb.SeshChannel do
   use Phoenix.Channel
   alias Propollr.Questions.Question
-  alias Propollr.Sessions.Session
+  alias Propollr.Seshes.Sesh
 
-  def join("session:" <> session_id, _params, socket) do
-    send(self(), {:after_join, session_id})
+  def join("sesh:" <> sesh_id, _params, socket) do
+    send(self(), {:after_join, sesh_id})
     {:ok, socket}
   end
 
-  def handle_info({:after_join, session_id}, socket) do
-    session =
-      session_id
-      |> Session.get_by()
+  def handle_info({:after_join, sesh_id}, socket) do
+    sesh =
+      sesh_id
+      |> Sesh.get_by()
 
       questions =
-      session.questions
+      sesh.questions
       |> Enum.map(fn q -> %{text: q.text, options: q.options, answers: q.answers, id: q.id} end)
 
-      socket = assign(socket, :session_id, session_id)
+      socket = assign(socket, :sesh_id, sesh_id)
 
       # Send the initial barrage of questions and answers
       push(socket, "questions", %{questions: questions})
@@ -36,7 +36,7 @@ defmodule PropollrWeb.SessionChannel do
   end
 
   def handle_in("question:answer", attrs, socket) do
-    question = Question.answer(attrs.session_id, attrs.session_params)
+    question = Question.answer(attrs.sesh_id, attrs.sesh_params)
     {:reply, {:ok, question}, socket}
   end
 end

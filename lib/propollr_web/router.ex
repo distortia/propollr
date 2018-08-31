@@ -2,53 +2,73 @@ defmodule PropollrWeb.Router do
   use PropollrWeb, :router
 
   pipeline :browser do
-    plug :accepts, ["html"]
-    plug :fetch_session
-    plug :fetch_flash
-    plug :protect_from_forgery
-    plug :put_secure_browser_headers
+    plug(:accepts, ["html"])
+    plug(:fetch_session)
+    plug(:fetch_flash)
+    plug(:protect_from_forgery)
+    plug(:put_secure_browser_headers)
+    plug(PropollrWeb.Plugs.Veil.UserId)
   end
 
   pipeline :api do
-    plug :accepts, ["json"]
+    plug(:accepts, ["json"])
   end
 
   scope "/", PropollrWeb do
-    pipe_through :browser # Use the default browser stack
+    # Use the default browser stack
+    pipe_through(:browser)
 
-    get "/", PageController, :index
-
-    # Dashboard
-    get "/dashboard", DashboardController, :index
-
-    # User
-    post "/login", UserController, :login
+    get("/", PageController, :index)
 
     # Sessions
-    get "/session", SessionController, :view
-    post "/session/join", SessionController, :join
-    get "/session/join/:session_id", SessionController, :join
-    get "/session/close", SessionController, :close
-    get "/session/reopen", SessionController, :reopen
-    get "/session/new", SessionController, :new
-    get "/session/new/soft", SessionController, :new_soft
-    post "/session/new", SessionController, :create
-    post "/session/new/soft", SessionController, :create_soft
-    get "/session/edit", SessionController, :edit
-    put "/session/edit", SessionController, :update
+    get("/sesh", SeshController, :view)
+    post("/sesh/join", SeshController, :join)
+    get("/sesh/join/:sesh_id", SeshController, :join)
+
+    get("/sesh/new", SeshController, :new)
+    get("/sesh/new/soft", SeshController, :new_soft)
+    post("/sesh/new", SeshController, :create)
+    post("/sesh/new/soft", SeshController, :create_soft)
 
     # Questions
-    post "/question", QuestionController, :answer
-    get "/question", QuestionController, :new
-    post "/question/new", QuestionController, :create
-    get "/question/view", QuestionController, :view
-    get "/quesiton/edit", QuestionController, :edit
-    put "/question", QuestionController, :update
-    delete "/question", QuestionController, :delete
+    post("/question", QuestionController, :answer)
   end
 
   # Other scopes may use custom stacks.
   # scope "/api", PropollrWeb do
   #   pipe_through :api
   # end
+
+  # Default Routes for Veil
+  scope "/veil", PropollrWeb.Veil do
+    pipe_through(:browser)
+
+    post("/users", UserController, :create)
+
+    get("/users/new", UserController, :new)
+    get("/sessions/new/:request_id", SessionController, :create)
+    get("/sessions/signout/:session_id", SessionController, :delete)
+  end
+
+  # Add your routes that require authentication in this block.
+  # Alternatively, you can use the default block and authenticate in the controllers.
+  # See the Veil README for more.
+  scope "/", PropollrWeb do
+    pipe_through([:browser, PropollrWeb.Plugs.Veil.Authenticate])
+    # Dashboard
+    get("/dashboard", DashboardController, :index)
+    
+    # Seshes
+    get("/sesh/close", SeshController, :close)
+    get("/sesh/reopen", SeshController, :reopen)
+    get("/sesh/edit", SeshController, :edit)
+    put("/sesh/edit", SeshController, :update)
+
+    # Questions
+    get("/question", QuestionController, :new)
+    post("/question/new", QuestionController, :create)
+    get("/quesiton/edit", QuestionController, :edit)
+    put("/question", QuestionController, :update)
+    delete("/question", QuestionController, :delete)
+  end
 end

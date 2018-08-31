@@ -2,24 +2,25 @@ defmodule PropollrWeb.QuestionController do
   use PropollrWeb, :controller
   alias Propollr.Questions.Question
   alias Propollr.Repo
-  alias Propollr.Sessions.Session
-  alias Propollr.Users.User
+  alias Propollr.Seshes.Sesh
+  alias Propollr.Veil.User
 
-  def answer(conn, %{"answer_params" => answer_params, "session_id" => session_id}) do
-    Question.answer(session_id, answer_params)
+  def answer(conn, %{"answer_params" => answer_params, "sesh_id" => sesh_id}) do
+    Question.answer(sesh_id, answer_params)
     conn
     |> put_flash(:info, "Questions Answered")
-    |> redirect(to: session_path(conn, :view, session_id: session_id))
+    |> redirect(to: sesh_path(conn, :view, sesh_id: sesh_id))
   end
 
-  def new(conn, %{"session_id" => session_id}) do
-    user = (session_id |> Session.get_by()).user_id |> User.get()
+  def new(conn, %{"sesh_id" => sesh_id}) do
+    user = User.get(conn.assigns.veil_user_id)
+
     conn
-    |> put_session(:session_id, session_id)
-    |> render("new.html", session_id: session_id, changeset: Question.changeset(%Question{}, %{}), user: user)
+    |> put_session(:sesh_id, sesh_id)
+    |> render("new.html", sesh_id: sesh_id, changeset: Question.changeset(%Question{}, %{}), user: user)
   end
 
-  def create(conn, %{"question_params" => question_params, "session_id" => session_id}) do
+  def create(conn, %{"question_params" => question_params, "sesh_id" => sesh_id}) do
     text = question_params["text"]
 
     options =
@@ -32,22 +33,22 @@ defmodule PropollrWeb.QuestionController do
       |> Map.new(fn option -> {option, 0} end)
 
     changeset =
-    session_id
-    |> Session.get_by()
+    sesh_id
+    |> Sesh.get_by()
     |> Ecto.build_assoc(:questions, %{text: text, options: options, answers: answers})
 
     case Repo.insert(changeset) do
       {:ok, question} ->
         # Broadcast to the channel that theres a new question
         payload = %{question_id: question.id, text: question.text, options: question.options, answers: question.answers}
-        PropollrWeb.Endpoint.broadcast("session:#{session_id}", "new_question", payload)
+        PropollrWeb.Endpoint.broadcast("sesh:#{sesh_id}", "new_question", payload)
         conn
         |> put_flash(:info, "Question Created!")
-        |> redirect(to: session_path(conn, :view, session_id: session_id))
+        |> redirect(to: sesh_path(conn, :view, sesh_id: sesh_id))
       {:error, changeset} ->
         conn
         |> put_flash(:error, "Something went wrong")
-        |> render("new.html", session_id: session_id, changeset: changeset)
+        |> render("new.html", sesh_id: sesh_id, changeset: changeset)
     end
 
   end
@@ -69,7 +70,7 @@ defmodule PropollrWeb.QuestionController do
       {:ok, question} ->
         conn
         |> put_flash(:info, "Question Updated")
-        |> redirect(to: session_path(conn, :view, session_id: question.session_id))
+        |> redirect(to: sesh_path(conn, :view, sesh_id: question.sesh_id))
       {:error, changeset} ->
         conn
         |> put_flash(:error, "Unable to update question.")
@@ -77,20 +78,20 @@ defmodule PropollrWeb.QuestionController do
     end
   end
 
-  def add_question(conn, %{"session_id" => session_id, "question" => question}) do
+  def add_question(conn, %{"sesh_id" => sesh_id, "question" => question}) do
     question =
     question
     |> format_question_params()
 
-    Session
-    |> Repo.get_by(session_id: session_id)
+    sesh_id
+    |> Sesh.get_by()
     |> Ecto.build_assoc(:questions, question)
     |> Repo.insert()
 
-    session = Session.with_questions(session_id)
+    sesh = Sesh.get_by(sesh_id)
     conn
     |> put_flash(:info, "Question Added!")
-    |> render("new.html", session_id: session_id, questions: session.questions, changeset: Question.changeset(%Question{}, %{}))
+    |> render("new.html", sesh_id: sesh_id, questions: sesh.questions, changeset: Question.changeset(%Question{}, %{}))
   end
 
 
@@ -109,17 +110,17 @@ defmodule PropollrWeb.QuestionController do
     }
   end
 
-  def delete(conn, %{"question_id" => question_id, "session_id" => session_id}) do
+  def delete(conn, %{"question_id" => question_id, "sesh_id" => sesh_id}) do
     case Question.delete(question_id) do
       {:ok, _} ->
-        PropollrWeb.Endpoint.broadcast("session:#{session_id}", "remove_question", %{id: question_id})
+        PropollrWeb.Endpoint.broadcast("sesh:#{sesh_id}", "remove_question", %{id: question_id})
         conn
         |> put_flash(:info, "Question Deleted")
-        |> redirect(to: session_path(conn, :edit, session_id: session_id))
+        |> redirect(to: sesh_path(conn, :edit, sesh_id: sesh_id))
       {:error, message} ->
         conn
         |> put_flash(:error, "An Error occurred while trying to delete this question. " <> message)
-        |> redirect(to: session_path(conn, :edit, session_id: session_id))
+        |> redirect(to: sesh_path(conn, :edit, sesh_id: sesh_id))
         |> halt()
     end
   end

@@ -25,3 +25,25 @@ config :logger, :console,
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"
+
+
+# -- Veil Configuration    Don't remove this line
+config :veil,
+  site_name: "ProPollr.com",
+  email_from_name: "The ProPollr Team",
+  email_from_address: "us@propollr.com",
+  sign_in_link_expiry: 3_600,
+  session_expiry: 86_400 * 30,
+  refresh_expiry_interval: 86_400
+
+config :veil,Veil.Scheduler,
+  jobs: [
+    # Runs every midnight to delete all expired requests and sessions
+    {"@daily", {Propollr.Veil.Clean, :expired, []}}
+  ]
+
+config :veil, PropollrWeb.Veil.Mailer,
+  adapter: Swoosh.Adapters.Sendgrid,
+  api_key: "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"
+
+# -- End Veil Configuration

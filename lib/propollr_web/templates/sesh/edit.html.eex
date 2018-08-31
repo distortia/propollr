@@ -1,7 +1,7 @@
 <section class="section">
   <div class="container">
     <h1 class="title">Editing Session</h1>
-    <%= form_for @changeset, session_path(@conn, :update, session_id: @session_id), [as: :session_params, method: :put, id: "update-form"], fn f -> %>
+    <%= form_for @changeset, sesh_path(@conn, :update, sesh_id: @sesh_id), [as: :sesh_params, method: :put, id: "update-form"], fn f -> %>
       <div class="card">
         <div class="card-content">
           <div class="field">
@@ -13,7 +13,7 @@
           <footer class="card-footer">
             <a onclick="document.getElementById('update-form').submit()" class="card-footer-item">Update</a>
 
-            <%= link "Back", to: session_path(@conn, :view, session_id: @session_id), class: "card-footer-item" %>
+            <%= link "Back", to: sesh_path(@conn, :view, sesh_id: @sesh_id), class: "card-footer-item" %>
           </footer>
         </div>
       </div>
@@ -56,7 +56,7 @@
               <div class="card-footer-item">
                 <div class="field">
                   <div class="control">
-                      <%= link to: question_path(@conn, :delete, session_id: @session_id, question_id: question.id), class: "button is-danger", method: :delete, data: [confirm: "Are you sure you want to delete this question?"] do %>
+                      <%= link to: question_path(@conn, :delete, sesh_id: @sesh_id, question_id: question.id), class: "button is-danger", method: :delete, data: [confirm: "Are you sure you want to delete this question?"] do %>
                       Delete
                     <% end %>
                   </div>

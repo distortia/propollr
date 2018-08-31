@@ -12,34 +12,28 @@
     <div class="row">
       <div class="columns">
         <div class="column">
-          <h4 class="subtitle">Login</h4>
-          <%= form_for @conn, user_path(@conn, :login), fn f -> %>
+          <h4 class="subtitle">Login or Signup!</h4>
+          <%= form_for @conn, user_path(@conn, :create), [as: :user], fn f -> %>
             <div class="field">
-              <label class="label">Username:</label>
+              <label class="label">Email:</label>
               <div class="control">
-                <%= text_input f, :username, class: "input", placeholder: "nick" %>
-              </div>
-            </div>
-            <div class="field">
-            <label class="label">Password</label>
-              <div class="control">
-                <%= password_input f, :password, class: "input", placeholder: "123" %>
+                <%= text_input f, :email, class: "input", placeholder: "us@propollr.com" %>
               </div>
             </div>
             <div class="field">
               <div class="control">
-                <%= submit "Login", class: "button is-fullwidth" %>
+                <%= submit "Go!", class: "button is-fullwidth" %>
               </div>
             </div>
           <% end %>        
         </div>
         <div class="column">
           <h4 class="subtitle">Join a Session</h4>
-          <%= form_for @conn, session_path(@conn, :join), fn f -> %>
+          <%= form_for @conn, sesh_path(@conn, :join), fn f -> %>
             <div class="field">
               <label class="label">Session ID</label>
               <div class="control">
-                <%= text_input f, :session_id, class: "input", placeholder: "Session ID" %>
+                <%= text_input f, :sesh_id, class: "input", placeholder: "Session ID" %>
               </div>
             </div>
             <div class="field">

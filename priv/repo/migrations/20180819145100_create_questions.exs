@@ -2,18 +2,42 @@ defmodule Propollr.Repo.Migrations.CreateQuestions do
   use Ecto.Migration
 
   def change do
-    create table(:users) do
-      add :random_user_id, :string
-      add :username, :string
-      add :password, :string
+    create table(:veil_users) do
+      add(:email, :string)
+      add(:verified, :boolean, default: false)
 
       timestamps()
     end
-    create table(:sessions) do
+
+    create(unique_index(:veil_users, [:email]))
+
+    create table(:veil_requests) do
+      add(:user_id, references(:veil_users, on_delete: :delete_all))
+      add(:unique_id, :string)
+      add(:phoenix_token, :string)
+      add(:ip_address, :string)
+
+      timestamps()
+    end
+
+    create(index(:veil_requests, [:unique_id]))
+
+    create table(:veil_sessions) do
+      add(:user_id, references(:veil_users, on_delete: :delete_all))
+      add(:unique_id, :string)
+      add(:phoenix_token, :string)
+      add(:ip_address, :string)
+
+      timestamps()
+    end
+
+    create(index(:veil_sessions, [:unique_id]))
+
+    create table(:seshes) do
       add :closed, :boolean, default: false, null: false
-      add :session_id, :string
+      add :sesh_id, :string
       add :title, :string
-      add :user_id, references(:users, on_delete: :nothing)
+      add :user_id, references(:veil_users, on_delete: :delete_all)
 
       timestamps()
     end
@@ -22,12 +46,13 @@ defmodule Propollr.Repo.Migrations.CreateQuestions do
       add :text, :string
       add :answers, :map
       add :options, {:array, :string}
-      add :session_id, references(:sessions, on_delete: :nothing)
+      add :sesh_id, references(:seshes, on_delete: :delete_all)
 
       timestamps()
     end
 
-    create index(:sessions, [:user_id])
-    create index(:questions, [:session_id])
+    create index(:seshes, [:user_id])
+    create index(:questions, [:sesh_id])
   end
+
 end

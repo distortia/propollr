@@ -3,7 +3,7 @@ defmodule PropollrWeb.UserSocket do
 
   ## Channels
   # channel "room:*", PropollrWeb.RoomChannel
-  channel "session:*", PropollrWeb.SessionChannel
+  channel "sesh:*", PropollrWeb.SeshChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket
