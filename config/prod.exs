@@ -29,13 +29,12 @@ config :logger, level: :info
     config :propollr, PropollrWeb.Endpoint,
       url: [host: "propollr.com", port: 443],
       https: [:inet6,
-              http: [port: 80],
               port: 443,
               keyfile: keyfile: "/etc/letsencrypt/live/propollr.com/privkey.pem",
               cacertfile: "/etc/letsencrypt/live/propollr.com/chain.pem",
               certfile: "/etc/letsencrypt/live/propollr.com/cert.pem"]
 
-              config :isafe, Isafe.Web.Endpoint,
+              config :propollr, PropollrWeb.Endpoint,
 #
 # Where those two env variables return an absolute path to
 # the key and cert in disk or a relative path inside priv,
