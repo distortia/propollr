@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Hello Propollr!</title>
+    <title>Propollr - A dead simple realtime polling application</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/bulma.css") %>">
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/font-awesome.css") %>">
