@@ -61,4 +61,7 @@ config :logger, level: :info
 
 # Finally import the config/prod.secret.exs
 # which should be versioned separately.
+
+config :propollr, PropollrWeb.Endpoint,
+check_origin: ["propollr.com"]
 import_config "prod.secret.exs"
