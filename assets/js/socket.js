@@ -11,7 +11,7 @@ let socket = new Socket("/socket", {params: {token: window.userToken}})
 // variables //
 //           //
 
-if (window.location.href.includes("/sesh")) {
+if (window.location.pathname == "/sesh" || window.location.pathname.includes('/sesh/join')) {
   socket.connect()
 }
 let sesh_id = window.sesh_id
