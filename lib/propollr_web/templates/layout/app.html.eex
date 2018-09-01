@@ -17,7 +17,7 @@
     <nav class="navbar is-primary is-bold is-fixed-top" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
         <%= link to: page_path(@conn, :index), class: "navbar-item" do %>
-          <i class="fas fa-chevron-right"></i>ProPollr
+          <img src="<%= static_path(@conn, "/images/propollr.png") %>" alt="" width="112" height="28">
         <% end %>
 
         <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
