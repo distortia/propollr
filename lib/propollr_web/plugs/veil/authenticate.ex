@@ -11,9 +11,7 @@ defmodule PropollrWeb.Plugs.Veil.Authenticate do
     unless is_nil(conn.assigns[:veil_user_id]) do
       conn
     else
-      
       Phoenix.Controller.redirect(conn, to: PropollrWeb.Router.Helpers.user_path(conn, :new))
-      
     end
   end
 end

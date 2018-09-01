@@ -7,6 +7,7 @@ defmodule PropollrWeb.SeshView do
     case conn.assigns[:user] do
       nil ->
         false
+
       user ->
         Enum.any?(user.seshes, fn sesh ->
           sesh.sesh_id == conn.query_params["sesh_id"]

@@ -11,7 +11,7 @@ defmodule Propollr.Application do
       # Start the Ecto repository
       supervisor(Propollr.Repo, []),
       # Start the endpoint when the application starts
-      supervisor(PropollrWeb.Endpoint, []),
+      supervisor(PropollrWeb.Endpoint, [])
       # Start your own worker by calling: Propollr.Worker.start_link(arg1, arg2, arg3)
       # worker(Propollr.Worker, [arg1, arg2, arg3]),
     ]

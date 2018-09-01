@@ -14,11 +14,10 @@ defmodule PropollrWeb.Veil.SessionController do
          {:ok, session} <- Veil.create_session(conn, user_id) do
       Task.start(fn -> Veil.verify_user(user_id) end)
       Task.start(fn -> Veil.delete(request) end)
-      
+
       conn
-      |> put_resp_cookie("session_unique_id", session.unique_id, max_age: 60*60*24*365)
+      |> put_resp_cookie("session_unique_id", session.unique_id, max_age: 60 * 60 * 24 * 365)
       |> redirect(to: dashboard_path(conn, :index))
-      
     else
       error ->
         error
@@ -30,11 +29,9 @@ defmodule PropollrWeb.Veil.SessionController do
   """
   def delete(conn, %{"session_id" => session_unique_id}) do
     with {:ok, _session} <- Veil.delete_session(session_unique_id) do
-      
       conn
-      |> delete_resp_cookie("session_unique_id", max_age: 60*60*24*365)
+      |> delete_resp_cookie("session_unique_id", max_age: 60 * 60 * 24 * 365)
       |> redirect(to: user_path(conn, :new))
-      
     else
       error ->
         error

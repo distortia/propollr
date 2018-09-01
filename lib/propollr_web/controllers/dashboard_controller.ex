@@ -8,6 +8,12 @@ defmodule PropollrWeb.DashboardController do
     opened_seshes = Sesh.get_opened(user.id)
     closed_seshes = Sesh.get_closed(user.id)
 
-    render(conn, "index.html", opened_seshes: opened_seshes, closed_seshes: closed_seshes, user: user)
+    render(
+      conn,
+      "index.html",
+      opened_seshes: opened_seshes,
+      closed_seshes: closed_seshes,
+      user: user
+    )
   end
 end

@@ -1,33 +1,17 @@
-<section class="section">
-  <div class="container">
-    <h1 class="title">Creating a new Session</h1>
-      <%= form_for @changeset, sesh_path(@conn, :create), [as: :sesh_params], fn f -> %>
-      <div class="card">
-        <div class="card-content">
-          <div class="field">
-            <label class="label">Title</label>
-            <div class="control">
-              <%= text_input f, :title, class: "input" %>
-            </div>
-          </div>
-          <div class="columns">
-            <div class="column">
-              <div class="field">
-                <div class="control">
-                  <%= submit "Add", class: "button" %>
-                </div>
-              </div>
-            </div>
-            <div class="column">
-              <div class="field">
-                <div class="control is-pulled-right">
-                  <%= link "Cancel", to: dashboard_path(@conn, :index), class: "button" %>
-                </div>
-              </div>
-            </div>
-          </div>
+<h1 class="title">Creating a new Session</h1>
+  <%= form_for @changeset, sesh_path(@conn, :create), [as: :sesh_params, id: "new-session-form"], fn f -> %>
+  <div class="card">
+    <div class="card-content">
+      <div class="field">
+        <label class="label">Title</label>
+        <div class="control">
+          <%= text_input f, :title, class: "input" %>
         </div>
       </div>
-    <% end %>
+    </div>
+    <div class="card-footer">
+      <a onclick="document.getElementById('new-session-form').submit()" class="card-footer-item">Add</a>
+      <%= link "Cancel", to: dashboard_path(@conn, :index), class: "card-footer-item" %>
+    </div>
   </div>
-</section>
+<% end %>

@@ -13,8 +13,8 @@ defmodule Propollr.Veil.User do
 
     has_many(:requests, Request)
     has_many(:sessions, Session)
-    has_many :seshes, Propollr.Seshes.Sesh
-    
+    has_many(:seshes, Propollr.Seshes.Sesh)
+
     timestamps()
   end
 

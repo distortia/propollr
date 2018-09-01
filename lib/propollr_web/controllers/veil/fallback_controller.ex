@@ -10,15 +10,13 @@ defmodule PropollrWeb.Veil.FallbackController do
 
   def call(conn, {:error, {:closed, ""}}) do
     Logger.error(fn -> "[Veil] Invalid Swoosh api key, update your config.exs" end)
-    
+
     render(conn, PropollrWeb.Veil.UserView, "new.html", changeset: User.changeset(%User{}))
-    
   end
 
   def call(conn, {:error, :no_permission}) do
     Logger.error(fn -> "[Veil] Invalid Request or Session" end)
-    
+
     render(conn, PropollrWeb.Veil.UserView, "new.html", changeset: User.changeset(%User{}))
-    
   end
 end

@@ -59,9 +59,9 @@ defmodule Propollr.Veil do
 
   defp new_session_url(conn, unique_id) do
     cur_uri = Phoenix.Controller.endpoint_module(conn).struct_url()
-    
+
     cur_path = PropollrWeb.Router.Helpers.session_path(conn, :create, unique_id)
-    
+
     PropollrWeb.Router.Helpers.url(cur_uri) <> cur_path
   end
 

@@ -5,11 +5,11 @@ defmodule Propollr.Questions.Question do
   alias Propollr.Seshes.Sesh
 
   schema "questions" do
-    field :answers, :map
-    field :options, {:array, :string}
-    field :text, :string
+    field(:answers, :map)
+    field(:options, {:array, :string})
+    field(:text, :string)
 
-    belongs_to :sesh, Propollr.Seshes.Sesh
+    belongs_to(:sesh, Propollr.Seshes.Sesh)
     timestamps()
   end
 

@@ -57,7 +57,7 @@ defmodule PropollrWeb.Router do
     pipe_through([:browser, PropollrWeb.Plugs.Veil.Authenticate])
     # Dashboard
     get("/dashboard", DashboardController, :index)
-    
+
     # Seshes
     get("/sesh/close", SeshController, :close)
     get("/sesh/reopen", SeshController, :reopen)

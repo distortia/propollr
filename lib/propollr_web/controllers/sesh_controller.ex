@@ -14,11 +14,13 @@ defmodule PropollrWeb.SeshController do
 
   def join(conn, %{"sesh_id" => sesh_id}) do
     sesh = Sesh.get_by(sesh_id)
+
     case sesh do
       nil ->
         conn
         |> put_flash(:error, "No session with the ID " <> sesh_id <> " exists or is open.")
         |> redirect(to: page_path(conn, :index))
+
       _ ->
         conn
         |> put_session(:sesh_id, sesh.sesh_id)
@@ -29,11 +31,13 @@ defmodule PropollrWeb.SeshController do
   def join(conn, params) do
     sesh_id = params["sesh_id"]
     sesh = Sesh.get_by(sesh_id)
+
     case sesh do
       nil ->
         conn
         |> put_flash(:error, "No Sesh with the ID " <> sesh_id <> " exists or is open.")
         |> redirect(to: page_path(conn, :index))
+
       _ ->
         conn
         |> put_session(:sesh_id, sesh.sesh_id)
@@ -47,6 +51,7 @@ defmodule PropollrWeb.SeshController do
         conn
         |> put_flash(:info, "Sesh Closed")
         |> redirect(to: sesh_path(conn, :view, sesh_id: sesh_id))
+
       {:error, message} ->
         conn
         |> put_flash(:error, "Sesh unable to close - " <> message)
@@ -61,6 +66,7 @@ defmodule PropollrWeb.SeshController do
         conn
         |> put_flash(:info, "Sesh Reopened")
         |> redirect(to: sesh_path(conn, :view, sesh_id: sesh_id))
+
       {:error, message} ->
         conn
         |> put_flash(:error, "Sesh unable to reopen - " <> message)
@@ -92,21 +98,24 @@ defmodule PropollrWeb.SeshController do
         conn
         |> put_flash(:info, "Sesh Created!")
         |> redirect(to: sesh_path(conn, :view, sesh_id: sesh.sesh_id))
+
       {:error, changeset} ->
         conn
         |> put_flash(:error, "Error creating session")
         |> render("new.html", changeset: changeset)
-        |> halt()  
+        |> halt()
     end
   end
 
   def edit(conn, %{"sesh_id" => sesh_id}) do
-    sesh = 
+    sesh =
       sesh_id
       |> Sesh.get_by()
+
     changeset =
       sesh
       |> Sesh.changeset(%{})
+
     render(conn, "edit.html", changeset: changeset, sesh_id: sesh_id, questions: sesh.questions)
   end
 
@@ -114,9 +123,11 @@ defmodule PropollrWeb.SeshController do
     case Sesh.update(sesh_id, sesh_params) do
       {:ok, sesh} ->
         user = sesh.user_id |> User.get()
+
         conn
         |> put_flash(:info, "Sesh Updated")
         |> redirect(to: sesh_path(conn, :view, sesh_id: sesh_id, user: user))
+
       {:error, changeset} ->
         conn
         |> put_flash(:error, "Error when updating. Please try again")

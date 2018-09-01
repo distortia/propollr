@@ -6,11 +6,11 @@ defmodule Propollr.Seshes.Sesh do
   import Ecto.Query
 
   schema "seshes" do
-    field :closed, :boolean, default: false
-    field :sesh_id, :string
-    field :title, :string
-    has_many :questions, Propollr.Questions.Question
-    belongs_to :user, Propollr.Veil.User
+    field(:closed, :boolean, default: false)
+    field(:sesh_id, :string)
+    field(:title, :string)
+    has_many(:questions, Propollr.Questions.Question)
+    belongs_to(:user, Propollr.Veil.User)
     timestamps()
   end
 
@@ -28,6 +28,7 @@ defmodule Propollr.Seshes.Sesh do
 
   def create(user, sesh_params) do
     sesh_id = randomize_sesh_id()
+
     user
     |> Ecto.build_assoc(:seshes, %{closed: false, sesh_id: sesh_id, title: sesh_params["title"]})
     |> __MODULE__.changeset(sesh_params)
@@ -36,7 +37,11 @@ defmodule Propollr.Seshes.Sesh do
 
   def soft_sesh(sesh_params, user) do
     user
-    |> Ecto.build_assoc(:seshes, %__MODULE__{closed: false, sesh_id: randomize_sesh_id(), title: sesh_params["title"]})
+    |> Ecto.build_assoc(:seshes, %__MODULE__{
+      closed: false,
+      sesh_id: randomize_sesh_id(),
+      title: sesh_params["title"]
+    })
     |> Repo.insert!()
     |> Repo.preload(:user)
   end
@@ -56,13 +61,13 @@ defmodule Propollr.Seshes.Sesh do
   end
 
   def get_opened(user_id) do
-    Repo.all(from s in __MODULE__, where: s.closed == ^false and s.user_id == ^user_id)
+    Repo.all(from(s in __MODULE__, where: s.closed == ^false and s.user_id == ^user_id))
     |> Repo.preload(:questions)
     |> Repo.preload(:user)
   end
 
   def get_closed(user_id) do
-    Repo.all(from s in __MODULE__, where: s.closed == ^true and s.user_id == ^user_id)
+    Repo.all(from(s in __MODULE__, where: s.closed == ^true and s.user_id == ^user_id))
     |> Repo.preload(:questions)
     |> Repo.preload(:user)
   end
@@ -89,6 +94,6 @@ defmodule Propollr.Seshes.Sesh do
   end
 
   def randomize_sesh_id() do
-    Ecto.UUID.generate |> binary_part(16,16)
+    Ecto.UUID.generate() |> binary_part(16, 16)
   end
 end

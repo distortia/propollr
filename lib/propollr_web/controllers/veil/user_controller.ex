@@ -5,7 +5,6 @@ defmodule PropollrWeb.Veil.UserController do
 
   action_fallback(PropollrWeb.Veil.FallbackController)
 
-  
   plug(:scrub_params, "user" when action in [:create])
 
   @doc """
@@ -14,15 +13,13 @@ defmodule PropollrWeb.Veil.UserController do
   def new(conn, _params) do
     render(conn, "new.html", changeset: User.changeset(%User{}))
   end
-  
 
   @doc """
   If needed, creates a new user, otherwise finds the existing one.
   Creates a new request and emails the unique id to the user.
   """
-  
+
   def create(conn, %{"user" => %{"email" => email}}) when not is_nil(email) do
-  
     if user = Veil.get_user_by_email(email) do
       sign_and_email(conn, user)
     else
@@ -38,9 +35,7 @@ defmodule PropollrWeb.Veil.UserController do
   defp sign_and_email(conn, %User{} = user) do
     with {:ok, request} <- Veil.create_request(conn, user),
          {:ok, email} <- Veil.send_login_email(conn, user, request) do
-      
-        render(conn, "show.html", user: user, email: email)
-      
+      render(conn, "show.html", user: user, email: email)
     else
       error ->
         error

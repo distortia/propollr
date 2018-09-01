@@ -6,16 +6,14 @@
 use Mix.Config
 
 # General application configuration
-config :propollr,
-  ecto_repos: [Propollr.Repo]
+config :propollr, ecto_repos: [Propollr.Repo]
 
 # Configures the endpoint
 config :propollr, PropollrWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "WbvZY8zmWYKRWuKNkwbB1a6P659H0K0/rAdyhazDrQBpcvh/dIjgHtVzIh9PtmtA",
   render_errors: [view: PropollrWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: Propollr.PubSub,
-           adapter: Phoenix.PubSub.PG2]
+  pubsub: [name: Propollr.PubSub, adapter: Phoenix.PubSub.PG2]
 
 # Configures Elixir's Logger
 config :logger, :console,
@@ -24,8 +22,7 @@ config :logger, :console,
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
-import_config "#{Mix.env}.exs"
-
+import_config "#{Mix.env()}.exs"
 
 # -- Veil Configuration    Don't remove this line
 config :veil,
@@ -36,7 +33,7 @@ config :veil,
   session_expiry: 86_400 * 30,
   refresh_expiry_interval: 86_400
 
-config :veil,Veil.Scheduler,
+config :veil, Veil.Scheduler,
   jobs: [
     # Runs every midnight to delete all expired requests and sessions
     {"@daily", {Propollr.Veil.Clean, :expired, []}}

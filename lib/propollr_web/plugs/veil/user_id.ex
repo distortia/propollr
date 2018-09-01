@@ -9,11 +9,9 @@ defmodule PropollrWeb.Plugs.Veil.UserId do
 
   def init(default), do: default
 
-  
   def call(conn, _opts) do
     with session_unique_id <- conn.cookies["session_unique_id"],
          {:ok, session} <- Veil.get_session(session_unique_id),
-  
          {:ok, user_id} <- Veil.verify(conn, session),
          true <- Kernel.==(user_id, session.user_id) do
       Task.start(fn -> Veil.extend_session(conn, session) end)
@@ -26,6 +24,4 @@ defmodule PropollrWeb.Plugs.Veil.UserId do
         conn
     end
   end
-
-  
 end

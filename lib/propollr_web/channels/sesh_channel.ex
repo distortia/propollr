@@ -13,15 +13,15 @@ defmodule PropollrWeb.SeshChannel do
       sesh_id
       |> Sesh.get_by()
 
-      questions =
+    questions =
       sesh.questions
       |> Enum.map(fn q -> %{text: q.text, options: q.options, answers: q.answers, id: q.id} end)
 
-      socket = assign(socket, :sesh_id, sesh_id)
+    socket = assign(socket, :sesh_id, sesh_id)
 
-      # Send the initial barrage of questions and answers
-      push(socket, "questions", %{questions: questions})
-      {:noreply, socket}
+    # Send the initial barrage of questions and answers
+    push(socket, "questions", %{questions: questions})
+    {:noreply, socket}
   end
 
   def handle_in("answer", %{"question_id" => question_id, "answer" => answer}, socket) do
@@ -30,6 +30,7 @@ defmodule PropollrWeb.SeshChannel do
         payload = %{question: question.text, question_id: question.id, answers: question.answers}
         broadcast(socket, "updated_answer", payload)
         {:noreply, socket}
+
       {:error, changeset} ->
         {:reply, {:error, changeset}}
     end
