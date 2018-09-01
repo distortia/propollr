@@ -11,8 +11,8 @@ defmodule PropollrWeb.Endpoint do
     Plug.Static,
     at: "/",
     from: :propollr,
-    gzip: false,
-    only: ~w(css images js favicon.ico robots.txt webfonts)
+    gzip: true,
+    only: ~w(css images js favicon.ico robots.txt webfonts .well-known)
   )
 
   # Code reloading can be explicitly enabled under the
