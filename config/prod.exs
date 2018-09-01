@@ -26,13 +26,15 @@ config :logger, level: :info
 # To get SSL working, you will need to add the `https` key
 # to the previous section and set your `:url` port to 443:
 #
-#     config :propollr, PropollrWeb.Endpoint,
-#       ...
-#       url: [host: "example.com", port: 443],
-#       https: [:inet6,
-#               port: 443,
-#               keyfile: System.get_env("SOME_APP_SSL_KEY_PATH"),
-#               certfile: System.get_env("SOME_APP_SSL_CERT_PATH")]
+    config :propollr, PropollrWeb.Endpoint,
+      url: [host: "propollr.com", port: 443],
+      https: [:inet6,
+              port: 443,
+              keyfile: keyfile: "/etc/letsencrypt/live/propollr.com/privkey.pem",
+              cacertfile: "/etc/letsencrypt/live/propollr.com/chain.pem",
+              certfile: "/etc/letsencrypt/live/propollr.com/cert.pem"]
+
+              config :isafe, Isafe.Web.Endpoint,
 #
 # Where those two env variables return an absolute path to
 # the key and cert in disk or a relative path inside priv,
@@ -41,8 +43,8 @@ config :logger, level: :info
 # We also recommend setting `force_ssl`, ensuring no data is
 # ever sent via http, always redirecting to https:
 #
-#     config :propollr, PropollrWeb.Endpoint,
-#       force_ssl: [hsts: true]
+    config :propollr, PropollrWeb.Endpoint,
+      force_ssl: [hsts: true]
 #
 # Check `Plug.SSL` for all available options in `force_ssl`.
 

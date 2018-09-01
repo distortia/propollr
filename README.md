@@ -25,7 +25,7 @@ Ready to run in production? Please [check our deployment guides](http://www.phoe
     * pass: K0Fd1DJ8GwFKlFOa
 
 To run:
-`sudo PORT=80 MIX_ENV=prod iex --sname propollr --cookie propollr --detached -S mix phx.server `
+`sudo MIX_ENV=prod PORT=80 elixir --detached --sname propollr --cookie propollr -S mix do compile, phx.server`
 
 To kill:
 `ps ax | grep beam` then `sudo kill <pid>`
