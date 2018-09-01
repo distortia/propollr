@@ -27,16 +27,16 @@ config :logger, level: :info
 # to the previous section and set your `:url` port to 443:
 #
 
-config :propollr, PropollrWeb.Endpoint,
-  http: [port: {:system, "PORT"}],
-  url: [host: "propollr.com"],
-  cache_static_manifest: "priv/static/manifest.json",
-  https: [port: 443,
-          otp_app: :propollr,
-          keyfile: "/etc/letsencrypt/live/propollr.com/privkey.pem",
-          certfile: "/etc/letsencrypt/live/propollr.com/chain.pem",
-          cacertfile: "/etc/letsencrypt/live/propollr.com/cert.pem" # OPTIONAL Key for intermediate certificates
-          ]
+# config :propollr, PropollrWeb.Endpoint,
+#   http: [port: {:system, "PORT"}],
+#   url: [host: "propollr.com"],
+#   cache_static_manifest: "priv/static/manifest.json",
+#   https: [port: 443,
+#           otp_app: :propollr,
+#           keyfile: "/etc/letsencrypt/live/propollr.com/privkey.pem",
+#           certfile: "/etc/letsencrypt/live/propollr.com/chain.pem",
+#           cacertfile: "/etc/letsencrypt/live/propollr.com/cert.pem" # OPTIONAL Key for intermediate certificates
+#           ]
 #
 # Where those two env variables return an absolute path to
 # the key and cert in disk or a relative path inside priv,
