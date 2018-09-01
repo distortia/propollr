@@ -30,7 +30,7 @@ config :logger, level: :info
       url: [host: "propollr.com", port: 443],
       https: [:inet6,
               port: 443,
-              keyfile: keyfile: "/etc/letsencrypt/live/propollr.com/privkey.pem",
+              keyfile: "/etc/letsencrypt/live/propollr.com/privkey.pem",
               cacertfile: "/etc/letsencrypt/live/propollr.com/chain.pem",
               certfile: "/etc/letsencrypt/live/propollr.com/cert.pem"]
 
