@@ -1,54 +1,78 @@
-<div class="card session-info">
-  <header class="header">
-    <p class="card-header-title">
-      <%= @sesh.title %> |  <%= if @sesh.closed, do: "Closed", else: "Open" %>
-    </p>
-  </header>
-  <div class="card-content">
-    <h4 class="subtitle">Sesh ID: <%= @sesh.sesh_id %></h4>
-    <p>
-      Created at: <%= @sesh.inserted_at %>
-      <br>
-      Last Updated: <%= @sesh.updated_at %>
-      <br>
-      Questions: <%= length(@sesh.questions) %>
-      <br>
-      <span id="share-link-container-<%= @sesh.sesh_id %>">
-        <a onclick="copy_share_link('<%= PropollrWeb.Endpoint.url() <> "/sesh/join/" %>', '<%= @sesh.sesh_id %>')">
-          <span class="icon">
-            <i class="fas fa-copy"></i>
+<section class="section">
+  <div class="container">
+    <div class="card session-info">
+      <header class="header">
+        <p class="card-header-title <%= if @sesh.closed, do: "has-text-danger", else: "has-text-success" %> ">
+          <%= @sesh.title %> |  <%= if @sesh.closed, do: "Closed", else: "Open" %>
+        </p>
+      </header>
+      <div class="card-content">
+        <h4 class="subtitle">Sesh ID: <%= @sesh.sesh_id %></h4>
+        <p>
+          Created at: <%= @sesh.inserted_at %>
+          <br>
+          Last Updated: <%= @sesh.updated_at %>
+          <br>
+          Questions: <%= length(@sesh.questions) %>
+          <br>
+          <span id="share-link-container-<%= @sesh.sesh_id %>">
+            <a onclick="copy_share_link('<%= PropollrWeb.Endpoint.url() <> "/sesh/join/" %>', '<%= @sesh.sesh_id %>')" class="button is-info is-outlined">
+                 <span class="icon">
+                     <i class="fas fa-copy"></i>
+                 </span>
+                 <span class="copy-share-link">Share Link</span>
+            </a>
           </span>
-          <span class="copy-share-link">Share link</span>
-        </a>
-      </span>
-    </p>
-  </div>
-  <footer class="card-footer">
-   <%= if user_belongs_to_session?(@conn) do %>
-   <div class="card-footer-item">
-    <%= link "Create Question", to: question_path(@conn, :new, sesh_id: @sesh.sesh_id) %>
-  </div>
-  <div class="card-footer-item">
-    <%= link "Edit Session", to: sesh_path(@conn, :edit, sesh_id: @sesh.sesh_id) %>
-  </div>
-  <div class="card-footer-item">
-    <%= if @sesh.closed do %>
-      <%= link "Reopen Session", to: sesh_path(@conn, :reopen, sesh_id: @sesh.sesh_id) %>
-    <% else %>
-      <%= link "Close Session", to: sesh_path(@conn, :close, sesh_id: @sesh.sesh_id) %>
+        </p>
+      </div>
+      <footer class="card-footer">
+       <%= if user_belongs_to_session?(@conn) do %>
+       <div class="card-footer-item">
+        <%= link to: question_path(@conn, :new, sesh_id: @sesh.sesh_id), class: "button is-primary is-outlined" do %>
+          <span class="icon">
+             <i class="fas fa-question"></i>
+          </span>
+          <span>Create Question</span>
+        <% end %>
+      </div>
+      <div class="card-footer-item">
+        <%= link to: sesh_path(@conn, :edit, sesh_id: @sesh.sesh_id), class: "button is-info is-outlined" do %>
+          <span class="icon">
+             <i class="fas fa-edit"></i>
+          </span>
+          <span>Edit Session</span>        
+        <% end %>
+      </div>
+      <div class="card-footer-item">
+        <%= if @sesh.closed do %>
+          <%= link to: sesh_path(@conn, :reopen, sesh_id: @sesh.sesh_id), class: "button is-success is-outlined" do %>
+            <span class="icon">
+               <i class="fas fa-plus"></i>
+            </span>
+            <span>Re-Open Session</span>   
+          <% end %>        
+        <% else %>
+          <%= link to: sesh_path(@conn, :close, sesh_id: @sesh.sesh_id), class: "button is-danger is-outlined" do %>
+            <span class="icon">
+               <i class="fas fa-times"></i>
+            </span>
+            <span>Close Session</span>    
+          <% end %>
+        <% end %>
+      </div>
+      <% end %>
+    </footer>
+    </div>
+
+    <%= if !user_belongs_to_session?(@conn) do %>
+      <h1 class="title">Questions</h1>
+      <div class="questions columns is-multiline"></div>    
     <% end %>
+
+      <h1 class="title">Answers</h1>
+      <div class="answers columns is-multiline"></div>
   </div>
-  <% end %>
-</footer>
-</div>
-
-<%= if !user_belongs_to_session?(@conn) do %>
-  <h1 class="title">Questions</h1>
-  <div class="questions columns is-multiline"></div>    
-<% end %>
-
-  <h1 class="title">Answers</h1>
-  <div class="answers columns is-multiline"></div>
+</section>
 
 <script>window.user = <%= if @conn.assigns[:user], do: true, else: false %></script>
 <script>window.sesh_id = "<%= Plug.Conn.get_session(@conn, :sesh_id) %>";</script>

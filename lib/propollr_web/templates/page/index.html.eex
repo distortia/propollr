@@ -1,4 +1,4 @@
-<section class="hero">
+<section class="hero is-primary is-medium is-bold">
   <div class="hero-body">
     <div class="container">
       <h1 class="title">Welcome to ProPollr</h1>
@@ -22,7 +22,7 @@
             </div>
             <div class="field">
               <div class="control">
-                <%= submit "Go!", class: "button is-fullwidth" %>
+                <%= submit "Go!", class: "button is-primary is-fullwidth" %>
               </div>
             </div>
           <% end %>        
@@ -38,7 +38,7 @@
             </div>
             <div class="field">
               <div class="control">
-                <%= submit "Join Session", class: "button is-fullwidth" %>
+                <%= submit "Join Session", class: "button is-fullwidth is-info is-outlined" %>
               </div>
             </div>
           <% end %>

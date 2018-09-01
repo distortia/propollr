@@ -1,44 +1,68 @@
-<h1 class="title">New Question</h1>
+<section class="hero is-primary is-bold">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">New Question</h1>
+    </div>
+  </div>
+</section>
 
-<div class="card">
-  <%= form_for @changeset, question_path(@conn, :create, sesh_id: @sesh_id), [as: :question_params, id: "question-form"], fn f -> %>
-  <div class="card-content">
-    <div class="field">
-      <label class="label">
-        Question
-      </label>
-      <div class="control">
-        <%= text_input f, :text, class: "input" %>
+<section class="section">
+  <div class="container">
+    <div class="card">
+      <%= form_for @changeset, question_path(@conn, :create, sesh_id: @sesh_id), [as: :question_params, id: "question-form"], fn f -> %>
+      <div class="card-content">
+        <div class="field">
+          <label class="label">
+            Question
+          </label>
+          <div class="control">
+            <%= text_input f, :text, class: "input", placeholder: "What is 1 + 1?" %>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Option</label>
+          <div class="control">
+            <%= text_input f, :option1, class: "input", placeholder: "1" %>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Option</label>
+          <div class="control">
+            <%= text_input f, :option2, class: "input", placeholder: "2" %>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Option</label>
+          <div class="control">
+            <%= text_input f, :option3, class: "input", placeholder: "3" %>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Option</label>
+          <div class="control">
+            <%= text_input f, :option4, class: "input", placeholder: "4" %>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="field">
-      <label class="label">Option</label>
-      <div class="control">
-        <%= text_input f, :option1, class: "input" %>
+      <div class="card-footer">
+        <div class="card-footer-item">
+          <a onclick="document.getElementById('question-form').submit()" class="button is-primary is-outlined">
+            <span class="icon">
+               <i class="fas fa-plus"></i>
+            </span>
+            <span>Add Question</span>
+          </a>
+        </div>
+        <div class="card-footer-item">
+          <%= link to: sesh_path(@conn, :view, sesh_id: @sesh_id, user: @user), class: "button is-warning is-outlined" do %>
+            <span class="icon">
+               <i class="fas fa-ban"></i>
+            </span>
+            <span>Cancel</span>
+          <% end %>
+        </div>
       </div>
-    </div>
-    <div class="field">
-      <label class="label">Option</label>
-      <div class="control">
-        <%= text_input f, :option2, class: "input" %>
-      </div>
-    </div>
-    <div class="field">
-      <label class="label">Option</label>
-      <div class="control">
-        <%= text_input f, :option3, class: "input" %>
-      </div>
-    </div>
-    <div class="field">
-      <label class="label">Option</label>
-      <div class="control">
-        <%= text_input f, :option4, class: "input" %>
-      </div>
-    </div>
+      <% end %>
+    </div>        
   </div>
-  <div class="card-footer">
-    <a onclick="document.getElementById('question-form').submit()" class="card-footer-item">Add Question</a>
-    <%= link "Cancel", to: sesh_path(@conn, :view, sesh_id: @sesh_id, user: @user), class: "card-footer-item" %>
-  </div>
-  <% end %>
-</div>        
+</section>

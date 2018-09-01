@@ -13,52 +13,59 @@
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/font-awesome.css") %>">
   </head>
 
-  <body>
-  <nav class="navbar" role="navigation" aria-label="main navigation">
-    <div class="navbar-brand">
-      <%= link to: page_path(@conn, :index), class: "navbar-item" do %>
-        <i class="fas fa-chevron-right"></i>ProPollr
-      <% end %>
+  <body class="has-navbar-fixed-top">
+    <nav class="navbar is-primary is-bold is-fixed-top" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <%= link to: page_path(@conn, :index), class: "navbar-item" do %>
+          <i class="fas fa-chevron-right"></i>ProPollr
+        <% end %>
 
-      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-      </a>
-    </div>
-    <div class="navbar-menu">
-      <div class="navbar-end">
-        <%= link "Home", to: page_path(@conn, :index), class: active_class(@conn, page_path(@conn, :index), "navbar-item") %>
-        <%= if !@conn.assigns[:session_unique_id] do %>
-          <%= link "Login or Sign Up", to: user_path(@conn, :new), class: active_class(@conn, user_path(@conn, :new), "navbar-item") %>
-        <% end %>
-        <%= if @conn.assigns[:session_unique_id] do %>
-          <%= link "Dashboard", to: dashboard_path(@conn, :index), class: active_class(@conn, dashboard_path(@conn, :index), "navbar-item") %>
-          <%= link "Log out", to: "/veil/sessions/signout/" <> @conn.assigns[:session_unique_id], class: "navbar-item" %>
-        <% end %>
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
       </div>
-    </div>
-  </nav>
-  <section class="section">
-    <div class="container">
-      <%= if get_flash(@conn, :info) do %>
+      <div class="navbar-menu">
+        <div class="navbar-end">
+          <%= link "Home", to: page_path(@conn, :index), class: active_class(@conn, page_path(@conn, :index), "navbar-item") %>
+          <%= if !@conn.assigns[:session_unique_id] do %>
+            <%= link "Login or Sign Up", to: user_path(@conn, :new), class: active_class(@conn, user_path(@conn, :new), "navbar-item") %>
+          <% end %>
+          <%= if @conn.assigns[:session_unique_id] do %>
+            <%= link "Dashboard", to: dashboard_path(@conn, :index), class: active_class(@conn, dashboard_path(@conn, :index), "navbar-item") %>
+            <%= link "Log out", to: "/veil/sessions/signout/" <> @conn.assigns[:session_unique_id], class: "navbar-item" %>
+          <% end %>
+        </div>
+      </div>
+    </nav>
+    
+    <%= if get_flash(@conn, :info) do %>
+      <section class="section alert-info-section">
+        <div class="container">
         <div class="notification  is-info alert alert-info" role="alert">
-          <button class="delete" onclick="document.querySelector('.alert-info').style.display = 'none'"></button>
+          <button class="delete" onclick="document.querySelector('.alert-info-section').style.display = 'none'"></button>
           <%= get_flash(@conn, :info) %>
         </div>
-      <% end %>      
-      <%= if get_flash(@conn, :error) do %>
-        <div class="notification is-error alert alert-danger" role="alert">
-          <button class="delete" onclick="document.querySelector('.alert-danger').style.display = 'none'"></button>
-          <%= get_flash(@conn, :error) %>
-        </div>
-      <% end %>
-      <main role="main">
-        <%= render @view_module, @view_template, assigns %>
-      </main>
+      </div>
+    </section>
+    <% end %>
 
-    </div> <!-- /container -->
-  </section>
+    <%= if get_flash(@conn, :error) do %>
+      <section class="section alert-danger-section">
+        <div class="container">
+          <div class="notification is-error alert alert-danger" role="alert">
+            <button class="delete" onclick="document.querySelector('.alert-danger-section').style.display = 'none'"></button>
+            <%= get_flash(@conn, :error) %>
+          </div>
+        </div>
+      </section>
+    <% end %>
+
+    <main role="main">
+      <%= render @view_module, @view_template, assigns %>
+    </main>
+
     <script>window.sesh_id = "<%= Plug.Conn.get_session(@conn, :sesh_id) %>";</script>
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
   </body>

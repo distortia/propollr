@@ -73,11 +73,18 @@ channel.join()
   let create_vote_event = (question) => {
     let parent = document.getElementById(`question_id_${question.id}`)
       let button =  parent.querySelector('button')
+      let select_list_container = parent.querySelector('.select')
+      let select_list = parent.querySelector('select')
       button.addEventListener('click', () => {
         let options = parent.querySelector('select')
         if (options.value) {
           button.disabled = true
-          button.innerText = "Answered"
+          button.innerHTML = '<span class="icon"><i class="fas fa-comment-times"></i></span><span>Answered</span>'
+          button.classList.toggle('is-primary')
+          button.classList.toggle('is-danger')
+          select_list_container.classList.toggle('is-primary')
+          select_list_container.classList.toggle('is-danger')
+          select_list.disabled = !select_list.disabled
           channel.push("answer", {question_id: question.id, answer: options.value})
         }
       })
@@ -106,13 +113,14 @@ channel.join()
         <div class="card question" id="question_id_${question.id}">
           <header class="header">
               <p class="card-header-title">
-                  ${question.text}
+                  Question: ${question.text}
               </p>
           </header>
           <div class="card-content">
             <div class="field">
+              <label class="label">Options:</label>
               <div class="control">
-                <div class="select is-fullwidth">
+                <div class="select is-fullwidth is-rounded is-primary">
                   <select>
                     <option></option>
                     ${question.options.map(option =>`<option>${option}</option>`)}
@@ -123,11 +131,12 @@ channel.join()
           </div>
           <div class="card-footer">
             <div class="card-footer-item">
-              <div class="field">
-                <div class="control">
-                  <button class="button">Answer</button>
-                </div>
-              </div>
+              <button class="button is-primary is-outlined is-fullwidth">
+                <span class="icon">
+                  <i class="fas fa-comment-alt-plus"></i>
+                </span>
+                <span>Answer</span>
+              </button>
             </div>
           </div>
         </div>
@@ -166,10 +175,11 @@ channel.join()
         <div class="card answer" id="answer_id_${question.id}">
           <header class="header">
               <p class="card-header-title">
-                  ${question.text}
+                  Question: ${question.text}
               </p>
           </header>
           <div class="card-content">
+            <p class="has-text-weight-bold">Options:</p>
             <ul></ul>
           </div>
         </div>

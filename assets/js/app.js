@@ -25,10 +25,10 @@ window.copy_share_link = function(base_url, sesh_id){
     let full_url = `${base_url}${sesh_id}`
     let share_container = document.querySelector(`#share-link-container-${sesh_id} a`)
     clipboard.writeText(full_url).then(function() {
-      share_container.classList.toggle('has-text-success')
+      share_container.classList.toggle('is-success')
       share_container.querySelector(`.copy-share-link`).innerHTML = "Link Copied!"
       setTimeout(() => {
-        share_container.classList.toggle('has-text-success')
+        share_container.classList.toggle('is-success')
         share_container.querySelector(`.copy-share-link`).innerHTML = "Share Link"
       }, 3000)
   })};

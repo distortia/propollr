@@ -1,4 +1,4 @@
-<section class="hero">
+<section class="hero is-primary is-bold is-medium">
     <div class="hero-body">
         <div class="container">
             <h1 class="title">Dashbard</h1>
@@ -7,76 +7,104 @@
     </div>
 </section>
 
-<%= link "Create a Session", to: sesh_path(@conn, :new) %>
-<h3 class="subtitle">Active Sessions</h3>
-<%= if Enum.empty?(@opened_seshes) do %>
-    <div class="notification">
-        No Sessions open yet! <%= link "Create a Session", to: sesh_path(@conn, :new, user_id: @user.id) %>
-    </div>
-<% else %>
-    <%= for sesh <- @opened_seshes do %>
-        <div class="card session open">
-            <header class="card-header">
-                <p class="card-header-title">
-                    <%= sesh.title %>
-                </p>
-            </header>
-            <div class="card-content">
-                <p class="card-content">
-                    Questions: <%= length(sesh.questions) %>
-                    <br>
-                    Created: <%= sesh.inserted_at %>
-                    <br>
-                    Last Updated: <%= sesh.updated_at %>
-                    <br>
-                    <span id="share-link-container-<%= sesh.sesh_id %>">
-                        <a onclick="copy_share_link('<%= PropollrWeb.Endpoint.url() <> "/sesh/join/"%>', '<%= sesh.sesh_id %>')">
-                             <span class="icon">
-                                 <i class="fas fa-copy"></i>
-                             </span>
-                             <span class="copy-share-link">Share Link</span>
-                        </a>
-                    </span>
-                </p>
+<section class="section">
+    <div class="container">
+        <%= link to: sesh_path(@conn, :new), class: "button is-primary is-outlined is-rounded is-pulled-right" do %>
+            <span class="icon">
+              <i class="fas fa-plus"></i>
+            </span>
+            <span>Create a Session</span>
+        <% end %>
+        <h3 class="subtitle has-text-success">Active Sessions:</h3>
+        <%= if Enum.empty?(@opened_seshes) do %>
+            <div class="notification">
+                No Sessions open yet! <%= link "Create a Session", to: sesh_path(@conn, :new), class: "has-text-primary" %>
+            </div>
+        <% else %>
+            <%= for sesh <- @opened_seshes do %>
+                <div class="card session open">
+                    <header class="card-header">
+                        <p class="card-header-title">
+                            <%= sesh.title %>
+                        </p>
+                    </header>
+                    <div class="card-content">
+                        <p class="card-content">
+                            Questions: <%= length(sesh.questions) %>
+                            <br>
+                            Created: <%= sesh.inserted_at %>
+                            <br>
+                            Last Updated: <%= sesh.updated_at %>
+                            <br>
+                            <span id="share-link-container-<%= sesh.sesh_id %>">
+                                <a onclick="copy_share_link('<%= PropollrWeb.Endpoint.url() <> "/sesh/join/" %>', '<%= sesh.sesh_id %>')" class="button is-info is-outlined">
+                                     <span class="icon">
+                                         <i class="fas fa-copy"></i>
+                                     </span>
+                                     <span class="copy-share-link">Share Link</span>
+                                </a>
+                            </span>
+                        </p>
+                        <footer class="card-footer">
+                            <p class="card-footer-item">
+                                <%= link to: sesh_path(@conn, :view, sesh_id: sesh.sesh_id), class: "button is-primary is-outlined" do %>
+                                    <span class="icon is-small">
+                                      <i class="fas fa-comments"></i>
+                                    </span>
+                                    <span>Go to Session</span>
+                                <% end %>
+                            </p>
+                            <p class="card-footer-item">
+                                <%= link to: sesh_path(@conn, :close, sesh_id: sesh.sesh_id), class: "button is-danger is-outlined" do %>
+                                    <span class="icon is-small">
+                                      <i class="fas fa-times"></i>
+                                    </span>
+                                    <span>Close Session</span>
+                                <% end %>
+                            </p>
+                        </footer>
+                    </div>
+                </div>
+            <% end %>
+        <% end %>
+        <h3 class="subtitle has-text-danger">Closed Sessions:</h3>
+        <%= if Enum.empty?(@closed_seshes) do %>
+            <div class="notification">
+                No Closed Sessions as of yet.
+            </div>
+        <% else %>
+            <%= for sesh <- @closed_seshes do %>
+            <div class="card session closed">
+                <header class="card-header">
+                    <p class="card-header-title">
+                        <%= sesh.title %>
+                    </p>
+                </header>
+                <div class="card-content">
+                    <h5>ID: <%= sesh.sesh_id %></h5>
+                    <p>Created: <%= sesh.inserted_at %></p>
+                </div>
                 <footer class="card-footer">
                     <p class="card-footer-item">
-                        <%= link "Go to Session", to: sesh_path(@conn, :view, sesh_id: sesh.sesh_id) %>
+                        <%= link to: sesh_path(@conn, :view, sesh_id: sesh.sesh_id), class: "button is-primary is-outlined" do %>
+                            <span class="icon is-small">
+                              <i class="fas fa-comments"></i>
+                            </span>
+                            <span>Go to Session</span>
+                        <% end %>
                     </p>
                     <p class="card-footer-item">
-                        <%= link "Close Session", to: sesh_path(@conn, :close, sesh_id: sesh.sesh_id) %>
+                        <%= link to: sesh_path(@conn, :reopen, sesh_id: sesh.sesh_id), class: "button is-success is-outlined" do %>
+                            <span class="icon is-small">
+                              <i class="fas fa-plus"></i>
+                            </span>
+                            <span>Re-Open Session</span>
+                        <% end %>
                     </p>
                 </footer>
             </div>
-        </div>
-    <% end %>
-<% end %>
-<h3 class="subtitle">Closed Sessions</h3>
-<%= if Enum.empty?(@closed_seshes) do %>
-    <div class="notification">
-        No Closed Sessions as of yet.
+            <% end %>
+        <% end %>
     </div>
-<% else %>
-    <%= for sesh <- @closed_seshes do %>
-    <div class="card session closed">
-        <header class="card-header">
-            <p class="card-header-title">
-                <%= sesh.title %>
-            </p>
-        </header>
-        <div class="card-content">
-            <h5>ID: <%= sesh.sesh_id %></h5>
-            <p>Created: <%= sesh.inserted_at %></p>
-        </div>
-        <footer class="card-footer">
-            <p class="card-footer-item">
-                <%= link "Go to Session", to: sesh_path(@conn, :view, sesh_id: sesh.sesh_id) %>
-            </p>
-            <p class="card-footer-item">
-                <%= link "Reopen Session", to: sesh_path(@conn, :reopen, sesh_id: sesh.sesh_id) %>
-            </p>
-            <p class="card-footer-item"></p>
-        </footer>
-    </div>
-    <% end %>
-<% end %>
+</section>
 <script>window.user = <%= if @user, do: true, else: false %></script>

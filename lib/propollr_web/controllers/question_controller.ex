@@ -84,7 +84,7 @@ defmodule PropollrWeb.QuestionController do
       {:ok, question} ->
         conn
         |> put_flash(:info, "Question Updated")
-        |> redirect(to: sesh_path(conn, :view, sesh_id: question.sesh_id))
+        |> redirect(to: sesh_path(conn, :edit, sesh_id: question.sesh.sesh_id))
 
       {:error, changeset} ->
         conn

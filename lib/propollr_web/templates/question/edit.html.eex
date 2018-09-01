@@ -1,18 +1,47 @@
-<h4>Editing Question</h4>
-
-<%= form_for @conn, question_path(@conn, :update, question_id: @question.id), [as: :question_params, method: :put], fn f -> %>
-
-<label>
-    <%= text_input f, :text, value: @question.text %>
-</label>
-<hr>
-<%= for {option, index} <- Enum.with_index(@question.options, 1) do %> 
-<label>
-    Option: <%= text_input f, String.to_atom("option#{index}"), value: option %>
-</label>
-<br>
-<% end %>
-
-<hr>
-<%= submit "Update" %>
-<% end %>
+<section class="hero is-primary is-bold">
+  <div class="hero-body">
+    <h1 class="title">Editing Question</h1>
+  </div>
+</section>
+<section class="section">
+  <div class="container">
+    <%= form_for @conn, question_path(@conn, :update, question_id: @question.id), [as: :question_params, method: :put], fn f -> %>
+      <div class="card">
+        <div class="card-content">
+          <label class="label">Question:</label>
+          <div class="field">
+            <div class="control">
+              <%= text_input f, :text, value: @question.text, class: "input" %>
+            </div>
+          </div>
+          <%= for {option, index} <- Enum.with_index(@question.options, 1) do %> 
+            <label class="label">Option <%= index %></label>
+            <div class="field">
+              <div class="control">
+                <%= text_input f, String.to_atom("option#{index}"), value: option, class: "input" %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+        <footer class="card-footer">
+          <div class="card-footer-item">
+            <%= submit class: "button is-primary is-outlined" do %>
+              <span class="icon">
+                 <i class="fas fa-save"></i>
+              </span>
+              <span>Update</span>
+            <% end %>
+          </div>
+          <div class="card-footer-item">
+           <%= link to: sesh_path(@conn, :edit, sesh_id: @question.sesh.sesh_id), class: "button is-info is-outlined" do %>
+              <span class="icon">
+                 <i class="fas fa-undo-alt"></i>
+              </span>                
+              <span>Back</span>
+            <% end %>
+          </div>
+        </footer>
+      </div>
+    <% end %>
+  </div>
+</section>

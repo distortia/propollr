@@ -1,17 +1,41 @@
-<h1 class="title">Creating a new Session</h1>
-  <%= form_for @changeset, sesh_path(@conn, :create), [as: :sesh_params, id: "new-session-form"], fn f -> %>
-  <div class="card">
-    <div class="card-content">
-      <div class="field">
-        <label class="label">Title</label>
-        <div class="control">
-          <%= text_input f, :title, class: "input" %>
+<section class="hero is-primary is-medium is-bold">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">Creating a new Session</h1>
+    </div>
+  </div>
+</section>
+<section class="section">
+  <div class="container">
+    <%= form_for @changeset, sesh_path(@conn, :create), [as: :sesh_params, id: "new-session-form"], fn f -> %>
+    <div class="card">
+      <div class="card-content">
+        <div class="field">
+          <label class="label">Title</label>
+          <div class="control">
+            <%= text_input f, :title, class: "input" %>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <div class="card-footer-item">
+          <a onclick="document.getElementById('new-session-form').submit()" class="button is-primary is-outlined">
+            <span class="icon">
+               <i class="fas fa-plus"></i>
+            </span>
+            <span>Add</span>
+        </a>
+        </div>
+        <div class="card-footer-item">
+          <%= link to: dashboard_path(@conn, :index), class: "button is-warning is-outlined" do %>
+            <span class="icon">
+               <i class="fas fa-ban"></i>
+            </span>          
+            <span>Cancel</span>
+          <% end %>
         </div>
       </div>
     </div>
-    <div class="card-footer">
-      <a onclick="document.getElementById('new-session-form').submit()" class="card-footer-item">Add</a>
-      <%= link "Cancel", to: dashboard_path(@conn, :index), class: "card-footer-item" %>
-    </div>
+  <% end %>
   </div>
-<% end %>
+</section>
