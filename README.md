@@ -23,3 +23,6 @@ Ready to run in production? Please [check our deployment guides](http://www.phoe
   * Default Acct:
     * user: postgres
     * pass: K0Fd1DJ8GwFKlFOa
+
+To run:
+`sudo PORT=80 MIX_ENV=prod iex --sname propollr --cookie propollr -S mix phx.server `
