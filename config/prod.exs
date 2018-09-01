@@ -45,8 +45,8 @@ config :propollr, PropollrWeb.Endpoint,
 # We also recommend setting `force_ssl`, ensuring no data is
 # ever sent via http, always redirecting to https:
 #
-config :propoller, PropollrWeb.Endpoint, 
-    force_ssl: [rewrite_on: [:x_forwarded_proto]]
+# config :propoller, PropollrWeb.Endpoint, 
+#     force_ssl: [rewrite_on: [:x_forwarded_proto]]
 #
 # Check `Plug.SSL` for all available options in `force_ssl`.
 
