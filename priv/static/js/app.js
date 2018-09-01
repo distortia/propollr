@@ -1693,13 +1693,15 @@ window.copy_share_link = function (base_url, sesh_id) {
   var clipboard = window.navigator.clipboard;
   var full_url = "" + base_url + sesh_id;
   var share_container = document.querySelector("#share-link-container-" + sesh_id + " a");
-  clipboard.writeText(full_url).then(function () {
+  navigator.clipboard.writeText(full_url).then(function () {
     share_container.classList.toggle('is-success');
     share_container.querySelector(".copy-share-link").innerHTML = "Link Copied!";
     setTimeout(function () {
       share_container.classList.toggle('is-success');
       share_container.querySelector(".copy-share-link").innerHTML = "Share Link";
     }, 3000);
+  }).catch(function (err) {
+    console.log("error");
   });
 };
 

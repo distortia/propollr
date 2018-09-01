@@ -21,17 +21,21 @@ import "phoenix_html"
 import socket from "./socket"
 
 window.copy_share_link = function(base_url, sesh_id){
-    let clipboard = window.navigator.clipboard;
-    let full_url = `${base_url}${sesh_id}`
-    let share_container = document.querySelector(`#share-link-container-${sesh_id} a`)
-    clipboard.writeText(full_url).then(function() {
+let clipboard = window.navigator.clipboard;
+let full_url = `${base_url}${sesh_id}`
+let share_container = document.querySelector(`#share-link-container-${sesh_id} a`)
+navigator.clipboard.writeText(full_url).then(
+  () => {
+    share_container.classList.toggle('is-success')
+    share_container.querySelector(`.copy-share-link`).innerHTML = "Link Copied!"
+    setTimeout(() => {
       share_container.classList.toggle('is-success')
-      share_container.querySelector(`.copy-share-link`).innerHTML = "Link Copied!"
-      setTimeout(() => {
-        share_container.classList.toggle('is-success')
-        share_container.querySelector(`.copy-share-link`).innerHTML = "Share Link"
-      }, 3000)
-  })};
+      share_container.querySelector(`.copy-share-link`).innerHTML = "Share Link"
+    }, 3000)
+  }).catch(err => {
+    console.log("error")
+  })
+};
 
 // Navbar toggle
 document.addEventListener('DOMContentLoaded', () => {
