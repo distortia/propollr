@@ -63,5 +63,5 @@ config :logger, level: :info
 # which should be versioned separately.
 
 config :propollr, PropollrWeb.Endpoint,
-check_origin: ["propollr.com"]
+check_origin: ["//propollr.com"]
 import_config "prod.secret.exs"
