@@ -46,7 +46,7 @@ config :propollr, PropollrWeb.Endpoint,
 # ever sent via http, always redirecting to https:
 #
 config :propollr, PropollrWeb.Endpoint, 
-    force_ssl: [rewrite_on: [:x_forwarded_proto]]
+    force_ssl: [hsts: true]
 #
 # Check `Plug.SSL` for all available options in `force_ssl`.
 
