@@ -1,0 +1,21 @@
+<%= if get_flash(@conn, :info) do %>
+  <section class="section alert-info-section">
+    <div class="container">
+    <div class="notification  is-info alert alert-info" role="alert">
+      <button class="delete" onclick="document.querySelector('.alert-info-section').style.display = 'none'"></button>
+      <%= get_flash(@conn, :info) %>
+    </div>
+  </div>
+</section>
+<% end %>
+
+<%= if get_flash(@conn, :error) do %>
+  <section class="section alert-danger-section">
+    <div class="container">
+      <div class="notification is-error alert alert-danger" role="alert">
+        <button class="delete" onclick="document.querySelector('.alert-danger-section').style.display = 'none'"></button>
+        <%= get_flash(@conn, :error) %>
+      </div>
+    </div>
+  </section>
+<% end %>

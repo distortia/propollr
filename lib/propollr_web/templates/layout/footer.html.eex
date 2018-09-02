@@ -1,0 +1,16 @@
+<footer class="footer is-primary is-bold">
+  <div class="content">
+    <div class="level">
+      <div class="level-item">
+        <%= link to: page_path(@conn, :index) do %>
+          <div class="figure">
+            <img src="<%= static_path(@conn, "/images/propollr.png") %>" alt="" width="112" height="28">
+          </div>
+        <% end %>
+      </div>
+      <div class="level-item">
+        Built with <div class="icon"><i class="fas fa-heart"></i></div> by <a href="https://alphaity.io" class="is-link">Alphaity.io</a>
+      </div>
+    </div>
+  </div>
+</footer>

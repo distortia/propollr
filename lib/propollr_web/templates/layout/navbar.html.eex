@@ -1,0 +1,25 @@
+<nav class="navbar is-primary is-bold is-fixed-top" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <%= link to: page_path(@conn, :index), class: "navbar-item" do %>
+      <img src="<%= static_path(@conn, "/images/propollr.png") %>" alt="" width="112" height="28">
+    <% end %>
+
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-end">
+      <%= link "Home", to: page_path(@conn, :index), class: active_class(@conn, page_path(@conn, :index), "navbar-item") %>
+      <%= if !@conn.assigns[:session_unique_id] do %>
+        <%= link "Login or Sign Up", to: user_path(@conn, :new), class: active_class(@conn, user_path(@conn, :new), "navbar-item") %>
+      <% end %>
+      <%= if @conn.assigns[:session_unique_id] do %>
+        <%= link "Dashboard", to: dashboard_path(@conn, :index), class: active_class(@conn, dashboard_path(@conn, :index), "navbar-item") %>
+        <%= link "Log out", to: "/veil/sessions/signout/" <> @conn.assigns[:session_unique_id], class: "navbar-item" %>
+      <% end %>
+    </div>
+  </div>
+</nav>
