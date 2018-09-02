@@ -27,16 +27,16 @@ config :logger, level: :info
 # to the previous section and set your `:url` port to 443:
 #
 
-# config :propollr, PropollrWeb.Endpoint,
-#   http: [port: {:system, "PORT"}],
-#   url: [host: "propollr.com"],
-#   cache_static_manifest: "priv/static/manifest.json",
-#   https: [port: 443,
-#           otp_app: :propollr,
-#           keyfile: "/etc/letsencrypt/live/propollr.com/privkey.pem",
-#           certfile: "/etc/letsencrypt/live/propollr.com/chain.pem",
-#           cacertfile: "/etc/letsencrypt/live/propollr.com/cert.pem" # OPTIONAL Key for intermediate certificates
-#           ]
+config :propollr, PropollrWeb.Endpoint,
+  http: [port: {:system, "PORT"}],
+  url: [host: "propollr.com"],
+  cache_static_manifest: "priv/static/manifest.json",
+  https: [port: 443,
+          otp_app: :propollr,
+          keyfile: "/etc/letsencrypt/live/propollr.com/privkey.pem",
+          certfile: "/etc/letsencrypt/live/propollr.com/chain.pem",
+          cacertfile: "/etc/letsencrypt/live/propollr.com/cert.pem" # OPTIONAL Key for intermediate certificates
+          ]
 #
 # Where those two env variables return an absolute path to
 # the key and cert in disk or a relative path inside priv,
@@ -45,8 +45,8 @@ config :logger, level: :info
 # We also recommend setting `force_ssl`, ensuring no data is
 # ever sent via http, always redirecting to https:
 #
-# config :propoller, PropollrWeb.Endpoint, 
-#     force_ssl: [rewrite_on: [:x_forwarded_proto]]
+config :propoller, PropollrWeb.Endpoint, 
+    force_ssl: [rewrite_on: [:x_forwarded_proto]]
 #
 # Check `Plug.SSL` for all available options in `force_ssl`.
 
