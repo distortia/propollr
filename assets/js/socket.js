@@ -5,16 +5,13 @@
 // and connect at the socket path in "lib/web/endpoint.ex":
 import {Socket} from "phoenix"
 
-
-
 //           //
 // variables //
 //           //
-
+let socket = new Socket("/socket", {params: {token: window.userToken}})
 if (window.location.pathname == "/sesh" || window.location.pathname.includes('/sesh/join')) {
-  let socket = new Socket("/socket", {params: {token: window.userToken}})
   socket.connect()
-}
+
 let sesh_id = window.sesh_id
 let answer_container = document.querySelector('.answers')
 let question_container = document.querySelector('.questions')
@@ -196,4 +193,5 @@ channel.join()
   let remove_answer = (question) => {
     document.querySelector(`#answer_column_${question.id}`).remove()
   }
+}
 export default socket

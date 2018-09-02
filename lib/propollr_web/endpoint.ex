@@ -11,7 +11,7 @@ defmodule PropollrWeb.Endpoint do
     Plug.Static,
     at: "/",
     from: :propollr,
-    gzip: true,
+    gzip: (if Mix.env() == :dev || Mix.env() == :test, do: false, else: true),
     only: ~w(css images js favicon.ico robots.txt webfonts .well-known)
   )
 
