@@ -1,3 +1,8 @@
+.navbar-burger {
+  color: white; }
+  .navbar-burger:hover {
+    color: #dbdbdb; }
+
 .card {
   margin-bottom: 2.5%; }
 
