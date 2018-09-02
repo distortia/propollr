@@ -5,13 +5,14 @@
 // and connect at the socket path in "lib/web/endpoint.ex":
 import {Socket} from "phoenix"
 
-let socket = new Socket("/socket", {params: {token: window.userToken}})
+
 
 //           //
 // variables //
 //           //
 
 if (window.location.pathname == "/sesh" || window.location.pathname.includes('/sesh/join')) {
+  let socket = new Socket("/socket", {params: {token: window.userToken}})
   socket.connect()
 }
 let sesh_id = window.sesh_id

@@ -27,14 +27,15 @@ config :logger, level: :info
 # to the previous section and set your `:url` port to 443:
 #
 config :propollr, PropollrWeb.Endpoint,
- url: [host: "propollr.com", port: 443],
- http: [port: 80],
- force_ssl: [hsts: true],
- https: [port: 443,
- otp_app: :propollr,
- keyfile: "/etc/letsencrypt/live/propollr.com/privkey.pem",
- cacertfile: "/etc/letsencrypt/live/propollr.com/chain.pem", 
- certfile: "/etc/letsencrypt/live/propollr.com/cert.pem"]
+    check_origin: ["//propollr.com", "//35.202.203.25"],
+    url: [host: "propollr.com", port: 443],
+    http: [port: 80],
+    force_ssl: [hsts: true],
+    https: [port: 443,
+      otp_app: :propollr,
+      keyfile: "/etc/letsencrypt/live/propollr.com/privkey.pem",
+      cacertfile: "/etc/letsencrypt/live/propollr.com/chain.pem", 
+      certfile: "/etc/letsencrypt/live/propollr.com/cert.pem"]
 # config :propollr, PropollrWeb.Endpoint,
 #   cache_static_manifest: "priv/static/cache_manifest.json",
 #   http: [port: 80],
@@ -75,6 +76,4 @@ config :propollr, PropollrWeb.Endpoint,
 # Finally import the config/prod.secret.exs
 # which should be versioned separately.
 
-config :propollr, PropollrWeb.Endpoint,
-check_origin: ["//propollr.com", "//35.202.203.25"]
 import_config "prod.secret.exs"
