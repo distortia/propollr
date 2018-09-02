@@ -26,19 +26,27 @@ config :logger, level: :info
 # To get SSL working, you will need to add the `https` key
 # to the previous section and set your `:url` port to 443:
 #
-
 config :propollr, PropollrWeb.Endpoint,
-  cache_static_manifest: "priv/static/cache_manifest.json",
-  http: [port: 80],
-  url: [host: "propollr.com"],
-  force_ssl: [hsts: true, host: nil, rewrite_on: [:x_forwarded_proto]],
-  https: [port: 443,
-          otp_app: :propollr,
-          keyfile: "/etc/letsencrypt/live/propollr.com/privkey.pem",
-          certfile: "/etc/letsencrypt/live/propollr.com/chain.pem",
-          cacertfile: "/etc/letsencrypt/live/propollr.com/cert.pem" # OPTIONAL Key for intermediate certificates
-          ]
-#
+ url: [host: "propollr.com", port: 443],
+ http: [port: 80],
+ force_ssl: [hsts: true],
+ https: [port: 443,
+ otp_app: :propollr,
+ keyfile: "/etc/letsencrypt/live/propollr.com/privkey.pem",
+ cacertfile: "/etc/letsencrypt/live/propollr.com/chain.pem", 
+ certfile: "/etc/letsencrypt/live/propollr.com/cert.pem"]
+# config :propollr, PropollrWeb.Endpoint,
+#   cache_static_manifest: "priv/static/cache_manifest.json",
+#   http: [port: 80],
+#   url: [host: "propollr.com"],
+#   force_ssl: [hsts: true, host: nil, rewrite_on: [:x_forwarded_proto]],
+#   https: [port: 443,
+#           otp_app: :propollr,
+#           keyfile: "/etc/letsencrypt/live/propollr.com/privkey.pem",
+#           certfile: "/etc/letsencrypt/live/propollr.com/chain.pem",
+#           cacertfile: "/etc/letsencrypt/live/propollr.com/cert.pem" # OPTIONAL Key for intermediate certificates
+#           ]
+# #
 # Where those two env variables return an absolute path to
 # the key and cert in disk or a relative path inside priv,
 # for example "priv/ssl/server.key".
