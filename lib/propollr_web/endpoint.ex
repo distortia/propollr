@@ -12,7 +12,7 @@ defmodule PropollrWeb.Endpoint do
     at: "/",
     from: :propollr,
     gzip: (if Mix.env() == :dev || Mix.env() == :test, do: false, else: true),
-    only: ~w(css images js favicon.ico robots.txt webfonts .well-known)
+    only: ~w(css images js favicon.ico robots.txt webfonts .well-known apple-touch-icon.png favicon-32x32.png favicon-16x16.png site.webmanifest afari-pinned-tab.svg)
   )
 
   # Code reloading can be explicitly enabled under the

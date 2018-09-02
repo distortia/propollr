@@ -24,8 +24,32 @@ Ready to run in production? Please [check our deployment guides](http://www.phoe
     * user: postgres
     * pass: K0Fd1DJ8GwFKlFOa
 
-To run:
-`sudo MIX_ENV=prod PORT=80 elixir --detached --sname propollr --cookie propollr -S mix do compile, phx.server`
 
-To kill:
-`ps ax | grep beam` then `sudo kill <pid>`
+# Prod
+
+Your machine:
+
+```
+$ mix deps.get --only prod
+$ MIX_ENV=prod PORT=4001 mix compile
+
+# Compile assets
+$ brunch build --production
+
+$ mix phx.digest
+
+$ git add .
+$ git commit -m <Your Message>
+$ git push
+```
+
+On the server:
+
+
+To run:
+```
+$ git pull
+$ ps ax | grep beam
+$ sudo kill <pid>
+$ sudo MIX_ENV=prod PORT=80 elixir --detached --sname propollr --cookie propollr -S mix do compile, phx.server
+```
