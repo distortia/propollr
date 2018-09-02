@@ -29,9 +29,9 @@ config :logger, level: :info
 
 config :propollr, PropollrWeb.Endpoint,
   cache_static_manifest: "priv/static/cache_manifest.json",
-  http: [port: {:system, "PORT"}],
+  http: [port: 80],
   url: [host: "propollr.com"],
-  force_ssl: [hsts: true, host: nil],
+  force_ssl: [hsts: true, host: nil, rewrite_on: [:x_forwarded_proto]],
   https: [port: 443,
           otp_app: :propollr,
           keyfile: "/etc/letsencrypt/live/propollr.com/privkey.pem",
