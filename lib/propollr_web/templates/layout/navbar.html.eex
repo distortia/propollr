@@ -13,6 +13,7 @@
   <div class="navbar-menu">
     <div class="navbar-end">
       <%= link "Home", to: page_path(@conn, :index), class: active_class(@conn, page_path(@conn, :index), "navbar-item") %>
+      <%= link "Feedback", to: "#", class: "navbar-item modal-button" %>
       <%= if !@conn.assigns[:session_unique_id] do %>
         <%= link "Login or Sign Up", to: user_path(@conn, :new), class: active_class(@conn, user_path(@conn, :new), "navbar-item") %>
       <% end %>

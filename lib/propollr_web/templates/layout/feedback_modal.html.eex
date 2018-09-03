@@ -1,0 +1,32 @@
+<div class="modal" id="feedback-modal">
+  <%= form_for @conn, page_path(@conn, :feedback), fn f -> %>
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Feedback</p>
+      </header>
+      <section class="modal-card-body">
+        <div class="field">
+          <label class="label">Feedback</label>
+          <div class="control">
+            <%= textarea f, :feedback, class: "textarea" %>
+          </div>
+        </div>
+      </section>
+      <footer class="modal-card-foot">
+        <%= submit class: "button is-primary is-outlined" do %>
+          <span class="icon is-small">
+            <i class="fas fa-envelope"></i>
+          </span>
+          <span>Send</span>
+        <% end %>
+        <a class="button is-warning is-outlined modal-cancel">
+          <span class="icon is-small">
+            <i class="fas fa-undo-alt"></i>
+          </span>
+          <span>Cancel</span>
+        </a>
+      </footer>
+    </div>
+  <% end %>
+</div>

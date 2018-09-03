@@ -21,7 +21,7 @@ import "phoenix_html"
 import socket from "./socket"
 
 window.copy_share_link = function(base_url, sesh_id){
-let clipboard = window.navigator.clipboard;
+let clipboard = window.navigator.clipboard
 let full_url = `${base_url}${sesh_id}`
 let share_container = document.querySelector(`#share-link-container-${sesh_id} a`)
 navigator.clipboard.writeText(full_url).then(
@@ -35,14 +35,39 @@ navigator.clipboard.writeText(full_url).then(
   }).catch(err => {
     console.log("error")
   })
-};
+}
 
 // Navbar toggle
 document.addEventListener('DOMContentLoaded', () => {
     let burger = document.querySelector('.navbar-burger')
     let menu = document.querySelector('.navbar-menu')
     burger.addEventListener('click', () => {
-      burger.classList.toggle('is-active');
-      menu.classList.toggle('is-active');
-    });
-  });
+      burger.classList.toggle('is-active')
+      menu.classList.toggle('is-active')
+    })
+  })
+
+// Feedback Modal
+document.addEventListener('DOMContentLoaded', function () {
+  let rootEl = document.documentElement
+  let feedback_modal = document.querySelector('.modal')
+  let modal_button = document.querySelector('.modal-button')
+  let modal_cancel = document.querySelector('.modal-cancel')
+
+  modal_button.addEventListener('click', () => {
+    rootEl.classList.add('is-clipped')
+    feedback_modal.classList.add('is-active')
+  })
+
+  modal_cancel.addEventListener('click', () => { closeModal() })
+
+  document.addEventListener('keydown', (event) => {
+    var e = event || window.event
+    if (e.keyCode === 27) { closeModal() }
+  })
+
+  let closeModal = () => {
+    rootEl.classList.remove('is-clipped')
+    feedback_modal.classList.remove('is-active')
+  }
+})

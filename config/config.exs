@@ -44,3 +44,6 @@ config :veil, PropollrWeb.Veil.Mailer,
   api_key: "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"
 
 # -- End Veil Configuration
+config :propollr, PropollrWeb.Feedback.Mailer,
+  adapter: Swoosh.Adapters.Sendgrid,
+  api_key: "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"

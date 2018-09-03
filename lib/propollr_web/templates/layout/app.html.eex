@@ -34,7 +34,9 @@
     </main>
 
     <%= render "footer.html", conn: @conn %>
-
+    
+    <%= render "feedback_modal.html", conn: @conn %>
+    
     <script>window.sesh_id = "<%= Plug.Conn.get_session(@conn, :sesh_id) %>";</script>
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
     <!-- Global site tag (gtag.js) - Google Analytics -->

@@ -1722,6 +1722,35 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
+// Feedback Modal
+document.addEventListener('DOMContentLoaded', function () {
+  var rootEl = document.documentElement;
+  var feedback_modal = document.querySelector('.modal');
+  var modal_button = document.querySelector('.modal-button');
+  var modal_cancel = document.querySelector('.modal-cancel');
+
+  modal_button.addEventListener('click', function () {
+    rootEl.classList.add('is-clipped');
+    feedback_modal.classList.add('is-active');
+  });
+
+  modal_cancel.addEventListener('click', function () {
+    closeModal();
+  });
+
+  document.addEventListener('keydown', function (event) {
+    var e = event || window.event;
+    if (e.keyCode === 27) {
+      closeModal();
+    }
+  });
+
+  var closeModal = function closeModal() {
+    rootEl.classList.remove('is-clipped');
+    feedback_modal.classList.remove('is-active');
+  };
+});
+
 });
 
 require.register("js/socket.js", function(exports, require, module) {

@@ -19,6 +19,7 @@ defmodule PropollrWeb.Router do
     pipe_through(:browser)
 
     get("/", PageController, :index)
+    post("/feedback", PageController, :feedback)
 
     # Sessions
     get("/sesh", SeshController, :view)
