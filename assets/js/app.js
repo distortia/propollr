@@ -71,3 +71,34 @@ document.addEventListener('DOMContentLoaded', function () {
     feedback_modal.classList.remove('is-active')
   }
 })
+
+window.remove_option = (id) => {
+  let option_section = document.querySelector('.option-section')
+  option_section.querySelector(`#option-${id}`).remove()
+}
+
+window.add_option = () => {
+  let option_section = document.querySelector('.option-section')
+  let current_option_count = option_section.querySelectorAll('input').length
+  option_section.innerHTML += option_template(current_option_count + 1)
+}
+let option_template = (option_count) => {
+  return `
+  <div class="field" id="option-${option_count}">
+    <label class="label">Option ${option_count}:</label>
+    <div class="control">
+      <input class="input" id="question_params_option${option_count}" name="question_params[option${option_count}]" placeholder="Option" type="text">
+    </div>
+    <p class="help is-danger" onclick="window.remove_option(${option_count})">
+      <a class="button is-small is-danger is-outlined">
+        <span class="icon">
+          <i class="fas fa-times"></i>
+        </span>
+        <span>
+          Delete
+        </span>
+      </a>
+    </p>
+  </div>
+  `
+}
