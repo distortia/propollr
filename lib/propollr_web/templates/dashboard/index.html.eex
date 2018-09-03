@@ -6,7 +6,7 @@
         </div>
     </div>
 </section>
-
+<%= render PropollrWeb.LayoutView, "flash.html", conn: @conn %>
 <section class="section">
     <div class="container">
         <%= link to: sesh_path(@conn, :new), class: "button is-primary is-outlined is-rounded is-pulled-right" do %>

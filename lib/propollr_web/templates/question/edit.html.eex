@@ -3,6 +3,7 @@
     <h1 class="title">Editing Question</h1>
   </div>
 </section>
+<%= render PropollrWeb.LayoutView, "flash.html", conn: @conn %>
 <section class="section">
   <div class="container">
     <%= form_for @conn, question_path(@conn, :update, question_id: @question.id), [as: :question_params, method: :put], fn f -> %>

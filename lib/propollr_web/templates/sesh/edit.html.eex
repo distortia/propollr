@@ -3,6 +3,7 @@
     <h1 class="title">Editing Session</h1>
   </div>
 </section>
+<%= render PropollrWeb.LayoutView, "flash.html", conn: @conn %>
 <section class="section">
   <div class="container">
     <%= form_for @changeset, sesh_path(@conn, :update, sesh_id: @sesh_id), [as: :sesh_params, method: :put, id: "update-form"], fn f -> %>

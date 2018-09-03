@@ -26,8 +26,6 @@
 
   <body class="has-navbar-fixed-top">
     <%= render "navbar.html", conn: @conn %>
-    
-    <%= render "flash.html", conn: @conn %>
 
     <main role="main">
       <%= render @view_module, @view_template, assigns %>

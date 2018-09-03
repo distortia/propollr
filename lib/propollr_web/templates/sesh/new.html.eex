@@ -5,6 +5,7 @@
     </div>
   </div>
 </section>
+<%= render PropollrWeb.LayoutView, "flash.html", conn: @conn %>
 <section class="section">
   <div class="container">
     <%= form_for @changeset, sesh_path(@conn, :create), [as: :sesh_params, id: "new-session-form"], fn f -> %>

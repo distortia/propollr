@@ -5,7 +5,7 @@
     </div>
   </div>
 </section>
-
+<%= render PropollrWeb.LayoutView, "flash.html", conn: @conn %>
 <section class="section">
   <div class="container">
     <div class="card">
