@@ -1,5 +1,6 @@
 defmodule PropollrWeb.SeshChannel do
   use Phoenix.Channel
+  alias PropollrWeb.Presence
   alias Propollr.Questions.Question
   alias Propollr.Seshes.Sesh
 
@@ -21,6 +22,11 @@ defmodule PropollrWeb.SeshChannel do
 
     # Send the initial barrage of questions and answers
     push(socket, "questions", %{questions: questions})
+    
+    push(socket, "presence_state", Presence.list(socket))
+    {:ok, _} = Presence.track(socket, sesh_id, %{
+      online_at: inspect(System.system_time(:seconds))
+    })
     {:noreply, socket}
   end
 

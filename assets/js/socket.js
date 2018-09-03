@@ -3,12 +3,14 @@
 
 // To use Phoenix channels, the first step is to import Socket
 // and connect at the socket path in "lib/web/endpoint.ex":
-import {Socket} from "phoenix"
+import {Socket, Presence} from "phoenix"
 
 //           //
 // variables //
 //           //
 let socket = new Socket("/socket", {params: {token: window.userToken}})
+let presences = {}
+
 if (window.location.pathname == "/sesh" || window.location.pathname.includes('/sesh/join')) {
   socket.connect()
 
@@ -56,6 +58,16 @@ channel.join()
   channel.on("remove_question", question => {
     remove_question(question)
     remove_answer(question)
+  })
+
+  channel.on("presence_state", state => {
+    presences = Presence.syncState(presences, state)
+    update_counters(presences)
+  })
+
+  channel.on("presence_diff", diff => {
+    presences = Presence.syncDiff(presences, diff)
+    update_counters(presences)
   })
 
 //         //
@@ -189,9 +201,13 @@ channel.join()
       <li>Option ${opt[0]}: ${opt[1]} Votes</li>
     `
   }
-
   let remove_answer = (question) => {
     document.querySelector(`#answer_column_${question.id}`).remove()
+  }
+  let update_counters = (presences) => {
+    Presence.list(presences, (id, {metas: [first, ...rest]}) => {
+      document.querySelector('.pollr-count').innerText = rest.length
+    })
   }
 }
 export default socket

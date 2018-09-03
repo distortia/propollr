@@ -1776,14 +1776,18 @@ Object.defineProperty(exports, "__esModule", {
 
 var _phoenix = require("phoenix");
 
-//           //
-// variables //
-//           //
-var socket = new _phoenix.Socket("/socket", { params: { token: window.userToken } }); // NOTE: The contents of this file will only be executed if
+function _toArray(arr) { return Array.isArray(arr) ? arr : Array.from(arr); } // NOTE: The contents of this file will only be executed if
 // you uncomment its entry in "assets/js/app.js".
 
 // To use Phoenix channels, the first step is to import Socket
 // and connect at the socket path in "lib/web/endpoint.ex":
+
+
+//           //
+// variables //
+//           //
+var socket = new _phoenix.Socket("/socket", { params: { token: window.userToken } });
+var presences = {};
 
 if (window.location.pathname == "/sesh" || window.location.pathname.includes('/sesh/join')) {
   socket.connect();
@@ -1834,6 +1838,16 @@ if (window.location.pathname == "/sesh" || window.location.pathname.includes('/s
   channel.on("remove_question", function (question) {
     remove_question(question);
     remove_answer(question);
+  });
+
+  channel.on("presence_state", function (state) {
+    presences = _phoenix.Presence.syncState(presences, state);
+    update_counters(presences);
+  });
+
+  channel.on("presence_diff", function (diff) {
+    presences = _phoenix.Presence.syncDiff(presences, diff);
+    update_counters(presences);
   });
 
   //         //
@@ -1920,9 +1934,17 @@ if (window.location.pathname == "/sesh" || window.location.pathname.includes('/s
   var option_template = function option_template(opt) {
     return "\n      <li>Option " + opt[0] + ": " + opt[1] + " Votes</li>\n    ";
   };
-
   var remove_answer = function remove_answer(question) {
     document.querySelector("#answer_column_" + question.id).remove();
+  };
+  var update_counters = function update_counters(presences) {
+    _phoenix.Presence.list(presences, function (id, _ref) {
+      var _ref$metas = _toArray(_ref.metas),
+          first = _ref$metas[0],
+          rest = _ref$metas.slice(1);
+
+      document.querySelector('.pollr-count').innerText = rest.length;
+    });
   };
 }
 exports.default = socket;

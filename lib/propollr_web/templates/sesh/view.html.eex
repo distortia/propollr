@@ -16,6 +16,10 @@
           <br>
           Questions: <%= length(@sesh.questions) %>
           <br>
+          <%= if user_belongs_to_session?(@conn) do %>
+            Pollrs Online: <span class="pollr-count"></span>
+            <br>
+          <% end %>
           <span id="share-link-container-<%= @sesh.sesh_id %>">
             <a onclick="copy_share_link('<%= PropollrWeb.Endpoint.url() <> "/sesh/join/" %>', '<%= @sesh.sesh_id %>')" class="button is-info is-outlined share-link">
                  <span class="icon">
