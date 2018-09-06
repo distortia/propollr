@@ -20,4 +20,18 @@ defmodule PropollrWeb.PageController do
     |> put_flash(:info, "Feedback sent! We really appreciate it!")
     |> redirect(to: "/" <> origin)
   end
+
+  def newsletter(conn, %{"email" => email}) do
+    # TODO: sign them up for our newsletter
+    conn
+    |> put_flash(:info, "Thanks for signing up for our newsletter!")
+    |> render("index.html")
+  end
+
+  def contact(conn, %{"message" => message}) do
+    # TODO: Send us a contact massge, similar to feedback
+    conn
+    |> put_flash(:info, "Thanks for your message! We will respond as soon as possible.")
+    |> render("index.html")
+  end
 end

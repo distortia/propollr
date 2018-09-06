@@ -1,123 +1,300 @@
-<section class="section">
-  <div class="container">
-    <div class="columns">
-      <div class="column">
-        <p class="title">ProPollr is</p>
-        <div class="content">
-          a tool for real-time collaboration with a focus on honest and anonymous feedback.
-          Our main goal is to create an atmosphere where 
-          We aim to invoke honest conversations which drive better discussions.
-        </div>
-      </div>
-      <div class="column">
-        <p class="title">ProPollr is Not</p>
-        <div class="content">
-          A replacement for traditional forms where you want to associate answers with a name.
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<section class="hero features is-light is-bold">
+<section class="hero is-primary is-bold is-medium">
   <div class="hero-body">
     <div class="container">
-      <h1 class="title">Features</h1>
-      <h3 class="subtitle">Less is More!</h3>
+      <div class="columns">
+        <div class="column">
+          <p class="title">ProPollr is</p>
+          <div class="content">
+            A tool for real-time collaboration with a focus on honest and anonymous feedback.
+            Our main goal is to create an atmosphere where 
+            We aim to invoke honest conversations which drive better discussions.
+          </div>
+        </div>
+        <div class="column">
+          <p class="title">ProPollr is Not</p>
+          <div class="content">
+            A replacement for traditional forms where you want to associate answers with a name.
+            Picture taking orders for lunch.
+          </div>
+        </div>
+      </div>
+    </div> 
+  </div>
+</section>
+<section class="section">
+  <div class="container">
+    <p class="title has-text-centered">Examples</p>
+    <p class="subtitle has-text-centered">A Few Ideas</p>
+    <div class="columns">
+      <div class="column">
+        <div class="card">
+          <header class="card-header">
+            <p class="card-header-title">Presentations</p>
+          </header>
+          <div class="card-content">
+            <div class="content">
+              Pre-Poll your attendees in order to cater your talk to ther experience levels.
+              Keep them captivated for longer!
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="column">
+        <div class="card">
+          <header class="card-header">
+            <p class="card-header-title">Group Polling</p>
+          </header>
+          <div class="card-content">
+            <div class="content">
+              FaceBook groups allow for polls, but names are attached.
+              This can cause a lack of answering.
+              Gain more confidence in your polling!
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="column">
+        <div class="card">
+          <header class="card-header">
+            <p class="card-header-title">Group Decisions</p>
+          </header>
+          <div class="card-content">
+            <div class="content">
+              Want to assign points to a card? Ask the team instead of doing it manually.
+              Let them answer on their own time and aggregate the results.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="column">
+        <div class="card">
+          <header class="card-header">
+            <p class="card-header-title">Retros</p>
+          </header>
+          <div class="card-content">
+            <div class="content">
+              What is working and what is not? Perform retros with your team.
+              Identify action items and make the appropriate changes.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+<section class="hero features is-primary is-bold is-medium">
+  <div class="container">
+    <div class="hero-body">
+      <p class="title has-text-centered">Features</p>
+      <p class="subtitle has-text-centered">Less is More!</p>
+      <div class="columns">
+        <div class="column">
+          <div class="card">
+            <header class="card-header">
+              <p class="card-header-title">
+                Simplistic Interface
+              </p>
+              <span class="card-header-icon">
+                <span class="icon">
+                  <i class="fas fa-browser"></i>
+                </span>
+              </span>
+            </header>
+            <div class="card-content">
+              <div class="content">
+                Focus on what really matters, your discussions.
+                Don't get lost in the technology!
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <div class="card">
+            <header class="card-header">
+              <p class="card-header-title">
+                Anonymous Polling
+              </p>
+              <span class="card-header-icon">
+                <span class="icon">
+                  <i class="fas fa-user-secret"></i>
+                </span>
+              </span>
+            </header>
+            <div class="card-content">
+              <div class="content">
+                We believe that anonyminity leads to honest feedback.
+                By having pollrs remain anonymous, there is no fear of consequences for speaking their mind.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <div class="card">
+            <header class="card-header">
+              <p class="card-header-title">
+                Real-Time Capabilities
+              </p>
+              <span class="card-header-icon">
+                <span class="icon">
+                  <i class="fas fa-clock"></i>
+                </span>
+              </span>
+            </header>
+            <div class="card-content">
+              <div class="content">
+                Ask questions, get answers, all in real-time.
+                Dynamically shape your discussions and move them in a constructive manner.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <div class="card">
+            <header class="card-header">
+              <p class="card-header-title">
+                Scalable
+              </p>
+              <span class="card-header-icon">
+                <span class="icon">
+                  <i class="fas fa-users"></i>
+                </span>
+              </span>
+            </header>
+            <div class="card-content">
+              <div class="content">
+                ProPollr can handle all of your polling needs, from small teams to large organizations.
+                All without compromising the basic values of ProPollr.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-footer">
+        <p class="has-text-centered">
+          More Coming!
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="section is-medium">
+  <div class="container">
+    <p class="title has-text-centered">How It Works</p>
+    <p class="subtitle has-text-centered">It is <em>Really</em> this Simple</p>
+    <div class="steps is-large">
+      <div class="step-item is-completed is-primary">
+        <div class="step-marker">
+          <span class="icon">
+            <i class="fas fa-sign-in"></i>
+          </span>
+        </div>
+        <div class="step-details">
+          <p class="step-title is-completed">Step 1</p>
+          <p>Log In or Create an Account</p>
+        </div>
+      </div>
+      <div class="step-item is-completed">
+        <div class="step-marker">
+          <span class="icon">
+            <i class="fas fa-plus"></i>
+          </span>
+        </div>
+        <div class="step-details">
+          <p class="step-title">Step 2</p>
+          <p>Create a Sesh</p>
+        </div>
+      </div>
+      <div class="step-item is-completed">
+        <div class="step-marker">
+          <span class="icon">
+            <i class="fas fa-users"></i>
+          </span>
+        </div>
+        <div class="step-details">
+          <p class="step-title">Step 3</p>
+          <p>Invite Users to Your Sesh.</p>
+        </div>
+      </div>
+      <div class="step-item is-completed">
+        <div class="step-marker">
+          <span class="icon">
+            <i class="fas fa-comment-plus"></i>
+          </span>
+        </div>
+        <div class="step-details">
+          <p class="step-title">Step 4</p>
+          <p>Ask Questions and Get Real-Time Feedback</p>
+        </div>
+      </div>
+    </div>
+    <div class="has-text-centered">
+      <%= link "Get Started", to: user_path(@conn, :new), class: "button is-primary is-outlined is-large" %>
+    </div>
+  </div>
+</section>
+<section class="hero is-primary is-bold">
+  <div class="hero-body">
+    <div class="container">
+      <p class="subtitle has-text-centered">
+        Sign Up to Recieve News From Us!
+      </p>
+      <%= form_for @conn, page_path(@conn, :newsletter), fn f -> %>
+        <div class="field is-grouped">
+          <p class="control is-expanded">
+            <%= email_input f, :email, class: "input", required: true, placeholder: "me@mydomain.com" %>
+          </p>
+          <p class="control">
+            <%= submit class: "button is-light is-outlined" do %>
+              <span class="icon">
+                <i class="fas fa-envelope"></i>
+              </span>
+              <span>Sign Up</span>
+            <% end %>
+          </p>
+        </div>
+          <p class="help has-text-centered">
+            We will never give your email address to any 3rd party.
+          </p>
+      <% end %>
     </div>
   </div>
 </section>
 <section class="section">
-  <div class="columns">
-    <div class="column">
+  <div class="container">
+    <%= form_for @conn, page_path(@conn, :contact), fn f -> %>
+    <p class="title has-text-centered">
+      Contact Us!
+    </p>
+    <p class="subtitle has-text-centered">
+      We Love Hearing from You
+    </p>
       <div class="card">
-        <header class="card-header">
-          <p class="card-header-title">
-            Simplistic Interface
-          </p>
-          <span class="card-header-icon">
-            <span class="icon">
-              <i class="fas fa-browser"></i>
-            </span>
-          </span>
-        </header>
         <div class="card-content">
-          <div class="content">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat.
+          <div class="field">
+            <p class="control">
+              <%= label f, :email, "Email", class: "label" %>
+              <%= email_input f, :email, placeholder: "me@mydomain.com", required: true, class: "input" %>
+            </p>
+            <div class="field">
+              <p class="control">
+                <%= label f, :message, "Message", class: "label" %>
+                <%= textarea f, :message, placeholder: "My Message", required: true, class: "textarea" %>
+              </p>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="column">
-      <div class="card">
-        <header class="card-header">
-          <p class="card-header-title">
-            Anonymous Polling
+        <footer class="card-footer">
+          <p class="card-footer-item">
+            <%= submit class: "button is-primary is-fullwidth is-outlined" do %>
+              <span class="icon">
+                <i class="fas fa-envelope"></i>
+              </span>
+              <span>Send</span>
+            <% end %>
           </p>
-          <span class="card-header-icon">
-            <span class="icon">
-              <i class="fas fa-user-secret"></i>
-            </span>
-          </span>
-        </header>
-        <div class="card-content">
-          <div class="content">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat.
-          </div>
-        </div>
+        </footer>
       </div>
-    </div>
-    <div class="column">
-      <div class="card">
-        <header class="card-header">
-          <p class="card-header-title">
-            Realtime Capabilities
-          </p>
-          <span class="card-header-icon">
-            <span class="icon">
-              <i class="fas fa-clock"></i>
-            </span>
-          </span>
-        </header>
-        <div class="card-content">
-          <div class="content">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat.
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="column">
-      <div class="card">
-        <header class="card-header">
-          <p class="card-header-title">
-            Scalable
-          </p>
-          <span class="card-header-icon">
-            <span class="icon">
-              <i class="fas fa-users"></i>
-            </span>
-          </span>
-        </header>
-        <div class="card-content">
-          <div class="content">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat.
-          </div>
-        </div>
-      </div>
-    </div>
+    <% end %>
   </div>
-</section>
-<section class="section">
-  
 </section>

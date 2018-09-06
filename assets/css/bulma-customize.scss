@@ -24,3 +24,5 @@ $purple:       hsl(273.7, 61.4%, 43.7%);
 $red:          hsl(3.5, 61.4%, 43.7%);
 
 @import "../node_modules/bulma/bulma";
+@import "../node_modules/bulma-extensions/bulma-steps/src/sass/index.sass";
+@import "../node_modules/bulma-extensions/bulma-divider/src/sass/index.sass";

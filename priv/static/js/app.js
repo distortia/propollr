@@ -1707,7 +1707,6 @@ window.copy_share_link = function (base_url, sesh_id) {
 
 // Navbar toggle
 
-
 // Import local files
 //
 // Local files can be imported directly using relative
