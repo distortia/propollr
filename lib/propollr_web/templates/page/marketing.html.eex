@@ -1,0 +1,123 @@
+<section class="section">
+  <div class="container">
+    <div class="columns">
+      <div class="column">
+        <p class="title">ProPollr is</p>
+        <div class="content">
+          a tool for real-time collaboration with a focus on honest and anonymous feedback.
+          Our main goal is to create an atmosphere where 
+          We aim to invoke honest conversations which drive better discussions.
+        </div>
+      </div>
+      <div class="column">
+        <p class="title">ProPollr is Not</p>
+        <div class="content">
+          A replacement for traditional forms where you want to associate answers with a name.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="hero features is-light is-bold">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">Features</h1>
+      <h3 class="subtitle">Less is More!</h3>
+    </div>
+  </div>
+</section>
+<section class="section">
+  <div class="columns">
+    <div class="column">
+      <div class="card">
+        <header class="card-header">
+          <p class="card-header-title">
+            Simplistic Interface
+          </p>
+          <span class="card-header-icon">
+            <span class="icon">
+              <i class="fas fa-browser"></i>
+            </span>
+          </span>
+        </header>
+        <div class="card-content">
+          <div class="content">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="column">
+      <div class="card">
+        <header class="card-header">
+          <p class="card-header-title">
+            Anonymous Polling
+          </p>
+          <span class="card-header-icon">
+            <span class="icon">
+              <i class="fas fa-user-secret"></i>
+            </span>
+          </span>
+        </header>
+        <div class="card-content">
+          <div class="content">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="column">
+      <div class="card">
+        <header class="card-header">
+          <p class="card-header-title">
+            Realtime Capabilities
+          </p>
+          <span class="card-header-icon">
+            <span class="icon">
+              <i class="fas fa-clock"></i>
+            </span>
+          </span>
+        </header>
+        <div class="card-content">
+          <div class="content">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="column">
+      <div class="card">
+        <header class="card-header">
+          <p class="card-header-title">
+            Scalable
+          </p>
+          <span class="card-header-icon">
+            <span class="icon">
+              <i class="fas fa-users"></i>
+            </span>
+          </span>
+        </header>
+        <div class="card-content">
+          <div class="content">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="section">
+  
+</section>

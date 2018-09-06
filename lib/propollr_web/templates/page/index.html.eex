@@ -12,21 +12,27 @@
     <div class="row">
       <div class="columns">
         <div class="column">
-          <h4 class="subtitle">Login or Signup!</h4>
-          <%= form_for @conn, user_path(@conn, :create), [as: :user], fn f -> %>
-            <div class="field">
-              <label class="label">Email:</label>
-              <div class="control">
-                <%= text_input f, :email, class: "input", placeholder: "us@propollr.com" %>
+          <%= if @conn.assigns[:session_unique_id] do %>
+            <h4 class="subtitle">You are already logged in.</h4>
+            <%= link "Go to Dashboard", to: dashboard_path(@conn, :index), class: "button is-primary is-outlined" %>
+          <% else %>
+            <h4 class="subtitle">Login or Signup!</h4>
+            <%= form_for @conn, user_path(@conn, :create), [as: :user], fn f -> %>
+              <div class="field">
+                <label class="label">Email:</label>
+                <div class="control">
+                  <%= text_input f, :email, class: "input", placeholder: "us@propollr.com" %>
+                </div>
               </div>
-            </div>
-            <div class="field">
-              <div class="control">
-                <%= submit "Go!", class: "button is-primary is-fullwidth" %>
+              <div class="field">
+                <div class="control">
+                  <%= submit "Go!", class: "button is-primary is-fullwidth" %>
+                </div>
               </div>
-            </div>
-          <% end %>        
+            <% end %>        
+          <% end %>
         </div>
+          
         <div class="column">
           <h4 class="subtitle">Join a Session</h4>
           <%= form_for @conn, sesh_path(@conn, :join), fn f -> %>
@@ -47,3 +53,4 @@
     </div>
   </div>
 </section>
+<%= render "marketing.html", conn: @conn %>
