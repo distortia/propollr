@@ -20,7 +20,6 @@ defmodule PropollrWeb.Router do
 
     get("/", PageController, :index)
     post("/feedback", PageController, :feedback)
-    post("/newsletter", PageController, :newsletter)
     post("/contact", PageController, :contact)
 
     # Sessions

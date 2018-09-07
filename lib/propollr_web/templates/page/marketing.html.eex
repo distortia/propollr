@@ -233,42 +233,46 @@
     </div>
   </div>
 </section>
+
 <section class="hero is-primary is-bold">
   <div class="hero-body">
     <div class="container">
       <p class="subtitle has-text-centered">
         Sign Up to Recieve News From Us!
       </p>
-      <%= form_for @conn, page_path(@conn, :newsletter), fn f -> %>
+      <form action="https://alphaity.us10.list-manage.com/subscribe/post?u=754435ba61eff39080741959c&amp;id=e2ce392544" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
         <div class="field is-grouped">
           <p class="control is-expanded">
-            <%= email_input f, :email, class: "input", required: true, placeholder: "me@mydomain.com" %>
+            <input type="email" value="" name="EMAIL" class="input" id="mce-EMAIL" placeholder="email address" required>
+            <div style="position: absolute; left: -5000px;" aria-hidden="true">
+              <input type="text" name="b_754435ba61eff39080741959c_e2ce392544" tabindex="-1" value="">
+            </div>
           </p>
           <p class="control">
-            <%= submit class: "button is-light is-outlined" do %>
+            <a href="#" class="button is-light is-outlined" onclick="document.querySelector('mce-EMAIL').submit()">
               <span class="icon">
                 <i class="fas fa-envelope"></i>
               </span>
               <span>Sign Up</span>
-            <% end %>
+            </a>
           </p>
         </div>
-          <p class="help has-text-centered">
-            We will never give your email address to any 3rd party.
-          </p>
-      <% end %>
+      </form>
+      <p class="help has-text-centered">
+        We will only use your email for ProPollr news and info.
+      </p>
     </div>
   </div>
 </section>
 <section class="section">
   <div class="container">
-    <%= form_for @conn, page_path(@conn, :contact), fn f -> %>
-    <p class="title has-text-centered">
-      Contact Us!
-    </p>
-    <p class="subtitle has-text-centered">
-      We Love Hearing from You
-    </p>
+    <%= form_for @conn, page_path(@conn, :contact), [id: "contact-form"], fn f -> %>
+      <p class="title has-text-centered">
+        Contact Us!
+      </p>
+      <p class="subtitle has-text-centered">
+        We Love Hearing from You
+      </p>
       <div class="card">
         <div class="card-content">
           <div class="field">
