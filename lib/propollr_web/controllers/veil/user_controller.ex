@@ -35,7 +35,9 @@ defmodule PropollrWeb.Veil.UserController do
   defp sign_and_email(conn, %User{} = user) do
     with {:ok, request} <- Veil.create_request(conn, user),
          {:ok, email} <- Veil.send_login_email(conn, user, request) do
-      render(conn, "show.html", user: user, email: email)
+          conn
+          |> put_flash(:info, "Email has been sent! Please check your inbox.")
+          |> redirect(to: page_path(conn, :index))
     else
       error ->
         error

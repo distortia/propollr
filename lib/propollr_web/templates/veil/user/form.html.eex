@@ -1,34 +1,40 @@
-<section class="section">
-  <div class="container">
-    <%= form_for @changeset, @action, [id: "login-form"], fn f -> %>
-      <div class="card">
-        <div class="card-content">
-        <%= if @changeset.action do %>
-          <div class="notification is-error alert alert-danger" role="alert">
-            <button class="delete" onclick="document.querySelector('.alert-danger').style.display = 'none'"></button>
-            <%= get_flash(@conn, :error) %>
-          </div>
-        <% end %>
-          
-          <div class="field">
-            <%= label f, :email, class: "label" %>  
-            <div class="control">
-              <%= email_input f, :email, class: "input", placeholder: "us@propollr.com" %>
-            </div>
-            <%= error_tag f, :email %>
-          </div>
-        </div>
-        <footer class="card-footer">
-          <div class="card-footer-item">
-            <a onclick="document.getElementById('login-form').submit()" class="button is-primary is-outlined is-fullwidth">
-              <span class="icon">
-                <i class="fas fa-envelope-square"></i>
-              </span>
-              <span>Let's Go!</span>
-            </a>
-          </div>
-        </footer>
+<%= form_for @changeset, @action, [id: "login-form"], fn f -> %>
+  <div class="card">
+    <div class="card-content">
+    <%= if @changeset.action do %>
+      <div class="notification is-error alert alert-danger" role="alert">
+        <button class="delete" onclick="document.querySelector('.alert-danger').style.display = 'none'"></button>
+        <%= get_flash(@conn, :error) %>
       </div>
     <% end %>
+      
+      <div class="field">
+        <%= label f, :email, class: "label" %>  
+        <div class="control">
+          <%= email_input f, :email, class: "input", placeholder: "us@propollr.com", required: true %>
+        </div>
+        <%= error_tag f, :email %>
+      </div>
+    </div>
+    <footer class="card-footer">
+      <div class="card-footer-item">
+        <a onclick="submitForm()" type="submit" class="button is-primary is-outlined is-fullwidth">
+          <span class="icon">
+            <i class="fas fa-envelope-square"></i>
+          </span>
+          <span>Let's Go!</span>
+        </a>
+      </div>
+    </footer>
   </div>
-</section>
+<% end %>
+<script>
+  let email_input = document.querySelector('#user_email')
+  let submit_button = document.querySelector('.button')
+  let form = document.getElementById('login-form')
+  let submitForm = () => {
+    if (email_input.value) {
+      form.submit()
+    }
+  }
+</script>
