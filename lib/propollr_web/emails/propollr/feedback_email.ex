@@ -1,4 +1,4 @@
-defmodule PropollrWeb.Feedback.FeedbackEmail do
+defmodule PropollrWeb.FeedbackEmail do
   use Phoenix.Swoosh, view: PropollrWeb.Veil.EmailView
 
   def generate(feedback) do

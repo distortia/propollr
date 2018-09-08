@@ -1,7 +1,8 @@
 defmodule PropollrWeb.PageController do
   use PropollrWeb, :controller
-  alias PropollrWeb.Feedback.FeedbackEmail
-  alias PropollrWeb.Feedback.Mailer
+  alias PropollrWeb.FeedbackEmail
+  alias PropollrWeb.ContactEmail
+  alias PropollrWeb.Mailer
   def index(conn, _params) do
     render(conn, "index.html")
   end
@@ -19,5 +20,13 @@ defmodule PropollrWeb.PageController do
     conn
     |> put_flash(:info, "Feedback sent! We really appreciate it!")
     |> redirect(to: "/" <> origin)
+  end
+
+  def contact(conn, %{"message" => message, "email" => email}) do
+    ContactEmail.generate(email, message) |> Mailer.deliver()
+
+    conn
+    |> put_flash(:info, "Thanks for your message! We will respond as soon as possible.")
+    |> redirect(to: page_path(conn, :index))
   end
 end

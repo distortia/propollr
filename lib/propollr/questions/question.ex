@@ -43,9 +43,13 @@ defmodule Propollr.Questions.Question do
   end
 
   def update(question_id, question_params) do
-    question_id
-    |> __MODULE__.get()
-    |> Ecto.Changeset.change(question_params)
+    question =
+      question_id
+      |> __MODULE__.get()
+    original_answers = question.answers
+
+    question
+    |> Ecto.Changeset.change(%{question_params | answers: original_answers})
     |> Repo.update()
   end
 
