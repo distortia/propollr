@@ -15,14 +15,19 @@
               <%= text_input f, :text, value: @question.text, class: "input" %>
             </div>
           </div>
-          <%= for {option, index} <- Enum.with_index(@question.options, 1) do %> 
-            <label class="label">Option <%= index %></label>
-            <div class="field">
-              <div class="control">
-                <%= text_input f, String.to_atom("option#{index}"), value: option, class: "input" %>
-              </div>
-            </div>
-          <% end %>
+          <a class="button is-success is-outlined" onclick="window.add_option()">
+            <span class="icon">
+              <i class="fas fa-plus"></i>
+            </span>
+            <span>
+              Add Option
+            </span>
+          </a>
+          <div class="option-section">
+            <%= for {option, index} <- Enum.with_index(@question.options, 1) do %> 
+              <%= render "option_template.html", option: option, index: index, form: f %>
+            <% end %>
+          </div>
         </div>
         <footer class="card-footer">
           <div class="card-footer-item">

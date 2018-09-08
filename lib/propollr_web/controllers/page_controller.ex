@@ -27,6 +27,6 @@ defmodule PropollrWeb.PageController do
 
     conn
     |> put_flash(:info, "Thanks for your message! We will respond as soon as possible.")
-    |> redirect(to: path_path(conn, :index))
+    |> redirect(to: page_path(conn, :index))
   end
 end
