@@ -34,7 +34,7 @@ channel.join()
     if (!window.user) {
       create_questions(questions)
       create_vote_events(questions)
-      // toggle_answered_questions(payload.answered_questions)
+      toggle_answered_questions(payload.answered_questions)
     }
     create_answers(questions)
   })
@@ -91,8 +91,7 @@ channel.join()
         toggle_answered_state(button, select_list_container, select_list)
         channel.push("answer", {question_id: question.id, answer: options.value, question_token: question_token})
         .receive("ok", question_token => {
-          let max_age = new Date(new Date().getTime() + 2.592e+9).toGMTString() // Cookie will expire a month from now
-          document.cookie = `question_token=${question_token.question_token};max-age=${max_age};secure`
+          document.cookie = `question_token=${question_token.question_token};max-age=${60 * 60 * 24 * 30}`
         })
       }
     })
@@ -135,10 +134,11 @@ channel.join()
       });
     }
   }
-
+  // format is {sesh_id: {question_id: answer, question_id2: answer2}}
   let toggle_answered_questions = (answered_questions) => {
-    if (Object.entries(answered_questions).length > 0) {
-      Object.entries(answered_questions).forEach(([question_id, value]) => {
+    let sesh_id = window.sesh_id
+    if (answered_questions[sesh_id]) {
+      Object.entries(answered_questions[sesh_id]).forEach(([question_id, value]) => {
         toggle_answered_question(question_id, value)
       })
     }
@@ -190,7 +190,7 @@ channel.join()
   let remove_question = (question) => {
     document.querySelector(`#question_column_${question.id}`).remove()
   }
-  // Can this be refactored with create answers to abstract out the innerHtml setting?
+
   let update_answer = (answer) => {
     let old_answer_set = answer_container.querySelector(`#answer_id_${answer.question_id} ul`)
     old_answer_set.innerHTML = ''
