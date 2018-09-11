@@ -5,14 +5,6 @@ defmodule PropollrWeb.QuestionController do
   alias Propollr.Seshes.Sesh
   alias Propollr.Veil.User
 
-  def answer(conn, %{"answer_params" => answer_params, "sesh_id" => sesh_id}) do
-    Question.answer(sesh_id, answer_params)
-
-    conn
-    |> put_flash(:info, "Questions Answered")
-    |> redirect(to: sesh_path(conn, :view, sesh_id: sesh_id))
-  end
-
   def new(conn, %{"sesh_id" => sesh_id}) do
     user = User.get(conn.assigns.veil_user_id)
 

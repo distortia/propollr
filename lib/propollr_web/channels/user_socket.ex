@@ -20,8 +20,10 @@ defmodule PropollrWeb.UserSocket do
   #
   # See `Phoenix.Token` documentation for examples in
   # performing token verification on connect.
-  def connect(_params, socket) do
-    {:ok, socket}
+  @spec connect(map(), any()) :: {:ok, any()}
+  def connect(params, socket) do
+    question_token = params["question_token"] || ""
+    {:ok, assign(socket, :question_token, question_token)}
   end
 
   # Socket id's are topics that allow you to identify all sockets for a given user:

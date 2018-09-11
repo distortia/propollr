@@ -8,7 +8,8 @@ import {Socket, Presence} from "phoenix"
 //           //
 // variables //
 //           //
-let socket = new Socket("/socket", {params: {token: window.userToken}})
+let initial_answered_questions = document.cookie.replace(/(?:(?:^|.*;\s*)question_token\s*\=\s*([^;]*).*$)|^.*$/, "$1")
+let socket = new Socket("/socket", {params: {token: window.userToken, question_token: initial_answered_questions}})
 let presences = {}
 
 if (window.location.pathname == "/sesh" || window.location.pathname.includes('/sesh/join')) {
@@ -33,6 +34,7 @@ channel.join()
     if (!window.user) {
       create_questions(questions)
       create_vote_events(questions)
+      toggle_answered_questions(payload.answered_questions)
     }
     create_answers(questions)
   })
@@ -81,23 +83,37 @@ channel.join()
   }
 
   let create_vote_event = (question) => {
-    let parent = document.getElementById(`question_id_${question.id}`)
-      let button =  parent.querySelector('button')
-      let select_list_container = parent.querySelector('.select')
-      let select_list = parent.querySelector('select')
-      button.addEventListener('click', () => {
-        let options = parent.querySelector('select')
-        if (options.value) {
-          button.disabled = true
-          button.innerHTML = '<span class="icon"><i class="fas fa-comment-times"></i></span><span>Answered</span>'
-          button.classList.toggle('is-primary')
-          button.classList.toggle('is-danger')
-          select_list_container.classList.toggle('is-primary')
-          select_list_container.classList.toggle('is-danger')
-          select_list.disabled = !select_list.disabled
-          channel.push("answer", {question_id: question.id, answer: options.value})
-        }
-      })
+    let [parent, button, select_list_container, select_list] = vote_area(question.id)
+    let question_token = document.cookie.replace(/(?:(?:^|.*;\s*)question_token\s*\=\s*([^;]*).*$)|^.*$/, "$1")
+    button.addEventListener('click', () => {
+      let options = parent.querySelector('select')
+      if (options.value) {
+        toggle_answered_state(button, select_list_container, select_list)
+        channel.push("answer", {question_id: question.id, answer: options.value, question_token: question_token})
+        .receive("ok", question_token => {
+          let max_age = new Date(new Date().getTime() + 2.592e+9).toGMTString() // Cookie will expire a month from now
+          document.cookie = `question_token=${question_token.question_token};max-age=${max_age}`
+        })
+      }
+    })
+  }
+
+  let vote_area = (question_id) => {
+    let parent = document.getElementById(`question_id_${question_id}`)
+    let button = parent.querySelector('button')
+    let select_list_container = parent.querySelector('.select')
+    let select_list = parent.querySelector('select')
+    return [parent, button, select_list_container, select_list]
+  }
+
+  let toggle_answered_state = (button, select_list_container, select_list) => {
+    button.disabled = true
+    button.innerHTML = '<span class="icon"><i class="fas fa-comment-times"></i></span><span>Answered</span>'
+    button.classList.toggle('is-primary')
+    button.classList.toggle('is-danger')
+    select_list_container.classList.toggle('is-primary')
+    select_list_container.classList.toggle('is-danger')
+    select_list.disabled = !select_list.disabled
   }
 
   let new_question = (question) => {
@@ -109,12 +125,29 @@ channel.join()
     old_question.innerHTML = question_template(question)
   }
 
-  let create_questions = (questions) => {
+  let create_questions = (questions, answered_questions) => {
+    if(question_container.childElementCount > 0) {
+      question_container.innerHTML = ''
+    }
     if (!window.user) {
       questions.forEach(question => {
         question_container.innerHTML += question_template(question)
       });
     }
+  }
+
+  let toggle_answered_questions = (answered_questions) => {
+    if (Object.entries(answered_questions).length) {
+      Object.entries(answered_questions).forEach(([question_id, value]) => {
+        toggle_answered_question(question_id, value)
+      })
+    }
+  }
+
+  let toggle_answered_question = (question_id, value) => {
+    let [parent, button, select_list_container, select_list] = vote_area(question_id)
+    toggle_answered_state(button, select_list_container, select_list)
+    select_list.value = value
   }
 
   let question_template = (question) => {
@@ -167,6 +200,10 @@ channel.join()
   }
 
   let create_answers = (questions) => {
+    // Clear out the answers if they already exist so we dont get duplicates
+    if (answer_container.childElementCount > 0) {
+      answer_container.innerHTML = ''
+    }
     questions.forEach(question => {
       create_answer(question)
     })
@@ -206,7 +243,9 @@ channel.join()
   }
   let update_counters = (presences) => {
     Presence.list(presences, (id, {metas: [first, ...rest]}) => {
-      document.querySelector('.pollr-count').innerText = rest.length
+      if (window.user) {
+        document.querySelector('.pollr-count').innerText = rest.length
+      }
     })
   }
 }

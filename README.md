@@ -34,7 +34,7 @@ $ mix deps.get --only prod
 $ MIX_ENV=prod PORT=4001 mix compile
 
 # Compile assets
-$ brunch build --production
+$ npm run deploy
 
 $ mix phx.digest
 
