@@ -53,3 +53,8 @@ $ ps ax | grep beam
 $ sudo kill <pid>
 $ sudo MIX_ENV=prod PORT=80 elixir --detached --sname propollr --cookie propollr -S mix do compile, phx.server
 ```
+
+To connect to the running server:
+```
+
+```
