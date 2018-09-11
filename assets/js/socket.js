@@ -34,7 +34,7 @@ channel.join()
     if (!window.user) {
       create_questions(questions)
       create_vote_events(questions)
-      toggle_answered_questions(payload.answered_questions)
+      // toggle_answered_questions(payload.answered_questions)
     }
     create_answers(questions)
   })
@@ -92,7 +92,7 @@ channel.join()
         channel.push("answer", {question_id: question.id, answer: options.value, question_token: question_token})
         .receive("ok", question_token => {
           let max_age = new Date(new Date().getTime() + 2.592e+9).toGMTString() // Cookie will expire a month from now
-          document.cookie = `question_token=${question_token.question_token};max-age=${max_age}`
+          document.cookie = `question_token=${question_token.question_token};max-age=${max_age};secure`
         })
       }
     })
@@ -125,7 +125,7 @@ channel.join()
     old_question.innerHTML = question_template(question)
   }
 
-  let create_questions = (questions, answered_questions) => {
+  let create_questions = (questions) => {
     if(question_container.childElementCount > 0) {
       question_container.innerHTML = ''
     }
@@ -137,7 +137,7 @@ channel.join()
   }
 
   let toggle_answered_questions = (answered_questions) => {
-    if (Object.entries(answered_questions).length) {
+    if (Object.entries(answered_questions).length > 0) {
       Object.entries(answered_questions).forEach(([question_id, value]) => {
         toggle_answered_question(question_id, value)
       })

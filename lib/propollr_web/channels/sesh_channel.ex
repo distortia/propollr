@@ -21,7 +21,7 @@ defmodule PropollrWeb.SeshChannel do
 
     answered_questions =
     if String.length(question_token) > 0 do
-      {:ok, answered_questions} = Phoenix.Token.verify(socket, @secret_key, question_token)
+      {:ok, answered_questions} = Phoenix.Token.verify(socket, @secret_key, question_token, max_age: 86400)
       answered_questions
     else
       %{}
@@ -54,7 +54,7 @@ defmodule PropollrWeb.SeshChannel do
           IO.inspect "NO TOKEN"
           %{}
         end
-        updated_question_token = Phoenix.Token.sign(socket, @secret_key, Map.put(question_list, question_id, answer))
+        updated_question_token = Phoenix.Token.sign(socket, @secret_key, Map.put(question_list, question_id, answer), max_age: 86400)
         {:reply, {:ok, %{question_token: updated_question_token}}, socket}
 
       {:error, changeset} ->
