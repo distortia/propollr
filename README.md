@@ -56,5 +56,5 @@ $ sudo MIX_ENV=prod PORT=80 elixir --detached --sname propollr --cookie propollr
 
 To connect to the running server:
 ```
-
+iex --sname local --cookie propollr --remsh propollr@propollr
 ```
