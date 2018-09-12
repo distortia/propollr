@@ -23538,7 +23538,7 @@ if (window.location.pathname == "/sesh" || window.location.pathname.includes('/s
     });
   };
   var create_chart = function create_chart(question) {
-    new Chartkick.PieChart("chart_" + question.id, question.answers, { legend: "bottom", download: question.text });
+    new Chartkick.PieChart("chart_" + question.id, question.answers, { legend: "bottom", download: "propollr_" + question.text });
   };
   var update_chart = function update_chart(question) {
     var chart = Chartkick.charts["chart_" + question.question_id];

@@ -258,7 +258,7 @@ channel.join()
     })
   }
   let create_chart = (question) => {
-    new Chartkick.PieChart(`chart_${question.id}`, question.answers, {legend: "bottom", download: question.text})
+    new Chartkick.PieChart(`chart_${question.id}`, question.answers, {legend: "bottom", download: `propollr_${question.text}`})
   }
   let update_chart = (question) => {
     let chart = Chartkick.charts[`chart_${question.question_id}`]
