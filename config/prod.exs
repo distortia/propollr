@@ -27,14 +27,14 @@ config :logger, level: :info
 # to the previous section and set your `:url` port to 443:
 #
 config :propollr, PropollrWeb.Endpoint,
-    check_origin: ["//propollr.com", "//35.202.203.25"],
+    check_origin: ["//propollr.com"],
     url: [host: "propollr.com", port: 443],
     http: [port: 80],
     force_ssl: [hsts: true],
     https: [port: 443,
       otp_app: :propollr,
       keyfile: "/etc/letsencrypt/live/propollr.com/privkey.pem",
-      cacertfile: "/etc/letsencrypt/live/propollr.com/chain.pem", 
+      cacertfile: "/etc/letsencrypt/live/propollr.com/chain.pem",
       certfile: "/etc/letsencrypt/live/propollr.com/cert.pem"]
 # config :propollr, PropollrWeb.Endpoint,
 #   cache_static_manifest: "priv/static/cache_manifest.json",
@@ -55,7 +55,7 @@ config :propollr, PropollrWeb.Endpoint,
 # We also recommend setting `force_ssl`, ensuring no data is
 # ever sent via http, always redirecting to https:
 #
-# config :propollr, PropollrWeb.Endpoint, 
+# config :propollr, PropollrWeb.Endpoint,
 #     force_ssl: [hsts: true]
 #
 # Check `Plug.SSL` for all available options in `force_ssl`.

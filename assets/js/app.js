@@ -18,6 +18,10 @@ import "phoenix_html"
 // paths "./socket" or full ones "web/static/js/socket".
 
 import socket from "./socket"
+import Chartkick from "chartkick";
+import Chart from "chart.js";
+
+Chartkick.addAdapter(Chart);
 
 window.copy_share_link = function(base_url, sesh_id){
 let clipboard = window.navigator.clipboard

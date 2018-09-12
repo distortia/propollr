@@ -37,6 +37,7 @@ channel.join()
       toggle_answered_questions(payload.answered_questions)
     }
     create_answers(questions)
+    create_charts(questions)
   })
 
   channel.on("updated_question", question => {
@@ -53,8 +54,9 @@ channel.join()
     create_answer(question)
   })
 
-  channel.on("updated_answer", answer => {
-    update_answer(answer)
+  channel.on("updated_answer", question => {
+    update_answer(question)
+    update_chart(question)
   })
 
   channel.on("remove_question", question => {
@@ -210,11 +212,11 @@ channel.join()
   }
   
   let create_answer = (question) => {
-      answer_container.innerHTML = answer_template(question) + answer_container.innerHTML
+    answer_container.innerHTML = answer_template(question) + answer_container.innerHTML
 
-      Object.entries(question.answers).forEach(opt => 
-        document.querySelector(`#answer_id_${question.id} ul`).innerHTML += option_template(opt)
-        )
+    Object.entries(question.answers).forEach(opt => 
+      document.querySelector(`#answer_id_${question.id} ul`).innerHTML += option_template(opt)
+      )
   }
  let answer_template = (question) => {
     return `
@@ -228,6 +230,8 @@ channel.join()
           <div class="card-content">
             <p class="has-text-weight-bold">Options:</p>
             <ul></ul>
+            <hr>
+            <div id="chart_${question.id}" style="width: 100%"></div>
           </div>
         </div>
       </div>
@@ -247,6 +251,18 @@ channel.join()
         document.querySelector('.pollr-count').innerText = rest.length
       }
     })
+  }
+  let create_charts = (questions) => {
+    questions.forEach(question => {
+      create_chart(question)
+    })
+  }
+  let create_chart = (question) => {
+    new Chartkick.PieChart(`chart_${question.id}`, question.answers, {legend: "bottom", download: question.text})
+  }
+  let update_chart = (question) => {
+    let chart = Chartkick.charts[`chart_${question.question_id}`]
+    chart.updateData(question.answers)
   }
 }
 export default socket

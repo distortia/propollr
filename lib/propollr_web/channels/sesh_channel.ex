@@ -4,6 +4,7 @@ defmodule PropollrWeb.SeshChannel do
   alias Propollr.Questions.Question
   alias Propollr.Seshes.Sesh
   @secret_key Application.get_env(:propollr, PropollrWeb.Endpoint)[:secret_key_base]
+  @token_max_age 86400 * 30
 
   def join("sesh:" <> sesh_id, _params, socket) do
     send(self(), {:after_join, sesh_id, socket.assigns.question_token})
@@ -21,7 +22,7 @@ defmodule PropollrWeb.SeshChannel do
 
     answered_questions =
     if String.length(question_token) > 0 do
-      {:ok, answered_questions} = Phoenix.Token.verify(socket, @secret_key, question_token, max_age: 86400)
+      {:ok, answered_questions} = Phoenix.Token.verify(socket, @secret_key, question_token, max_age: @token_max_age)
       answered_questions
     else
       %{}
@@ -46,13 +47,13 @@ defmodule PropollrWeb.SeshChannel do
         broadcast(socket, "updated_answer", payload)
         question_list =
         if String.length(question_token) > 0 do
-          {:ok, q_list} = Phoenix.Token.verify(socket, @secret_key, question_token)
+          {:ok, q_list} = Phoenix.Token.verify(socket, @secret_key, question_token, max_age: @token_max_age)
           q_list
         else
           %{}
         end
         answered_questions = map_answered_questions(question_list, question, answer)
-        updated_question_token = Phoenix.Token.sign(socket, @secret_key, answered_questions, max_age: 86400)
+        updated_question_token = Phoenix.Token.sign(socket, @secret_key, answered_questions, max_age: @token_max_age)
         {:reply, {:ok, %{question_token: updated_question_token}}, socket}
 
       {:error, changeset} ->
