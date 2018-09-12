@@ -29,6 +29,10 @@ Ready to run in production? Please [check our deployment guides](http://www.phoe
 
 Your machine:
 
+Run `bin/prod_setup.sh`
+
+or
+
 ```
 $ mix deps.get --only prod
 $ MIX_ENV=prod PORT=4001 mix compile
