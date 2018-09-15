@@ -6,6 +6,7 @@
 <%= render PropollrWeb.LayoutView, "flash.html", conn: @conn %>
 <section class="section">
   <div class="container">
+    <%= breadcrumbs [@conn, :sesh_edit, @sesh_id] %>
     <%= form_for @changeset, sesh_path(@conn, :update, sesh_id: @sesh_id), [as: :sesh_params, method: :put, id: "update-form"], fn f -> %>
       <div class="card">
         <div class="card-content">

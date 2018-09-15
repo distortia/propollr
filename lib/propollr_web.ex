@@ -41,6 +41,7 @@ defmodule PropollrWeb do
       import PropollrWeb.Router.Helpers
       import PropollrWeb.ErrorHelpers
       import PropollrWeb.Gettext
+      import PropollrWeb.BreadcrumbHelper
     end
   end
 

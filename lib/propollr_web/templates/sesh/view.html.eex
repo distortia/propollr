@@ -1,6 +1,7 @@
 <%= render PropollrWeb.LayoutView, "flash.html", conn: @conn %>
 <section class="section">
   <div class="container">
+  <%= breadcrumbs [@conn, :sesh, @sesh.sesh_id] %>
     <div class="card session-info">
       <header class="header">
         <p class="card-header-title <%= if @sesh.closed, do: "has-text-danger", else: "has-text-success" %> ">
