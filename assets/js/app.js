@@ -83,8 +83,11 @@ window.remove_option = (id) => {
 window.add_option = () => {
   let option_section = document.querySelector('.option-section')
   let current_option_count = option_section.querySelectorAll('input').length
-  option_section.innerHTML += option_template(current_option_count + 1)
+  let new_option = document.createElement('div')
+  new_option.innerHTML = option_template(current_option_count + 1)
+  option_section.appendChild(new_option)
 }
+
 let option_template = (option_count) => {
   return `
   <div class="field" id="option-${option_count}">
