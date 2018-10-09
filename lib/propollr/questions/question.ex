@@ -6,6 +6,7 @@ defmodule Propollr.Questions.Question do
 
   schema "questions" do
     field(:answers, :map)
+    field(:type, :string, default: "poll")
     field(:options, {:array, :string})
     field(:text, :string)
 
@@ -16,8 +17,8 @@ defmodule Propollr.Questions.Question do
   @doc false
   def changeset(question, attrs) do
     question
-    |> cast(attrs, [:text, :answers, :options])
-    |> validate_required([:text, :options])
+    |> cast(attrs, [:text, :answers, :options, :type])
+    |> validate_required([:text, :options, :type])
   end
 
   def new(question_params) do
